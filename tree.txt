@@ -1,0 +1,23 @@
+.escape-game/
+├── backend
+│   └── server.js
+├── index.html
+├── README.md
+├── static
+│   ├── assets
+│   │   ├── images
+│   │   └── sounds
+│   ├── css
+│   │   └── style.css
+│   └── scripts
+│       ├── controllers
+│       │   └── move.js
+│       ├── enigmes.js
+│       │   └── enigme1.js
+│       ├── game.js
+│       ├── main.js
+│       ├── models
+│       │   └── obstacle.js
+│       └── utils
+└── tree.txt
+
