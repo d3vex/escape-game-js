@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas id="canvasGame"></canvas>
+    <style>
+      #canvasGame {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: block;
+        background-color: #000;
+        background-color: #000000;
+        background-size: 18px 18px;
+        background-image: repeating-linear-gradient(
+          to right,
+          #001e33,
+          #001e33 0.9px,
+          #000000 0.9px,
+          #000000
+        );
+      }
+    </style>
+    <script src="./static/scripts/controllers/move.js"></script>
+    <script src="./static/scripts/game.js"></script>
+  </body>
+</html>
