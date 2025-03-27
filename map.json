@@ -1,0 +1,36 @@
+{
+    "config":{
+        "gridXSize":16,
+        "gridYSize": 16,
+        "imageSet":{
+            "ground": "/static/assets/images/ground",
+            "wall": "/static/assets/images/wall"
+        }
+    },
+    "grid":
+    [
+        {
+            "x": 0,
+            "y": 0,
+            "img": "ground",
+            "canGoTrough": true,
+            "onCollide": "none"
+        },
+        {
+            "x": 1,
+            "y": 0,
+            "img": "wall",
+            "canGoTrough": false,
+            "onCollide": "none"
+        },
+        {
+            "x": 1,
+            "y": 1,
+            "img": "./paint.jpg",
+            "canGoTrough": true,
+            "onCollide": "showPaint",
+            "paintImage": "This attribute will be sent to showPaint at the same time as all the other attributes."
+        }
+        
+    ]
+}
