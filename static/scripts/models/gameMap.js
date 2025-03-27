@@ -34,13 +34,19 @@ class GameMap {
   #load() {
     let config = this.#mapJson.config
     for (let el of this.#mapJson.grid) {
-      this.#obstacles.push({
-        x: el.x * config.gridXSize,
-        y: el.y * gridYSize,
-        onCollide: document[el.onCollide],
-        canGoThrough: el.canGoThrough,
-        img: config.imageSet[el.img],
-      });
+        if(typeof el.img == "string") el.img = config.imageSet[el.img];
+        if(typeof el.img == "object") el.img = el.img.map((img) => config.imageSet[img]);
+        this.#obstacles.push(
+            new Obstacles(
+                el.x * config.gridXSize,
+                el.y * config.gridYSize,
+                config.gridXSize,
+                config.gridYSize,
+                document[el.onCollide],
+                el.canGoThrough,
+                el.img
+            )
+        )
     }
     this.#ready = true;
   }
