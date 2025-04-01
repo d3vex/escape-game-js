@@ -1,4 +1,4 @@
-import Obstacles from "./obstacle";
+import Obstacles from "./obstacle.js";
 
 class GameMap {
   // private attributs
@@ -18,7 +18,10 @@ class GameMap {
    */
   #ready = false;
 
+  #mapNumber = 1;
+
   constructor(mapNumber = 1) {
+    this.#mapNumber = mapNumber;
     fetch(`/static/assets/map/map${mapNumber}.json`)
       .then((res) => res.json())
       .then((json) => {
@@ -32,33 +35,37 @@ class GameMap {
 
   // private methods
   #load() {
-    let config = this.#mapJson.config
+    let config = this.#mapJson.config;
     for (let el of this.#mapJson.grid) {
-        if(typeof el.img == "string") el.img = config.imageSet[el.img];
-        if(typeof el.img == "object") el.img = el.img.map((img) => config.imageSet[img]);
-        this.#obstacles.push(
-            new Obstacles(
-                el.x * config.gridXSize,
-                el.y * config.gridYSize,
-                config.gridXSize,
-                config.gridYSize,
-                document[el.onCollide],
-                el.canGoThrough,
-                el.img
-            )
+      if (typeof el.img == "string") el.img = config.imageSet[el.img];
+      if (typeof el.img == "object")
+        el.img = el.img.map((img) => config.imageSet[img]);
+      this.#obstacles.push(
+        new Obstacles(
+          el.x * config.gridXSize,
+          el.y * config.gridYSize,
+          config.gridXSize,
+          config.gridYSize,
+          document[el.onCollide],
+          el.canGoThrough,
+          el.img
         )
+      );
     }
     this.#ready = true;
   }
 
   /**
    * Return the list of obstacles
-   * @returns {Obstacles[]} 
+   * @returns {Obstacles[]}
    */
-  getObstacles() {
+  get obstacles() {
     return this.#obstacles;
   }
 
+  get mapNumber() {
+    return this.#mapNumber;
+  }
   /**
    * Re-set the obstacle at the given index
    * @param {Obstacles} obstacles - The obstacle to set
