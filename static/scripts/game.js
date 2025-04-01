@@ -1,8 +1,4 @@
+import Renderer from "./models/renderer.js";
 
-function loop() {
-  update();
-  draw();
-  requestAnimationFrame(loop);
-}
-loop();
+Renderer.create("canvasGame", 1).startRendering();
 //code after that will be executed
