@@ -15,11 +15,11 @@ class Obstacles {
 
         this.#onCollide = onCollide;
         this.#canGoThrough = canGoThrough;
-        if(typeof img == "object") {
-            this.#sprite = img[0];
-            this.#spritesList = img;
+        if(typeof sprite == "object") {
+            this.#sprite = sprite[0];
+            this.#spritesList = sprite;
         }else{
-            this.#sprite = img;
+            this.#sprite = sprite;
         }
     }
 
@@ -28,6 +28,12 @@ class Obstacles {
     }
     get y() {
         return this.#y;
+    }
+    get w() {
+        return this.#w;
+    }
+    get h() {
+        return this.#h;
     }
     /**
      * This method allow to move the absolute position of the obstacle
@@ -48,6 +54,11 @@ class Obstacles {
     }
     get sprite() {
         return this.#sprite;
+    }
+    get spriteImage() {
+        let img = new Image();
+        img.src = this.#sprite;
+        return img
     }
     /**
      * This method change the current sprite to the next one in the list
