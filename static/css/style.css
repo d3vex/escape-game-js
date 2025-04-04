@@ -1,0 +1,64 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css");
+
+body {
+    background-color: #181425;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: auto;
+    }
+    
+#game {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    }
+
+#board {
+    position: relative;
+    overflow: visible;
+    }
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: absolute;
+    bottom: 3rem;
+    right: 10rem;
+      
+    .top, .bottom {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        justify-content: center;
+      
+        .square {
+            align-items: center;
+            justify-content: center;
+            height: 50px;
+            width: 50px;
+            border: 1px solid #cecece;
+            border-radius: 6px;
+            display: flex;
+            transition: .3s;
+            cursor: pointer;
+      
+            i {
+              color: #cecece;
+              transition: .3s;
+            }
+            
+            &:hover {
+              border-color: #a0a0a0;
+              i {
+                color: #a0a0a0;
+              }
+            }
+        }
+    }   
+}
