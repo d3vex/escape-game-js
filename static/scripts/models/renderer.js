@@ -33,7 +33,9 @@ function setBoardBackground() {
 
             console.log(`Actual size multiplier used: ${actualSizeMultiplier}`);
             
-            createSquare();
+            if (!document.getElementById('pixel-square')) {
+                createSquare();
+            }
             
             const boardReadyEvent = new CustomEvent('boardReady', {
                 detail: { width: finalWidth, height: finalHeight }
@@ -76,4 +78,3 @@ function createSquare() {
 }
 
 export { actualSizeMultiplier, setBoardBackground };
-

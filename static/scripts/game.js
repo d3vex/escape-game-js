@@ -1,6 +1,7 @@
 import Player from './models/player.js';
 import MovementController from './controllers/move.js';
 import { actualSizeMultiplier, setBoardBackground } from './models/renderer.js';
+
 const CYCLE_DURATION = 1000 / 30;
 
 class Game {
@@ -10,23 +11,28 @@ class Game {
         this.lastFrameTime = 0;
 
         document.addEventListener('boardReady', (event) => {
-            console.log('Board ready, initializing player...');
+            if (!this.player) {
+                console.log('Board ready, initializing player...');
 
-            this.player = new Player();
-            const boardWidth = event.detail.width;
-            const boardHeight = event.detail.height;
-            const playerSize = 16 * actualSizeMultiplier;
+                const boardWidth = event.detail.width;
+                const boardHeight = event.detail.height;
+                const playerSize = 16 * actualSizeMultiplier;
 
-            const initialX = 180;
-            const initialY = 50;
+                const initialX = 180;
+                const initialY = 50;
 
-            this.player.initialize(initialX, initialY);
-            this.movementController = new MovementController(this.player);
+                this.player = new Player(initialX, initialY);
+                this.player.updatePosition();
+                this.movementController = new MovementController(this.player);
 
-            console.log('Game initialized successfully!');
+                console.log('Game initialized successfully!');
 
-            if (!this.isRunning) {
-                this.start();
+                if (!this.isRunning) {
+                    this.start();
+                }
+            } else {
+                console.log('Board resized, updating player position...');
+                this.player.updatePlayerSize();
             }
         });
     }
@@ -76,3 +82,4 @@ class Game {
 }
 
 export default Game;
+
