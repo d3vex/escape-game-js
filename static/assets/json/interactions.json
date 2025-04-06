@@ -22,17 +22,17 @@
     {
         "x": 176,
         "y": 0,
-        "interaction": "walls"
+        "interaction": "PrintConsole"
     },
     {
         "x": 192,
         "y": 0,
-        "interaction": "walls"
+        "interaction": "PrintConsole"
     },
     {
         "x": 208,
         "y": 0,
-        "interaction": "walls"
+        "interaction": "PrintConsole"
     },
     {
         "x": 224,

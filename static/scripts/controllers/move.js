@@ -1,4 +1,4 @@
-import { loadCollisionsData } from '../utils.js';
+import { loadInteractionsData } from '../utils.js';
 
 class MovementController {
     constructor(player) {
@@ -17,7 +17,7 @@ class MovementController {
     }
 
     async loadCollisions() {
-        const collisionsData = await loadCollisionsData();
+        const collisionsData = await loadInteractionsData();
         this.player.setCollisionsData(collisionsData);
     }
 
