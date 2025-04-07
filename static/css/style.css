@@ -30,35 +30,45 @@ body {
     position: absolute;
     bottom: 3rem;
     right: 10rem;
-      
-    .top, .bottom {
-        display: flex;
-        gap: 6px;
-        align-items: center;
-        justify-content: center;
-      
-        .square {
-            align-items: center;
-            justify-content: center;
-            height: 50px;
-            width: 50px;
-            border: 1px solid #cecece;
-            border-radius: 6px;
-            display: flex;
-            transition: .3s;
-            cursor: pointer;
-      
-            i {
-              color: #cecece;
-              transition: .3s;
-            }
-            
-            &:hover {
-              border-color: #a0a0a0;
-              i {
-                color: #a0a0a0;
-              }
-            }
-        }
-    }   
-}
+    }
+  
+.wrapper .top, .wrapper .bottom {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+    }
+  
+.wrapper .square {
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    border: 1px solid #cecece;
+    border-radius: 6px;
+    display: flex;
+    background-color: #333;
+    color: #fff;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    }
+  
+.wrapper .square i {
+    color: #cecece;
+    transition: color 0.3s ease;
+    }
+
+.wrapper .square:hover {
+    border-color: #a0a0a0;
+    }
+  
+.wrapper .square:hover i {
+    color: #a0a0a0;
+    }
+  
+.active {
+    background-color: #64729275 !important;
+    color: #fff;
+    transform: scale(1.2);
+    backdrop-filter: blur(4px);
+    }
