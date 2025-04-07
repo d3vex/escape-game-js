@@ -1,74 +1,179 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css");
+@import url("/static/assets/fonts/PressStart2P-Regular.ttf");
+@font-face {
+  font-family: PressStart;
+  src: url("/static/assets/fonts/PressStart2P-Regular.ttf");
+  font-weight: 400;
+  font-style: normal;
+}
 
 body {
-    background-color: #181425;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: auto;
-    }
+  font-family: 'PressStart';
+  text-shadow: #000000 3px 2px 3px;
+  background-color: #181425;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: auto;
+  }
     
 #game {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  }
 
 #board {
-    position: relative;
-    overflow: visible;
-    }
+  position: relative;
+  overflow: visible;
+  }
 
 .wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    position: absolute;
-    bottom: 3rem;
-    right: 10rem;
-    }
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: absolute;
+  bottom: 1.9rem;
+  right: 12rem;
+  }
   
 .wrapper .top, .wrapper .bottom {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    justify-content: center;
-    }
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  }
   
 .wrapper .square {
-    align-items: center;
-    justify-content: center;
-    height: 50px;
-    width: 50px;
-    border: 1px solid #cecece;
-    border-radius: 6px;
-    display: flex;
-    background-color: #333;
-    color: #fff;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    cursor: pointer;
-    }
-  
+  box-shadow: 0 0 5px black;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 50px;
+  border: 3px solid #cecece;
+  border-right: 2px solid #000;
+  border-bottom: 2px solid #000;
+  display: flex;
+  background-color: #333;
+  color: #fff;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  }
+
 .wrapper .square i {
-    color: #cecece;
-    transition: color 0.3s ease;
-    }
+  color: #cecece;
+  font-size: larger;
+  transition: color 0.3s ease;
+  }
 
 .wrapper .square:hover {
-    border-color: #a0a0a0;
-    }
+  border-color: #a0a0a0;
+  }
   
 .wrapper .square:hover i {
-    color: #a0a0a0;
-    }
+  color: #a0a0a0;
+  }
   
 .active {
-    background-color: #64729275 !important;
+  background-color: #64729275 !important;
+  color: #fff;
+  transform: scale(1.2);
+  backdrop-filter: blur(4px);
+  }
+
+  .timer {
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    width: 120px;
+    border: 3px solid #cecece;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    background-color: #333;
     color: #fff;
-    transform: scale(1.2);
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 0 5px black;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .timer.active {
+    background-color: #64729275;
+    transform: scale(1.1);
     backdrop-filter: blur(4px);
-    }
+  }
+
+  .interactBox {
+    color: #fff;
+    text-align: center;
+    line-height: 1.7rem;
+    position: absolute;
+    bottom: 1rem;
+    height: 5rem;
+    width: 45rem;
+    background-color: #333;
+    border: 3px solid #cecece;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    box-shadow: 0 0 5px black;
+  }
+
+  .enigmaBox {
+    color: #fff;
+    text-align: center;
+    line-height: 1.7rem;
+    position: absolute;
+    padding: 6px;
+    left: 0;
+    height: 20rem;
+    width: 15rem;
+    background-color: #333;
+    border: 3px solid #cecece;
+    border-left: none;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    box-shadow: 0 0 5px black;
+  }
+
+  .enigmaBox p, .questBox p {
+    font-size: small;
+  }
+
+  .questBox p {
+    text-align: left;
+    padding-left: 7px;
+  }
+
+  .questBox {
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    color: #fff;
+    text-align: center;
+    line-height: 1.2rem;
+    position: absolute;
+    padding: 6px;
+    right: 0;
+    height: 20rem;
+    width: 20rem;
+    background-color: #333;
+    border: 3px solid #cecece;
+    border-right: none;
+    border-bottom: 2px solid #000;
+    box-shadow: 0 0 5px black;
+  }
+
+  .clue {
+    font-size: xx-small !important;
+    color: #a0a0a0;
+  }
