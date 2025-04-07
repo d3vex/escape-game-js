@@ -1,4 +1,5 @@
 import { loadInteractionsData } from '../utils.js';
+import InteractionManager from '../models/interactionManager.js';
 
 class MovementController {
     constructor(player) {
@@ -7,7 +8,8 @@ class MovementController {
             ArrowUp: false,
             ArrowDown: false,
             ArrowLeft: false,
-            ArrowRight: false
+            ArrowRight: false,
+            e: false
         };
         this.speed = player.speed;
 
@@ -25,6 +27,10 @@ class MovementController {
         window.addEventListener('keydown', (e) => {
             if (this.keys.hasOwnProperty(e.key)) {
                 this.keys[e.key] = true;
+
+                if (e.key === 'e') {
+                    this.checkForInteraction();
+                }
             }
         });
 
@@ -44,21 +50,74 @@ class MovementController {
         requestAnimationFrame(gameLoop);
     }
 
+    checkForInteraction() {
+        const playerPos = this.player.position;
+        const size = this.player.size;
+        const facing = this.player.facing;
+
+        let checkX = playerPos.x;
+        let checkY = playerPos.y;
+
+        switch (facing) {
+            case 0: // NORTH
+                checkY = playerPos.y - size;
+                break;
+            case 1: // EAST
+                checkX = playerPos.x + size;
+                break;
+            case 2: // SOUTH
+                checkY = playerPos.y + size;
+                break;
+            case 3: // WEST
+                checkX = playerPos.x - size;
+                break;
+        }
+
+        const adjacentPositions = [
+            { x: checkX, y: checkY },
+            { x: checkX + size, y: checkY },
+            { x: checkX - size, y: checkY },
+            { x: checkX, y: checkY + size },
+            { x: checkX, y: checkY - size }
+        ];
+
+        const interactions = adjacentPositions.flatMap(pos => {
+            const gridX = Math.floor(pos.x / 16) * 16;
+            const gridY = Math.floor(pos.y / 16) * 16;
+
+            return this.player.collisionsData.filter(item =>
+                item.x === gridX &&
+                item.y === gridY &&
+                item.interaction !== 'walls'
+            );
+        });
+
+        if (interactions.length > 0) {
+            interactions.forEach(interaction => {
+                InteractionManager.triggerInteraction(interaction.interaction);
+            });
+        }
+    }
+
     updatePlayerPosition() {
         let dx = 0;
         let dy = 0;
 
         if (this.keys.ArrowUp) {
             dy -= this.speed;
+            this.player.facing = 0; // NORTH
         }
         if (this.keys.ArrowDown) {
             dy += this.speed;
+            this.player.facing = 2; // SOUTH
         }
         if (this.keys.ArrowLeft) {
             dx -= this.speed;
+            this.player.facing = 3; // WEST
         }
         if (this.keys.ArrowRight) {
             dx += this.speed;
+            this.player.facing = 1; // EAST
         }
 
         // Normaliser la vitesse
@@ -78,3 +137,4 @@ class MovementController {
 }
 
 export default MovementController;
+

@@ -9,6 +9,7 @@ class Player {
         this.boardElement = document.getElementById('board');
         this.collisionsData = [];
         this.size = 16; // Taille du joueur
+        this.facing = 2; // NORTH = 0, EAST = 1, SOUTH = 2, WEST = 3
     }
 
     // Charger les données de collision

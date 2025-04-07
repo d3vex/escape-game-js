@@ -26,18 +26,6 @@ function getCollisionsAtPosition(collisionsData, x, y) {
     );
 }
 
-function processCollisions(collisions) {
-    const hasWall = collisions.some(col => col.interaction === 'walls');
-    
-    // Traiter les interactions autres que les murs
-    collisions.forEach(col => {
-        if (col.interaction !== 'walls') {
-            InteractionManager.triggerInteraction(col.interaction);
-        }
-    });
-    
-    return hasWall;
-}
 
 function checkHorizontalCollision(collisionsData, oldPosition, possibleMovement, size) {
     if (possibleMovement.x === 0) return 0;
@@ -50,9 +38,9 @@ function checkHorizontalCollision(collisionsData, oldPosition, possibleMovement,
         ...getCollisionsAtPosition(collisionsData, testX, oldPosition.y),
         ...getCollisionsAtPosition(collisionsData, testX, oldPosition.y + size)
     ];
-    
-    const hasWall = processCollisions(horizontalCollisions);
-    
+
+    const hasWall = horizontalCollisions.length > 0;
+
     return hasWall ? 0 : possibleMovement.x;
 }
 
@@ -69,9 +57,9 @@ function checkVerticalCollision(collisionsData, oldPosition, possibleMovement, s
         ...getCollisionsAtPosition(collisionsData, adjustedX, testY),
         ...getCollisionsAtPosition(collisionsData, adjustedX + size, testY)
     ];
-    
-    const hasWall = processCollisions(verticalCollisions);
-    
+
+    const hasWall = verticalCollisions.length > 0;
+
     return hasWall ? 0 : possibleMovement.y;
 }
 
