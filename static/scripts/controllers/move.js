@@ -120,7 +120,7 @@ class MovementController {
             this.player.facing = 1; // EAST
         }
 
-        // Normaliser la vitesse
+        // Normalise the speed
         const length = Math.sqrt(dx * dx + dy * dy);
         if (length > 0) {
             dx /= length;

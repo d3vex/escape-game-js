@@ -12,7 +12,6 @@ class Player {
         this.facing = 2; // NORTH = 0, EAST = 1, SOUTH = 2, WEST = 3
     }
 
-    // Charger les données de collision
     setCollisionsData(data) {
         this.collisionsData = data;
     }
@@ -28,7 +27,6 @@ class Player {
         const maxX = boardRect.width - playerSize;
         const maxY = boardRect.height - playerSize;
 
-        // Limites du plateau
         newX = Math.max(0, Math.min(newX, maxX));
         newY = Math.max(0, Math.min(newY, maxY));
 

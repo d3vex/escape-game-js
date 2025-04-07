@@ -1,7 +1,3 @@
-
-/**
- * Classe qui gère les interactions entre le joueur et les éléments du jeu
- */
 class InteractionManager {
     constructor() {
         this.interactionHandlers = {
