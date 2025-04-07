@@ -48,10 +48,28 @@ class MovementController {
         let dx = 0;
         let dy = 0;
 
-        if (this.keys.ArrowUp) dy -= this.speed;
-        if (this.keys.ArrowDown) dy += this.speed;
-        if (this.keys.ArrowLeft) dx -= this.speed;
-        if (this.keys.ArrowRight) dx += this.speed;
+        if (this.keys.ArrowUp) {
+            dy -= this.speed;
+        }
+        if (this.keys.ArrowDown) {
+            dy += this.speed;
+        }
+        if (this.keys.ArrowLeft) {
+            dx -= this.speed;
+        }
+        if (this.keys.ArrowRight) {
+            dx += this.speed;
+        }
+
+        // Normaliser la vitesse
+        const length = Math.sqrt(dx * dx + dy * dy);
+        if (length > 0) {
+            dx /= length;
+            dy /= length;
+        }
+
+        dx *= this.speed;
+        dy *= this.speed;
 
         if (dx !== 0 || dy !== 0) {
             this.player.move(dx, dy);
