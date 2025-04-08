@@ -27,7 +27,7 @@
     {
         "x": 176,
         "y": 16,
-        "interaction": "PrintConsole"
+        "interaction": "Enigme1.takeKey"
     },
     {
         "x": 192,
