@@ -95,7 +95,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 8vh;
-  width: 10vw;
+  width: 12vw;
   border: 3px solid #cecece;
   border-right: 2px solid #000;
   border-bottom: 2px solid #000;
@@ -163,13 +163,14 @@ h4 {
 
 .contentEnigmaBox, .contentQuestBox {
   overflow-y: scroll;
+  scrollbar-color: grey transparent;
   scrollbar-width: thin;
   scroll-behavior: smooth;
   padding: 3px;
 }
 
 .contentEnigmaBox {
-  height: 18vh;
+  height: 15vh;
   width: 20vw;
 }
 
