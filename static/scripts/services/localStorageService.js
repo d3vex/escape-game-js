@@ -1,4 +1,4 @@
-class LocalStorage {
+class LocalStorageService {
   constructor() {}
 
   /**
@@ -81,3 +81,5 @@ class LocalStorage {
     localStorage.setItem(key, value);
   }
 }
+
+export default LocalStorageService;
