@@ -85,3 +85,5 @@ class Enigme1 {
         return false;
     }
 }
+
+export default Enigme1;
