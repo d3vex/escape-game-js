@@ -1,9 +1,5 @@
 import InteractionManager from "./models/interactionManager.js";
 
-/**
- * Charge les données de collision depuis un fichier JSON
- * @returns {Promise<Array>} Les données de collision
- */
 export async function loadInteractionsData() {
     try {
         const response = await fetch('static/assets/json/interactions.json');
