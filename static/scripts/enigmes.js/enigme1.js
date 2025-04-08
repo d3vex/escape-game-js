@@ -1,5 +1,7 @@
 import LocalStorageService from "../services/localStorageService.js";
 
+const maxTimer = 15 * 60 * 1000; // 15 minutes in milliseconds
+
 class Enigme1 {
     
     /**
@@ -69,5 +71,17 @@ class Enigme1 {
                 message: "You opened the door.",
             };
         }
+    }
+    static isQuestEnded() {
+        let keyIsAvailableToTake = LocalStorageService.getUserAttributes("enigme1.Key")==false?true:false;
+        let doorIsOpen = LocalStorageService.getUserAttributes("enigme1.Door");
+        let isFinished = LocalStorageService.getUserAttributes("enigme1.isFinished");
+        let timestampWhenEnded = LocalStorageService.getUserAttributes("enigme1.timestampWhenEnded");
+        if (keyIsAvailableToTake && doorIsOpen && isFinished) {
+            let currentTime = Date.now();
+            if(currentTime - timestampWhenEnded > maxTimer) return false; // Timer is over
+            return true
+        }
+        return false;
     }
 }
