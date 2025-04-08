@@ -5,6 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script type="module" src="./static/scripts/main.js"></script>
+  <script type="module" src="./static/scripts/GUI/manageATH.js"></script>
+  <script type="module" src="./static/scripts/GUI/manageInteractBox.js"></script>
   <script type="module" src="./static/scripts/GUI/arrowsInputHoverEffect.js"></script>
   <script type="module" src="./static/scripts/GUI/startTimer.js"></script>
   <link rel="stylesheet" href="./static/css/style.css"></link>
@@ -90,6 +92,16 @@
         </span>
     </div>
 </div>
+
+<script>
+  function hide() {
+    document.querySelector(".interactBox").style.bottom = "calc(-10vh - 4px)"
+}
+
+function reveal() {
+    document.querySelector(".interactBox").style.bottom = "calc(0.1rem)"
+}
+</script>
 
 </body>
 </html>
