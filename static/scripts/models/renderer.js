@@ -1,12 +1,12 @@
 const sizeMultiplier = 2;
 let actualSizeMultiplier = 1;
 
-function setBoardBackground() {
+function setBoardBackground(state) {
     const board = document.getElementById('board');
     if (board) {
 
         const img = new Image();
-        img.src = 'static/assets/images/map-image.png';
+        img.src = 'static/assets/images/Map-' + state + '.png';
         img.onload = function() {
             const imageWidth = img.width;
             const imageHeight = img.height;

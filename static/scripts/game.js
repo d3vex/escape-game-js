@@ -11,8 +11,9 @@ class Game {
         this.isRunning = false;
         this.lastFrameTime = 0;
         this.interactionsData = [];
+        this.currentState = 1;
 
-        document.addEventListener('boardReady', (event) => {
+        document.addEventListener('boardReady', async (event) => {
             if (!this.player) {
                 console.log('Board ready, initializing player...');
 
@@ -24,9 +25,9 @@ class Game {
                 const initialY = 50;
 
                 this.player = new Player(initialX, initialY);
-                this.loadInteractions().then(() => {
-                    this.player.setCollisionsData(this.interactionsData);
-                });
+                await this.loadInteractions();
+                this.player.setCollisionsData(this.interactionsData);
+
                 this.player.updatePosition();
                 this.movementController = new MovementController(this.player);
 
@@ -43,7 +44,7 @@ class Game {
     }
 
     async loadInteractions() {
-        this.interactionsData = await loadInteractionsData();
+        this.interactionsData = await loadInteractionsData(this.currentState);
         console.log(`Loaded ${this.interactionsData.length} interactions`);
     }
 
@@ -86,7 +87,7 @@ class Game {
 
     initialize() {
         console.log('Game initializing...');
-        setBoardBackground();
+        setBoardBackground(this.currentState);
         window.addEventListener('resize', setBoardBackground);
     }
 }
