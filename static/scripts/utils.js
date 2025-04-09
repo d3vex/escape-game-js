@@ -1,8 +1,8 @@
 import InteractionManager from "./models/interactionManager.js";
 
-export async function loadInteractionsData() {
+export async function loadInteractionsData(id) {
     try {
-        const response = await fetch('static/assets/json/interactions.json');
+        const response = await fetch('static/assets/json/interactions-'+ id +'.json');
         if (!response.ok) {
             throw new Error("Impossible de charger les données des interactions");
         }
@@ -65,11 +65,11 @@ export function checkCollision(collisionsData, oldPosition, newPosition, size) {
         y: newPosition.y - oldPosition.y
     };
 
-    const finalMovementX = checkHorizontalCollision(collisionsData, oldPosition, possibleMovement, size);
+    const finalMovementX = checkHorizontalCollision(collisionsData, oldPosition, possibleMovement, size - 1); // -1 so you can enter 1 block gap
 
     possibleMovement.x = finalMovementX;
     
-    const finalMovementY = checkVerticalCollision(collisionsData, oldPosition, possibleMovement, size);
+    const finalMovementY = checkVerticalCollision(collisionsData, oldPosition, possibleMovement, size - 1); // -1 so you can enter 1 block gap
 
     return {
         x: oldPosition.x + finalMovementX,
