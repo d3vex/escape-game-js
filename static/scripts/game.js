@@ -119,7 +119,7 @@ class Game {
     initialize() {
         console.log('Game initializing...');
         setBoardBackground(this.currentState);
-        window.addEventListener('resize', setBoardBackground);
+        window.addEventListener('resize', () => setBoardBackground(this.currentState));
     }
 }
 
