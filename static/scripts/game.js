@@ -1,127 +1,126 @@
-import Player from './models/player.js';
-import MovementController from './controllers/move.js';
-import { actualSizeMultiplier, setBoardBackground } from './models/renderer.js';
-import { loadInteractionsData } from './utils.js';
+import Player from "./models/player.js";
+import MovementController from "./controllers/move.js";
+import { actualSizeMultiplier, setBoardBackground } from "./models/renderer.js";
+import { loadInteractionsData } from "./utils.js";
 
 const CYCLE_DURATION = 1000 / 30;
 
 class Game {
-    static #instance = null;
+  static #instance = null;
 
-    static getInstance() {
-        if (!Game.#instance) {
-            Game.#instance = new Game();
+  static getInstance() {
+    if (!Game.#instance) {
+      Game.#instance = new Game();
+    }
+    return Game.#instance;
+  }
+
+  constructor() {
+    if (Game.#instance) {
+      return Game.#instance;
+    }
+
+    this.player = null;
+    this.isRunning = false;
+    this.lastFrameTime = 0;
+    this.interactionsData = [];
+    this.currentState = 1;
+
+    document.addEventListener("boardReady", async (event) => {
+      if (!this.player) {
+        console.log("Board ready, initializing player...");
+
+        const boardWidth = event.detail.width;
+        const boardHeight = event.detail.height;
+        const playerSize = 16 * actualSizeMultiplier;
+
+        const initialX = 180;
+        const initialY = 50;
+
+        this.player = new Player(initialX, initialY);
+        await this.loadInteractions();
+        this.player.setCollisionsData(this.interactionsData);
+
+        this.player.updatePosition();
+        this.movementController = new MovementController(this.player);
+
+        console.log("Game initialized successfully!");
+
+        if (!this.isRunning) {
+          this.start();
         }
-        return Game.#instance;
+      } else {
+        console.log("Board resized, updating player position...");
+        this.player.updatePlayerSize();
+      }
+    });
+
+    // Store the instance
+    Game.#instance = this;
+  }
+
+  async loadInteractions() {
+    this.interactionsData = await loadInteractionsData(this.currentState);
+    console.log(`Loaded ${this.interactionsData.length} interactions`);
+  }
+
+  async nextState() {
+    this.currentState++;
+    console.log(`Loading state ${this.currentState}...`);
+
+    setBoardBackground(this.currentState);
+
+    await this.loadInteractions();
+
+    if (this.player) {
+      this.player.setCollisionsData(this.interactionsData);
     }
-    
-    constructor() {
-        if (Game.#instance) {
-            return Game.#instance;
-        }
-        
-        this.player = null;
-        this.isRunning = false;
-        this.lastFrameTime = 0;
-        this.interactionsData = [];
-        this.currentState = 1;
+  }
 
-        document.addEventListener('boardReady', async (event) => {
-            if (!this.player) {
-                console.log('Board ready, initializing player...');
+  start() {
+    console.log("Starting game loop...");
+    this.isRunning = true;
+    requestAnimationFrame(this.gameLoop.bind(this));
+  }
 
-                const boardWidth = event.detail.width;
-                const boardHeight = event.detail.height;
-                const playerSize = 16 * actualSizeMultiplier;
+  stop() {
+    this.isRunning = false;
+  }
 
-                const initialX = 180;
-                const initialY = 50;
+  gameLoop() {
+    const now = performance.now();
+    const deltaTime = now - this.lastFrameTime;
 
-                this.player = new Player(initialX, initialY);
-                await this.loadInteractions();
-                this.player.setCollisionsData(this.interactionsData);
+    if (deltaTime >= CYCLE_DURATION) {
+      this.lastFrameTime = now - (deltaTime % CYCLE_DURATION);
 
-                this.player.updatePosition();
-                this.movementController = new MovementController(this.player);
-
-                console.log('Game initialized successfully!');
-
-                if (!this.isRunning) {
-                    this.start();
-                }
-            } else {
-                console.log('Board resized, updating player position...');
-                this.player.updatePlayerSize();
-            }
-        });
-        
-        // Store the instance
-        Game.#instance = this;
-    }
-
-    async loadInteractions() {
-        this.interactionsData = await loadInteractionsData(this.currentState);
-        console.log(`Loaded ${this.interactionsData.length} interactions`);
+      this.update(deltaTime);
+      this.render();
     }
 
-    async changeState(newState) {
-        if (this.currentState !== newState) {
-            console.log(`Changing state from ${this.currentState} to ${newState}`);
-            this.currentState = newState;
-
-            setBoardBackground(this.currentState);
-
-            await this.loadInteractions();
-
-            if (this.player) {
-                this.player.setCollisionsData(this.interactionsData);
-            }
-        }
+    if (this.isRunning) {
+      setTimeout(() => this.gameLoop(), CYCLE_DURATION);
     }
+  }
 
-    start() {
-        console.log('Starting game loop...');
-        this.isRunning = true;
-        requestAnimationFrame(this.gameLoop.bind(this));
+  update(deltaTime) {
+    if (this.player) {
     }
+  }
 
-    stop() {
-        this.isRunning = false;
+  render() {
+    if (this.player) {
+      this.player.updatePosition();
     }
+  }
 
-    gameLoop() {
-        const now = performance.now();
-        const deltaTime = now - this.lastFrameTime;
-
-        if (deltaTime >= CYCLE_DURATION) {
-            this.lastFrameTime = now - (deltaTime % CYCLE_DURATION);
-
-            this.update(deltaTime);
-            this.render();
-        }
-
-        if (this.isRunning) {
-            setTimeout(() => this.gameLoop(), CYCLE_DURATION);
-        }
-    }
-
-    update(deltaTime) {
-        if (this.player) {
-        }
-    }
-
-    render() {
-        if (this.player) {
-            this.player.updatePosition();
-        }
-    }
-
-    initialize() {
-        console.log('Game initializing...');
-        setBoardBackground(this.currentState);
-        window.addEventListener('resize', () => setBoardBackground(this.currentState));
-    }
+  initialize() {
+    console.log("Game initializing...");
+    setBoardBackground(this.currentState);
+    window.addEventListener("resize", () =>
+      setBoardBackground(this.currentState)
+    );
+  }
 }
 
 export default Game;
-
