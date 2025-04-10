@@ -1,4 +1,4 @@
-import InteractionManager from "./models/interactionManager.js";
+import interactionManager from "./models/interactionManager.js";
 
 export async function loadInteractionsData(id) {
     try {
@@ -71,9 +71,23 @@ export function checkCollision(collisionsData, oldPosition, newPosition, size) {
     
     const finalMovementY = checkVerticalCollision(collisionsData, oldPosition, possibleMovement, size - 1); // -1 so you can enter 1 block gap
 
-    return {
+    let finalPosition = {
         x: oldPosition.x + finalMovementX,
         y: oldPosition.y + finalMovementY
     };
+
+    let collisions = getCollisionsAtPosition(collisionsData, finalPosition.x, finalPosition.y);
+    if(collisions.length == 1) {
+        let message = interactionManager.getInteractionHandler(
+            collisions[0].interaction + "_interact"
+        )();
+        //revealInteractMod(message.mainMessage, message.subMessage);
+        
+    }else {
+        //hideInteractMod();
+    }
+    
+
+    return finalPosition
 }
 
