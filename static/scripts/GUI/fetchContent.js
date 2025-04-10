@@ -29,3 +29,32 @@ function fetchContent(enigmaMessage, questPoints) {
     });
   }
 }
+
+/*
+
+fetchContent("Solve the mystery!", [
+  { questMessage: "Find the key under the bed", clue: "Check the left side" },
+  { questMessage: "Open the locked drawer", clue: "Use the golden key" },
+  { questMessage: "Read the note inside the drawer", clue: "It contains a code" },
+]);
+
+Wished Output for html : 
+<div class="contentQuestBox">
+  <p>
+    <input type="radio" disabled>
+    Find the key under the bed
+  </p>
+  <span>Check the left side</span>
+  <p>
+    <input type="radio" disabled>
+    Open the locked drawer
+  </p>
+  <span>Use the golden key</span>
+  <p>
+    <input type="radio" disabled>
+    Read the note inside the drawer
+  </p>
+  <span>It contains a code</span>
+</div>
+
+*/
