@@ -2,6 +2,12 @@ const sizeMultiplier = 2;
 let actualSizeMultiplier = 1;
 
 function setBoardBackground(state) {
+    // Ensure state is a valid number
+    if (typeof state !== 'number') {
+        console.error('Invalid state provided to setBoardBackground:', state);
+        return;
+    }
+
     const board = document.getElementById('board');
     if (board) {
 
@@ -78,3 +84,4 @@ function createSquare() {
 }
 
 export { actualSizeMultiplier, setBoardBackground };
+
