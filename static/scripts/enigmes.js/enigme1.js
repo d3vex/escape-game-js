@@ -62,9 +62,15 @@ class Enigme1 {
    *     subMessage: String}
    */
   static takeKey_interact() {
+    if (!LocalStorageService.getUserAttributes("enigme1.Key")) {
+      return {
+        mainMessage: "Search in the box.",
+        subMessage: "Maybe you will find a key.",
+      };
+    }
     return {
-      mainMessage: "Search in the box.",
-      subMessage: "Maybe you will find a key.",
+      mainMessage: "Nothing more..",
+      subMessage: "The box is empty, you already took the key.",
     };
   }
 
@@ -96,7 +102,7 @@ class Enigme1 {
       );
       LocalStorageService.setUserAttributes("enigme1.isFinished", true);
 
-      await Game.getInstance().nextState()
+      await Game.getInstance().nextState();
 
       return {
         success: true,
