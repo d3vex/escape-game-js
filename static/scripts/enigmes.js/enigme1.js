@@ -21,7 +21,7 @@ class Enigme1 {
       name: "Find the key",
       description:
         "You are locked in a room and you need to find the key to escape.",
-      hint: "Search behind the pellows.",
+      hint: "Search in the box.",
       hintPrice: 50,
       level: 1,
     };
@@ -54,6 +54,12 @@ class Enigme1 {
       };
     }
   }
+  static takeKey_interact() {
+    return {
+      mainMessage: "Search in the box.",
+      subMessage: "Maybe you will find a key.",
+    };
+  }
 
   static openDoor() {
     let keyIsAvailableToTake =
@@ -81,6 +87,19 @@ class Enigme1 {
         message: "You opened the door.",
       };
     }
+  }
+
+  static openDoor_interact() {
+    if (!LocalStorageService.getUserAttributes("enigme1.Key")) {
+      return {
+        mainMessage: "You cannot open the grid without a key.",
+        subMessage: "Search in the room.",
+      };
+    }
+    return {
+      mainMessage: "Open the grid",
+      subMessage: "You have the key, escape now!",
+    };
   }
   static isQuestEnded() {
     let keyIsAvailableToTake =
