@@ -6,12 +6,25 @@ import { loadInteractionsData } from './utils.js';
 const CYCLE_DURATION = 1000 / 30;
 
 class Game {
+    static #instance = null;
+
+    static getInstance() {
+        if (!Game.#instance) {
+            Game.#instance = new Game();
+        }
+        return Game.#instance;
+    }
+    
     constructor() {
+        if (Game.#instance) {
+            return Game.#instance;
+        }
+        
         this.player = null;
         this.isRunning = false;
         this.lastFrameTime = 0;
         this.interactionsData = [];
-        this.currentState = 2;
+        this.currentState = 1;
 
         document.addEventListener('boardReady', async (event) => {
             if (!this.player) {
@@ -41,11 +54,29 @@ class Game {
                 this.player.updatePlayerSize();
             }
         });
+        
+        // Store the instance
+        Game.#instance = this;
     }
 
     async loadInteractions() {
         this.interactionsData = await loadInteractionsData(this.currentState);
         console.log(`Loaded ${this.interactionsData.length} interactions`);
+    }
+
+    async changeState(newState) {
+        if (this.currentState !== newState) {
+            console.log(`Changing state from ${this.currentState} to ${newState}`);
+            this.currentState = newState;
+
+            setBoardBackground(this.currentState);
+
+            await this.loadInteractions();
+
+            if (this.player) {
+                this.player.setCollisionsData(this.interactionsData);
+            }
+        }
     }
 
     start() {
@@ -93,3 +124,4 @@ class Game {
 }
 
 export default Game;
+
