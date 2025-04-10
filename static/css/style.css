@@ -184,15 +184,12 @@ h4 {
 .contentQuestBox {
   height: 40vh;
   width: 24.5vw;
+  text-align: left;
+  padding-left: 7px;
 }
 
 .enigmaBox p, .questBox p {
   font-size: 1.7vh;
-}
-
-.questBox p {
-  text-align: left;
-  padding-left: 7px;
 }
 
 span {
@@ -201,6 +198,12 @@ span {
   line-height: 1; 
 }
 
-.enigmaBox span {
-  text-align: left;
+.questBox p {
+  margin-bottom: 0.5rem;
+}
+
+.questBox span {
+  display: block; 
+  margin-top: -0.2rem; 
+  margin-bottom: 1rem;
 }
