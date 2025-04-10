@@ -33,6 +33,13 @@ body {
   overflow: visible;
   }
 
+.hideMessage {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  opacity: 0.5;
+}  
+
 .wrapper {
   display: flex;
   flex-direction: column;
