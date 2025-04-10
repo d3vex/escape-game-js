@@ -1,14 +1,38 @@
 function hideATH() {
-  document.querySelector("keydown", (event) => {
+  document.addEventListener("keydown", (event) => {
     if (event.key === "h") {
       const timerElement = document.querySelector(".timer");
-      timerElement.style.transform = "scale(0.5)";
-      timerElement.style.opacity = "0.5";
-      timerElement.style.transition = "transform 0.3s ease, opacity 0.3s ease";
-      document.querySelector(".enigmaBox").style.left = calc("20vw + 4px");
-      document.querySelector(".questBox").style.right = calc("25vw + 4px");
+      const enigmaBoxElement = document.querySelector(".enigmaBox");
+      const questBoxElement = document.querySelector(".questBox");
+
+      if (timerElement.style.transform === "scale(0.5)") {
+        revealATH(timerElement, enigmaBoxElement, questBoxElement);
+      } else {
+        timerElement.style.transform = "scale(0.5)";
+        timerElement.style.opacity = "0.5";
+        timerElement.style.transition = "transform 1s ease, opacity 1s ease";
+
+        enigmaBoxElement.style.left = "calc(-21vw - 4px)";
+        enigmaBoxElement.style.transition = "left 1s ease";
+
+        questBoxElement.style.right = "calc(-26vw - 4px)";
+        questBoxElement.style.transition = "right 1s ease";
+      }
     }
   });
 }
 
-export default {hideATH}
+function revealATH(timerElement, enigmaBoxElement, questBoxElement) {
+  timerElement.style.transform = "scale(1)";
+  timerElement.style.opacity = "1";
+  timerElement.style.transition = "transform 1s ease, opacity 1s ease";
+
+  enigmaBoxElement.style.left = "0";
+  enigmaBoxElement.style.transition = "left 1s ease";
+
+  questBoxElement.style.right = "0";
+  questBoxElement.style.transition = "right 1s ease";
+}
+
+hideATH();
+export default { hideATH };

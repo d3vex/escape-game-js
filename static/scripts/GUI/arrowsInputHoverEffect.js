@@ -1,7 +1,5 @@
 function arrowsInputEffect() {
   document.addEventListener("keydown", (event) => {
-    console.log(`Key pressed: ${event.key}`);
-
     switch (event.key) {
       case "ArrowUp":
         document

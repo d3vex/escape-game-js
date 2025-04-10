@@ -3,7 +3,6 @@ function hideInteractBox() {
 }
 
 function revealInteractBox(mainMessage, actionRealisedMessage) {
-    
   const mainMessageElement = 
     document.querySelector(".interactBox p");
 
