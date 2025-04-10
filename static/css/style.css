@@ -1,0 +1,199 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css");
+@import url("/static/assets/fonts/PressStart2P-Regular.ttf");
+@font-face {
+  font-family: PressStart;
+  src: url("/static/assets/fonts/PressStart2P-Regular.ttf");
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  font-family: 'PressStart';
+  font-size: 2vh;
+  text-shadow: #000000 3px 2px 3px;
+  background-color: #181425;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  }
+    
+#game {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  }
+
+#board {
+  position: relative;
+  overflow: visible;
+  }
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: absolute;
+  bottom: 2vh;
+  right: 6vw;
+  }
+  
+.wrapper .top, .wrapper .bottom {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  }
+  
+.wrapper .square {
+  box-shadow: 0 0 5px black;
+  align-items: center;
+  justify-content: center;
+  height: 8vh;
+  width: 4vw;
+  border: 3px solid #cecece;
+  border-right: 2px solid #000;
+  border-bottom: 2px solid #000;
+  display: flex;
+  background-color: #33333370;
+  color: #fff;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  }
+
+.wrapper .square i {
+  color: #cecece;
+  font-size: larger;
+  transition: color 0.3s ease;
+  }
+
+.wrapper .square:hover {
+  border-color: #a0a0a0;
+  }
+  
+.wrapper .square:hover i {
+  color: #a0a0a0;
+  }
+  
+.active {
+  background-color: #64729275 !important;
+  color: #fff;
+  transform: scale(1.2);
+  backdrop-filter: blur(4px);
+  }
+
+.timer {
+  position: absolute;
+  top: 1rem;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 8vh;
+  width: 12vw;
+  border: 3px solid #cecece;
+  border-right: 2px solid #000;
+  border-bottom: 2px solid #000;
+  background-color: #33333370;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 0 5px black;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.interactBox {
+  color: #fff;
+  text-align: center;
+  line-height: 3.5vh;
+  position: absolute;
+  bottom: 0.1rem;
+  height: 10vh;
+  width: 45vw;
+  background-color: #33333370;
+  border: 3px solid #cecece;
+  border-right: 2px solid #000 ;
+  border-bottom: 2px solid #000 ;
+  box-shadow: 0 0 5px black;
+  transition: bottom 0.3s linear;
+}
+
+h4 {
+  margin-top: 2vh;
+  margin-bottom: 1vh;
+}
+
+.enigmaBox {
+  direction: rtl;
+  color: #fff;
+  text-align: center;
+  line-height: 1.7rem;
+  position: absolute;
+  padding: 6px;
+  left: 0;
+  max-height: 30vh;
+  width: 20vw;
+  background-color: #33333370;
+  border: 3px solid #cecece;
+  border-left: none;
+  border-right: 2px solid #000;
+  border-bottom: 2px solid #000;
+  box-shadow: 0 0 5px black;
+}
+
+.questBox {
+  color: #fff;
+  text-align: center;
+  line-height: 1.2rem;
+  position: absolute;
+  padding: 6px;
+  right: 0;
+  max-height: 50vh;
+  width: 25vw;
+  background-color: #33333370;
+  border: 3px solid #cecece;
+  border-right: none;
+  border-bottom: 2px solid #000;
+  box-shadow: 0 0 5px black;
+}
+
+.contentEnigmaBox, .contentQuestBox {
+  overflow-y: scroll;
+  scrollbar-color: grey transparent;
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
+  padding: 3px;
+}
+
+.contentEnigmaBox {
+  height: 15vh;
+  width: 20vw;
+}
+
+.contentQuestBox {
+  height: 40vh;
+  width: 24.5vw;
+}
+
+.enigmaBox p, .questBox p {
+  font-size: 1.7vh;
+}
+
+.questBox p {
+  text-align: left;
+  padding-left: 7px;
+}
+
+span {
+  font-size: 1.2vh;
+  color: #cecece;
+  line-height: 1; 
+}
+
+.enigmaBox span {
+  text-align: left;
+}
