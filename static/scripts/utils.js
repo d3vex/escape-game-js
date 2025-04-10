@@ -1,4 +1,5 @@
 import interactionManager from "./models/interactionManager.js";
+import manageInteractBox from "./GUI/manageInteractBox.js";
 
 export async function loadInteractionsData(id) {
     try {
@@ -76,15 +77,15 @@ export function checkCollision(collisionsData, oldPosition, newPosition, size) {
         y: oldPosition.y + finalMovementY
     };
 
-    let collisions = getCollisionsAtPosition(collisionsData, finalPosition.x, finalPosition.y);
+    let collisions = getCollisionsAtPosition(collisionsData, newPosition.x, newPosition.y).filter(col => col.interaction != "walls");
     if(collisions.length == 1) {
         let message = interactionManager.getInteractionHandler(
             collisions[0].interaction + "_interact"
         )();
-        //revealInteractMod(message.mainMessage, message.subMessage);
+        manageInteractBox.revealInteractBox(message.mainMessage, message.subMessage);
         
     }else {
-        //hideInteractMod();
+        manageInteractBox.hideInteractBox();
     }
     
 
