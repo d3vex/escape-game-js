@@ -114,11 +114,11 @@ body {
 }
 
 .interactBox {
+  position: absolute;
+  bottom: calc(-10vh - 4px);
   color: #fff;
   text-align: center;
   line-height: 3.5vh;
-  position: absolute;
-  bottom: 0.1rem;
   height: 10vh;
   width: 45vw;
   background-color: #33333370;
