@@ -1,8 +1,27 @@
 import { loadInteractionsData } from '../utils.js';
 import InteractionManager from '../models/interactionManager.js';
+import Game from '../game.js';
 
 class MovementController {
+    static #instance = null;
+
+    /**
+     * This method allows to get the instance of the MovementController.
+     * 
+     * @returns {MovementController} - The instance of the MovementController
+     */
+    static getInstance() {
+        if (!MovementController.#instance) {
+            MovementController.#instance = new MovementController(Game.getInstance().player);
+        }
+        return MovementController.#instance;
+    }
+
     constructor(player) {
+        if (MovementController.#instance) {
+            return MovementController.#instance;
+        }
+
         this.player = player;
         this.keys = {
             ArrowUp: false,
@@ -13,8 +32,12 @@ class MovementController {
         };
         this.speed = player.speed;
 
+        MovementController.#instance = this;
+
         this.setupEventListeners();
         this.startGameLoop();
+
+
     }
 
     setupEventListeners() {
