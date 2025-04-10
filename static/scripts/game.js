@@ -11,7 +11,7 @@ class Game {
         this.isRunning = false;
         this.lastFrameTime = 0;
         this.interactionsData = [];
-        this.currentState = 2;
+        this.currentState = 1;
 
         document.addEventListener('boardReady', async (event) => {
             if (!this.player) {

@@ -152,17 +152,17 @@
     {
         "x": 128,
         "y": 80,
-        "interaction": "PrintConsole"
+        "interaction": "Enigme1.takeKey"
     },
     {
         "x": 208,
         "y": 96,
-        "interaction": "walls"
+        "interaction": "Enigme1.openDoor"
     },
     {
         "x": 224,
         "y": 96,
-        "interaction": "walls"
+        "interaction": "Enigme1.openDoor"
     },
     {
         "x": 128,
