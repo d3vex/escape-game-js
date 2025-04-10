@@ -14,13 +14,7 @@ class MovementController {
         this.speed = player.speed;
 
         this.setupEventListeners();
-        this.loadCollisions();
         this.startGameLoop();
-    }
-
-    async loadCollisions() {
-        const collisionsData = await loadInteractionsData();
-        this.player.setCollisionsData(collisionsData);
     }
 
     setupEventListeners() {

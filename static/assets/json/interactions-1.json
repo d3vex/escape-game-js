@@ -1,0 +1,227 @@
+[
+    {
+        "x": 112,
+        "y": 0,
+        "interaction": "walls"
+    },
+    {
+        "x": 128,
+        "y": 0,
+        "interaction": "walls"
+    },
+    {
+        "x": 144,
+        "y": 0,
+        "interaction": "walls"
+    },
+    {
+        "x": 160,
+        "y": 0,
+        "interaction": "walls"
+    },
+    {
+        "x": 176,
+        "y": 0,
+        "interaction": "walls"
+    },
+    {
+        "x": 192,
+        "y": 0,
+        "interaction": "walls"
+    },
+    {
+        "x": 208,
+        "y": 0,
+        "interaction": "walls"
+    },
+    {
+        "x": 224,
+        "y": 0,
+        "interaction": "walls"
+    },
+    {
+        "x": 240,
+        "y": 0,
+        "interaction": "walls"
+    },
+    {
+        "x": 256,
+        "y": 0,
+        "interaction": "walls"
+    },
+    {
+        "x": 272,
+        "y": 0,
+        "interaction": "walls"
+    },
+    {
+        "x": 112,
+        "y": 16,
+        "interaction": "walls"
+    },
+    {
+        "x": 272,
+        "y": 16,
+        "interaction": "walls"
+    },
+    {
+        "x": 112,
+        "y": 32,
+        "interaction": "walls"
+    },
+    {
+        "x": 272,
+        "y": 32,
+        "interaction": "walls"
+    },
+    {
+        "x": 112,
+        "y": 48,
+        "interaction": "walls"
+    },
+    {
+        "x": 272,
+        "y": 48,
+        "interaction": "walls"
+    },
+    {
+        "x": 112,
+        "y": 64,
+        "interaction": "walls"
+    },
+    {
+        "x": 272,
+        "y": 64,
+        "interaction": "walls"
+    },
+    {
+        "x": 112,
+        "y": 80,
+        "interaction": "walls"
+    },
+    {
+        "x": 272,
+        "y": 80,
+        "interaction": "walls"
+    },
+    {
+        "x": 112,
+        "y": 96,
+        "interaction": "walls"
+    },
+    {
+        "x": 128,
+        "y": 96,
+        "interaction": "walls"
+    },
+    {
+        "x": 144,
+        "y": 96,
+        "interaction": "walls"
+    },
+    {
+        "x": 160,
+        "y": 96,
+        "interaction": "walls"
+    },
+    {
+        "x": 176,
+        "y": 96,
+        "interaction": "walls"
+    },
+    {
+        "x": 192,
+        "y": 96,
+        "interaction": "walls"
+    },
+    {
+        "x": 240,
+        "y": 96,
+        "interaction": "walls"
+    },
+    {
+        "x": 256,
+        "y": 96,
+        "interaction": "walls"
+    },
+    {
+        "x": 272,
+        "y": 96,
+        "interaction": "walls"
+    },
+    {
+        "x": 128,
+        "y": 80,
+        "interaction": "Enigme1.takeKey"
+    },
+    {
+        "x": 208,
+        "y": 96,
+        "interaction": "Enigme1.openDoor"
+    },
+    {
+        "x": 224,
+        "y": 96,
+        "interaction": "Enigme1.openDoor"
+    },
+    {
+        "x": 128,
+        "y": 16,
+        "interaction": "walls"
+    },
+    {
+        "x": 240,
+        "y": 16,
+        "interaction": "walls"
+    },
+    {
+        "x": 240,
+        "y": 32,
+        "interaction": "walls"
+    },
+    {
+        "x": 256,
+        "y": 32,
+        "interaction": "walls"
+    },
+    {
+        "x": 256,
+        "y": 16,
+        "interaction": "walls"
+    },
+    {
+        "x": 256,
+        "y": 48,
+        "interaction": "walls"
+    },
+    {
+        "x": 240,
+        "y": 48,
+        "interaction": "walls"
+    },
+    {
+        "x": 256,
+        "y": 64,
+        "interaction": "walls"
+    },
+    {
+        "x": 256,
+        "y": 80,
+        "interaction": "walls"
+    },
+    {
+        "x": 240,
+        "y": 80,
+        "interaction": "walls"
+    },
+    {
+        "x": 128,
+        "y": 32,
+        "interaction": "walls"
+    },
+    {
+        "x": 144,
+        "y": 16,
+        "interaction": "walls"
+    }
+]
