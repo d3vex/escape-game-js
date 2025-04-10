@@ -30,6 +30,9 @@ function fetchContent(enigmaMessage, questPoints) {
   }
 }
 
+fetchContent();
+export default {fetchContent}
+
 /*
 
 fetchContent("Solve the mystery!", [
