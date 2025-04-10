@@ -21,7 +21,7 @@ class Enigme1 {
       name: "Find the key",
       description:
         "You are locked in a room and you need to find the key to escape.",
-      hint: "Search behind the pellows.",
+      hint: "Search in the box.",
       hintPrice: 50,
       level: 1,
     };
@@ -35,7 +35,6 @@ class Enigme1 {
    * }
    *
    */
-
   static takeKey() {
     let keyIsAvailableToTake =
       LocalStorageService.getUserAttributes("enigme1.Key") == false
@@ -54,7 +53,31 @@ class Enigme1 {
       };
     }
   }
+  /**
+   * This method return the message to display when
+   * the user can interact with the key.
+   *
+   * @returns {{
+   *     mainMessage: String,
+   *     subMessage: String}
+   */
+  static takeKey_interact() {
+    return {
+      mainMessage: "Search in the box.",
+      subMessage: "Maybe you will find a key.",
+    };
+  }
 
+  /**
+   * This method allow to open the door.
+   * You need to have the key to open the door.
+   * It will end the enigme and unlock the next room.
+   *
+   * @returns {{
+   *      success: Boolean,
+   *      message: String}
+   * }
+   */
   static openDoor() {
     let keyIsAvailableToTake =
       LocalStorageService.getUserAttributes("enigme1.Key") == false
@@ -81,6 +104,27 @@ class Enigme1 {
         message: "You opened the door.",
       };
     }
+  }
+
+  /**
+   * This method return the message to display when
+   * the user can interact with the door.
+   *
+   * @returns {{
+   *     mainMessage: String,
+   *     subMessage: String}
+   */
+  static openDoor_interact() {
+    if (!LocalStorageService.getUserAttributes("enigme1.Key")) {
+      return {
+        mainMessage: "You cannot open the grid without a key.",
+        subMessage: "Search in the room.",
+      };
+    }
+    return {
+      mainMessage: "Open the grid",
+      subMessage: "You have the key, escape now!",
+    };
   }
   static isQuestEnded() {
     let keyIsAvailableToTake =
