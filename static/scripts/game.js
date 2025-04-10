@@ -1,6 +1,8 @@
 import Player from './models/player.js';
 import MovementController from './controllers/move.js';
 import { actualSizeMultiplier, setBoardBackground } from './models/renderer.js';
+import { loadInteractionsData } from './utils.js';
+
 const CYCLE_DURATION = 1000 / 30;
 
 class Game {
@@ -8,27 +10,41 @@ class Game {
         this.player = null;
         this.isRunning = false;
         this.lastFrameTime = 0;
+        this.interactionsData = [];
 
         document.addEventListener('boardReady', (event) => {
-            console.log('Board ready, initializing player...');
+            if (!this.player) {
+                console.log('Board ready, initializing player...');
 
-            this.player = new Player();
-            const boardWidth = event.detail.width;
-            const boardHeight = event.detail.height;
-            const playerSize = 16 * actualSizeMultiplier;
+                const boardWidth = event.detail.width;
+                const boardHeight = event.detail.height;
+                const playerSize = 16 * actualSizeMultiplier;
 
-            const initialX = 180;
-            const initialY = 50;
+                const initialX = 180;
+                const initialY = 50;
 
-            this.player.initialize(initialX, initialY);
-            this.movementController = new MovementController(this.player);
+                this.player = new Player(initialX, initialY);
+                this.loadInteractions().then(() => {
+                    this.player.setCollisionsData(this.interactionsData);
+                });
+                this.player.updatePosition();
+                this.movementController = new MovementController(this.player);
 
-            console.log('Game initialized successfully!');
+                console.log('Game initialized successfully!');
 
-            if (!this.isRunning) {
-                this.start();
+                if (!this.isRunning) {
+                    this.start();
+                }
+            } else {
+                console.log('Board resized, updating player position...');
+                this.player.updatePlayerSize();
             }
         });
+    }
+
+    async loadInteractions() {
+        this.interactionsData = await loadInteractionsData();
+        console.log(`Loaded ${this.interactionsData.length} interactions`);
     }
 
     start() {

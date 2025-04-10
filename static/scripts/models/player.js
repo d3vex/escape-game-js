@@ -1,21 +1,17 @@
 import { checkCollision } from '../utils.js';
+import {actualSizeMultiplier} from "./renderer.js";
 
 class Player {
-    constructor() {
-        this.position = { x: 0, y: 0 };
+    constructor(x, y) {
+        this.position = { x: x, y: y };
         this.element = document.getElementById('pixel-square');
         this.speed = 1;
         this.boardElement = document.getElementById('board');
         this.collisionsData = [];
-        this.size = 16; // Taille du joueur (carré de 16x16px)
+        this.size = 16; // Taille du joueur
+        this.facing = 2; // NORTH = 0, EAST = 1, SOUTH = 2, WEST = 3
     }
 
-    initialize(x, y) {
-        this.position = { x, y };
-        this.updatePosition();
-    }
-
-    // Charger les données de collision
     setCollisionsData(data) {
         this.collisionsData = data;
     }
@@ -31,25 +27,12 @@ class Player {
         const maxX = boardRect.width - playerSize;
         const maxY = boardRect.height - playerSize;
 
-        // Limites du plateau
         newX = Math.max(0, Math.min(newX, maxX));
         newY = Math.max(0, Math.min(newY, maxY));
 
-        // Vérifier les collisions pour le mouvement horizontal
-        if (dx !== 0) {
-            const horizontalPosition = { x: newX, y: this.position.y };
-            if (!this.collisionsData.length || !checkCollision(this.collisionsData, horizontalPosition, playerSize, playerSize)) {
-                this.position.x = newX;
-            }
-        }
+        const newPosition = { x: newX, y: newY };
 
-        // Vérifier les collisions pour le mouvement vertical
-        if (dy !== 0) {
-            const verticalPosition = { x: this.position.x, y: newY };
-            if (!this.collisionsData.length || !checkCollision(this.collisionsData, verticalPosition, playerSize, playerSize)) {
-                this.position.y = newY;
-            }
-        }
+        this.position = checkCollision(this.collisionsData, this.position, newPosition, this.size);
 
         this.updatePosition();
     }
@@ -57,9 +40,14 @@ class Player {
     updatePosition() {
         if (this.element) {
             this.element.style.transform = 'none';
-            this.element.style.top = `${this.position.y}px`;
-            this.element.style.left = `${this.position.x}px`;
+            this.element.style.top = `${this.position.y * actualSizeMultiplier}px`;
+            this.element.style.left = `${this.position.x * actualSizeMultiplier}px`;
         }
+    }
+
+    updatePlayerSize() {
+        this.element.style.width = `${16 * actualSizeMultiplier}px`;
+        this.element.style.height = `${16 * actualSizeMultiplier}px`;
     }
 }
 

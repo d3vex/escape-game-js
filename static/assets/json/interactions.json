@@ -25,6 +25,11 @@
         "interaction": "walls"
     },
     {
+        "x": 176,
+        "y": 16,
+        "interaction": "Enigme1.takeKey"
+    },
+    {
         "x": 192,
         "y": 0,
         "interaction": "walls"
