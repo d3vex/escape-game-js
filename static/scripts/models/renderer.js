@@ -83,5 +83,39 @@ function createSquare() {
     }
 }
 
-export { actualSizeMultiplier, setBoardBackground };
+/**
+ * Create a new entity on the board with the given id and position.
+ * 
+ * @param {String} id 
+ * @param {Number} x 
+ * @param {Number} y 
+ */
+function createEntity(id, x, y) {
+    const existingSquare = document.getElementById(id);
+    if (existingSquare) {
+        existingSquare.remove();
+    }
+    const square = document.createElement('div');
+    square.id = id;
+    const squareSize = 16 * actualSizeMultiplier;
+
+    square.style.width = `${squareSize}px`;
+    square.style.height = `${squareSize}px`;
+    square.style.backgroundColor = 'red';
+    square.style.position = 'absolute';
+    
+    const board = document.getElementById('board');
+    if (board) {
+
+        const initialX = x* actualSizeMultiplier;
+        const initialY = y * actualSizeMultiplier;
+        
+        square.style.left = `${initialX}px`;
+        square.style.top = `${initialY}px`;
+        
+        board.appendChild(square);
+    }
+}
+
+export { actualSizeMultiplier, setBoardBackground, createEntity };
 
