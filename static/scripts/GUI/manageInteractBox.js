@@ -14,7 +14,7 @@ function revealInteractBox(mainMessage, actionRealisedMessage) {
   }
 
   if (actionRealisedMessage) {
-    actionRealisedMessageElement.firstChild.textContent = actionRealisedMessage;
+    actionRealisedMessageElement.textContent = actionRealisedMessage;
   }
 
   document.querySelector(".interactBox").style.bottom = "0.1rem";
