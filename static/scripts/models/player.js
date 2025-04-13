@@ -9,29 +9,25 @@ class Player {
         this.boardElement = document.getElementById('board');
         this.collisionsData = [];
         this.size = 16; // Player size
-        
-        // Direction constants
+
         this.NORTH = 'north';
         this.EAST = 'east';
         this.SOUTH = 'south';
         this.WEST = 'west';
         this.facing = this.SOUTH; // Default facing south
-        
-        // Animation properties
+
         this.currentAnimation = 'idle';
         this.animationFrame = 1;
-        this.animationFrameCount = 4; // Default frame count for idle
-        this.animationSpeed = 200; // ms between frames
+        this.animationFrameCount = 4;
+        this.animationSpeed = 200;
         this.lastAnimationTime = 0;
         this.animationFrames = {}; // Cache for preloaded animation frames
-        
-        // Mapping of animation types to their frame counts
+
         this.animationTypes = {
             'idle': 4,
             'walk': 8
         };
-        
-        // Track if player is currently moving
+
         this.isMoving = false;
 
         this.preloadAnimations().then(() => {
