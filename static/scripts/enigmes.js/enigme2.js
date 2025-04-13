@@ -127,6 +127,11 @@ class Enigme2 {
       subMessage: "Make the knigth open the door.",
     };
   }
+
+  static runDragNDrop(command) {
+    
+  }
+
   static isQuestEnded() {
     let keyIsAvailableToTake =
       LocalStorageService.getUserAttributes("enigme1.Key") == false
@@ -147,4 +152,4 @@ class Enigme2 {
   }
 }
 
-export default Enigme1;
+export default Enigme2;
