@@ -1,3 +1,4 @@
+import Game from "../game.js";
 import LocalStorageService from "../services/localStorageService.js";
 
 const maxTimer = 15 * 60 * 1000; // 15 minutes in milliseconds
@@ -89,9 +90,20 @@ class Enigme2 {
         message: "You need to put the helmet on before..",
       };
     } else {
+      const dragNdropContainer = document.querySelector(".enigme2_dragNdrop");
+      if(!dragNdropContainer) return
+      dragNdropContainer.style.display = "block";
 
-      
-      
+      /*
+      <div class="enigme2_dragNdrop">
+        <div class="workspace" id="workspace">
+          <div class="block go-forward og-block">Go forward</div>
+          <div class="block turn-left og-block">Turn left</div>
+          <div class="block turn-rigth og-block">Turn rigth</div>
+        </div>
+        <button class="run-button" id="egnime2_run">Run</button>
+    </div>
+    */
     }
   }
 
