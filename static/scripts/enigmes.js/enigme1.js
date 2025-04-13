@@ -1,5 +1,5 @@
 import LocalStorageService from "../services/localStorageService.js";
-
+import Game from "../game.js";
 const maxTimer = 15 * 60 * 1000; // 15 minutes in milliseconds
 
 class Enigme1 {
@@ -62,9 +62,15 @@ class Enigme1 {
    *     subMessage: String}
    */
   static takeKey_interact() {
+    if (!LocalStorageService.getUserAttributes("enigme1.Key")) {
+      return {
+        mainMessage: "Search in the box.",
+        subMessage: "Maybe you will find a key.",
+      };
+    }
     return {
-      mainMessage: "Search in the box.",
-      subMessage: "Maybe you will find a key.",
+      mainMessage: "Nothing more..",
+      subMessage: "The box is empty, you already took the key.",
     };
   }
 
@@ -78,7 +84,7 @@ class Enigme1 {
    *      message: String}
    * }
    */
-  static openDoor() {
+  static async openDoor() {
     let keyIsAvailableToTake =
       LocalStorageService.getUserAttributes("enigme1.Key") == false
         ? true
@@ -96,8 +102,7 @@ class Enigme1 {
       );
       LocalStorageService.setUserAttributes("enigme1.isFinished", true);
 
-      // This is actually unavailable but will be used to open the door and unlock the next room
-      //renderer.nextFrame();
+      await Game.getInstance().nextState();
 
       return {
         success: true,

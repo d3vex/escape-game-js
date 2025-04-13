@@ -12,6 +12,7 @@ body {
   font-size: 2vh;
   text-shadow: #000000 3px 2px 3px;
   background-color: #181425;
+  color: #fff;
   margin: 0;
   padding: 0;
   display: flex;
@@ -19,6 +20,23 @@ body {
   align-items: center;
   height: 100vh;
   overflow: hidden;
+  }
+
+  h4 {
+    margin-top: 2vh;
+    margin-bottom: 1vh;
+    line-height: 20px;
+  }
+
+  h6 {
+    margin: 0;
+    color: darkgrey;
+  }
+
+  span {
+    font-size: 1.2vh;
+    color: #cecece;
+    line-height: 20px; 
   }
     
 #game {
@@ -32,6 +50,13 @@ body {
   position: relative;
   overflow: visible;
   }
+
+.hideMessage {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  opacity: 0.5;
+}  
 
 .wrapper {
   display: flex;
@@ -60,7 +85,6 @@ body {
   border-bottom: 2px solid #000;
   display: flex;
   background-color: #33333370;
-  color: #fff;
   transition: background-color 0.3s ease, transform 0.3s ease;
   cursor: pointer;
   }
@@ -99,19 +123,49 @@ body {
   border-right: 2px solid #000;
   border-bottom: 2px solid #000;
   background-color: #33333370;
-  color: #fff;
   font-weight: bold;
   text-align: center;
   box-shadow: 0 0 5px black;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
+.messagePopUp {
+  opacity: 0;
+  position: absolute;
+  padding: 10px;
+  text-align: center;
+  background-color: #33333370;
+  border: 3px solid #cecece;
+  border-right: 2px solid #000 ;
+  border-bottom: 2px solid #000 ;
+  box-shadow: 0 0 5px black;
+  backdrop-filter: blur(4px);
+  transition: 0.3s;
+
+  &.popActive {
+  opacity: 1;
+  }
+} 
+
+
+
+.messagePopUp p {
+  margin: 10px; 
+}
+
+.contentMessagePopUp {
+  display: block;
+  max-width: 35vw; 
+  max-height: 20vh; 
+  padding-left: 10px; 
+  padding-right: 10px; 
+}
+
 .interactBox {
-  color: #fff;
+  position: absolute;
+  bottom: calc(-10vh - 4px);
   text-align: center;
   line-height: 3.5vh;
-  position: absolute;
-  bottom: 0.1rem;
   height: 10vh;
   width: 45vw;
   background-color: #33333370;
@@ -122,19 +176,17 @@ body {
   transition: bottom 0.3s linear;
 }
 
-h4 {
-  margin-top: 2vh;
-  margin-bottom: 1vh;
+.interactBox p {
+  margin: 0;
+  line-height: 20px;
 }
 
 .enigmaBox {
   direction: rtl;
-  color: #fff;
   text-align: center;
-  line-height: 1.7rem;
   position: absolute;
   padding: 6px;
-  left: 0;
+  left: 0.1vw;
   max-height: 30vh;
   width: 20vw;
   background-color: #33333370;
@@ -146,7 +198,6 @@ h4 {
 }
 
 .questBox {
-  color: #fff;
   text-align: center;
   line-height: 1.2rem;
   position: absolute;
@@ -161,22 +212,24 @@ h4 {
   box-shadow: 0 0 5px black;
 }
 
-.contentEnigmaBox, .contentQuestBox {
-  overflow-y: scroll;
+.contentMessagePopUp, .contentEnigmaBox, .contentQuestBox {
+  overflow-y: auto;
   scrollbar-color: grey transparent;
   scrollbar-width: thin;
   scroll-behavior: smooth;
-  padding: 3px;
+  padding: 10px;
 }
 
 .contentEnigmaBox {
   height: 15vh;
-  width: 20vw;
+  width: 19vw;
 }
 
 .contentQuestBox {
   height: 40vh;
   width: 24.5vw;
+  text-align: left;
+  padding-left: 7px;
 }
 
 .enigmaBox p, .questBox p {
@@ -184,16 +237,11 @@ h4 {
 }
 
 .questBox p {
-  text-align: left;
-  padding-left: 7px;
+  margin-bottom: 0.5rem;
 }
 
-span {
-  font-size: 1.2vh;
-  color: #cecece;
-  line-height: 1; 
-}
-
-.enigmaBox span {
-  text-align: left;
+.questBox span {
+  display: block; 
+  margin-top: -0.2rem; 
+  margin-bottom: 1rem;
 }

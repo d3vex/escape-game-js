@@ -2,8 +2,7 @@ import Player from './models/player.js';
 import MovementController from './controllers/move.js';
 import { actualSizeMultiplier, setBoardBackground, preloadAllGameAssets } from './models/renderer.js';
 import { loadInteractionsData } from './utils.js';
-
-const CYCLE_DURATION = 1000 / 30;
+import { CYCLE_DURATION } from './variables.js';
 
 class Game {
     static #instance = null;
@@ -14,19 +13,19 @@ class Game {
         }
         return Game.#instance;
     }
-    
+
     constructor() {
         if (Game.#instance) {
             return Game.#instance;
         }
-        
+
         this.player = null;
         this.isRunning = false;
         this.lastFrameTime = 0;
         this.interactionsData = [];
         this.currentState = 1;
         this.assetsLoaded = false;
-        
+
         // Store the instance
         Game.#instance = this;
     }
@@ -34,7 +33,7 @@ class Game {
     async preloadAssets() {
         try {
             await preloadAllGameAssets();
-            
+
             this.assetsLoaded = true;
             console.log("All game assets preloaded successfully");
 
@@ -62,6 +61,19 @@ class Game {
             if (this.player) {
                 this.player.setCollisionsData(this.interactionsData);
             }
+        }
+    }
+
+    async nextState() {
+        this.currentState++;
+        console.log(`Loading state ${this.currentState}...`);
+
+        setBoardBackground(this.currentState);
+
+        await this.loadInteractions();
+
+        if (this.player) {
+            this.player.setCollisionsData(this.interactionsData);
         }
     }
 
@@ -107,11 +119,11 @@ class Game {
 
     async initialize() {
         console.log('Game initializing...');
-        
+
         await this.preloadAssets();
         setBoardBackground(this.currentState);
         window.addEventListener('resize', () => setBoardBackground(this.currentState));
-        
+
         document.addEventListener('boardReady', async (event) => {
             if (!this.player) {
                 console.log('Board ready, initializing player...');
@@ -144,4 +156,3 @@ class Game {
 }
 
 export default Game;
-

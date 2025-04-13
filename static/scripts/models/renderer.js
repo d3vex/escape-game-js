@@ -8,7 +8,7 @@ function preloadImage(src) {
             resolve(imageCache[src]);
             return;
         }
-        
+
         const img = new Image();
         img.onload = () => {
             imageCache[src] = img;
@@ -40,6 +40,7 @@ function preloadSpriteFrames(baseUrl, animation, directionOrFrameCount, frameCou
 }
 
 function setBoardBackground(state) {
+    // Ensure state is a valid number
     if (typeof state !== 'number') {
         console.error('Invalid state provided to setBoardBackground:', state);
         return;
@@ -48,7 +49,7 @@ function setBoardBackground(state) {
     const board = document.getElementById('board');
     if (board) {
         const imgSrc = 'static/assets/images/Map-' + state + '.png';
-        
+
         preloadImage(imgSrc).then(img => {
             const imageWidth = img.width;
             const imageHeight = img.height;
@@ -75,11 +76,11 @@ function setBoardBackground(state) {
             board.style.imageRendering = 'pixelated';
 
             console.log(`Actual size multiplier used: ${actualSizeMultiplier}`);
-            
+
             if (!document.getElementById('pixel-square')) {
                 createSquare();
             }
-            
+
             const boardReadyEvent = new CustomEvent('boardReady', {
                 detail: { width: finalWidth, height: finalHeight }
             });
@@ -97,7 +98,7 @@ function createSquare() {
     if (existingSquare) {
         existingSquare.remove();
     }
-    
+
     const player = document.createElement('div');
     player.id = 'pixel-square'; // Keep the same ID for compatibility
     const spriteSize = 16 * actualSizeMultiplier;
@@ -111,32 +112,65 @@ function createSquare() {
     player.style.zIndex = '10';
     // Fix blurry images
     player.style.imageRendering = 'pixelated';
-    
+
     const board = document.getElementById('board');
     if (board) {
         const boardWidth = parseInt(board.style.width);
         const boardHeight = parseInt(board.style.height);
-        
+
         const initialX = (boardWidth - spriteSize) / 2;
         const initialY = (boardHeight - spriteSize) / 2;
-        
+
         player.style.left = `${initialX}px`;
         player.style.top = `${initialY}px`;
-        
+
         board.appendChild(player);
         console.log(`Player sprite created with size: ${spriteSize}x${spriteSize}px at position (${initialX}, ${initialY})`);
+    }
+}
+
+/**
+ * Create a new entity on the board with the given id and position.
+ *
+ * @param {String} id
+ * @param {Number} x
+ * @param {Number} y
+ */
+function createEntity(id, x, y) {
+    const existingSquare = document.getElementById(id);
+    if (existingSquare) {
+        existingSquare.remove();
+    }
+    const square = document.createElement('div');
+    square.id = id;
+    const squareSize = 16 * actualSizeMultiplier;
+
+    square.style.width = `${squareSize}px`;
+    square.style.height = `${squareSize}px`;
+    square.style.backgroundColor = 'red';
+    square.style.position = 'absolute';
+
+    const board = document.getElementById('board');
+    if (board) {
+        const initialX = x * actualSizeMultiplier;
+        const initialY = y * actualSizeMultiplier;
+
+        square.style.left = `${initialX}px`;
+        square.style.top = `${initialY}px`;
+
+        board.appendChild(square);
     }
 }
 
 async function preloadMapAssets(maxState = 2) {
     console.log('Preloading all map backgrounds...');
     const mapPromises = [];
-    
+
     for (let state = 1; state <= maxState; state++) {
         const mapUrl = `static/assets/images/Map-${state}.png`;
         mapPromises.push(preloadImage(mapUrl));
     }
-    
+
     try {
         await Promise.all(mapPromises);
         console.log(`Successfully preloaded ${maxState} map backgrounds`);
@@ -152,7 +186,7 @@ async function preloadCharacterAnimations() {
     const animations = ['idle', 'walk']; // Add all animation types here
     const directions = ['north', 'east', 'south', 'west'];
     const frameCount = 4; // Assuming each animation has 4 frames
-    
+
     const promises = [];
 
     for (const animation of animations) {
@@ -163,7 +197,7 @@ async function preloadCharacterAnimations() {
             }
         }
     }
-    
+
     try {
         await Promise.all(promises);
         console.log(`Successfully preloaded ${promises.length} character animation frames`);
@@ -175,11 +209,11 @@ async function preloadCharacterAnimations() {
 
 async function preloadAllGameAssets(maxState = 3) {
     console.log('Starting preloading of all game assets...');
-    
+
     try {
         await preloadMapAssets(maxState);
         await preloadCharacterAnimations();
-        
+
         console.log('All game assets preloaded successfully!');
         return true;
     } catch (error) {
@@ -188,12 +222,12 @@ async function preloadAllGameAssets(maxState = 3) {
     }
 }
 
-export { 
-    actualSizeMultiplier, 
-    setBoardBackground, 
+export {
+    actualSizeMultiplier,
+    setBoardBackground,
+    createEntity,
     preloadCharacterAnimations,
     preloadMapAssets,
     preloadImage,
-    preloadAllGameAssets 
+    preloadAllGameAssets
 };
-
