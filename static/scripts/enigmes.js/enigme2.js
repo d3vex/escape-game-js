@@ -4,6 +4,7 @@ import LocalStorageService from "../services/localStorageService.js";
 const maxTimer = 15 * 60 * 1000; // 15 minutes in milliseconds
 
 class Enigme2 {
+  static #elementId = "knight";
   /**
    * This method allow to get the Enigme1 object
    * It will return an object with the following properties:
@@ -91,7 +92,7 @@ class Enigme2 {
       };
     } else {
       const dragNdropContainer = document.querySelector(".enigme2_dragNdrop");
-      if(!dragNdropContainer) return
+      if (!dragNdropContainer) return;
       dragNdropContainer.style.display = "block";
       Game.getInstance().stop();
       /*
@@ -129,7 +130,31 @@ class Enigme2 {
   }
 
   static runDragNDrop(command) {
-    
+    if (command == "frfl") {
+      const dragNdropContainer = document.querySelector(".enigme2_dragNdrop");
+      if (!dragNdropContainer) return;
+      dragNdropContainer.style.display = "none";
+      Game.getInstance().start();
+      this.#moveKnigth(command);
+    } else {
+    }
+  }
+
+  static #moveKnigth(command = "") {
+    const entity = new Entity(this.#elementId);
+    command.split("").forEach((c) => {
+      switch (c) {
+        case "f":
+          entity.moveForward();
+          break;
+        case "r":
+          entity.turnRight();
+          break;
+        case "l":
+          entity.turnLeft();
+          break;
+      }
+    });
   }
 
   static isQuestEnded() {
