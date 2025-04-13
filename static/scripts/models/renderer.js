@@ -1,6 +1,12 @@
 const sizeMultiplier = 2;
 let actualSizeMultiplier = 1;
 
+const entity = {
+    id: "knight",
+    x: 140,
+    y: 140
+}
+
 function setBoardBackground(state) {
     // Ensure state is a valid number
     if (typeof state !== 'number') {
@@ -41,6 +47,13 @@ function setBoardBackground(state) {
             
             if (!document.getElementById('pixel-square')) {
                 createSquare();
+            }
+
+            for(const e in entity) {
+                if (!document.getElementById(e.id)) {
+                    createEntity(entity.id, entity.x, entity.y);    
+                }
+    
             }
             
             const boardReadyEvent = new CustomEvent('boardReady', {
