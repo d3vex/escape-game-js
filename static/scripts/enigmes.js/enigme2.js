@@ -93,7 +93,7 @@ class Enigme2 {
       const dragNdropContainer = document.querySelector(".enigme2_dragNdrop");
       if(!dragNdropContainer) return
       dragNdropContainer.style.display = "block";
-
+      Game.getInstance().stop();
       /*
       <div class="enigme2_dragNdrop">
         <div class="workspace" id="workspace">
