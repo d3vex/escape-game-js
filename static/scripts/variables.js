@@ -1,0 +1,3 @@
+const CYCLE_DURATION = 1000 / 30;
+
+export {CYCLE_DURATION};
