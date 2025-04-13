@@ -1,8 +1,27 @@
 import { loadInteractionsData } from '../utils.js';
 import InteractionManager from '../models/interactionManager.js';
+import Game from '../game.js';
 
 class MovementController {
+    static #instance = null;
+
+    /**
+     * This method allows to get the instance of the MovementController.
+     * 
+     * @returns {MovementController} - The instance of the MovementController
+     */
+    static getInstance() {
+        if (!MovementController.#instance) {
+            MovementController.#instance = new MovementController(Game.getInstance().player);
+        }
+        return MovementController.#instance;
+    }
+
     constructor(player) {
+        if (MovementController.#instance) {
+            return MovementController.#instance;
+        }
+
         this.player = player;
         this.keys = {
             ArrowUp: false,
@@ -13,8 +32,12 @@ class MovementController {
         };
         this.speed = player.speed;
 
+        MovementController.#instance = this;
+
         this.setupEventListeners();
         this.startGameLoop();
+
+
     }
 
     setupEventListeners() {
@@ -23,7 +46,7 @@ class MovementController {
                 this.keys[e.key] = true;
 
                 if (e.key === 'e') {
-                    this.checkForInteraction();
+                    this.checkForAndTriggerInteraction();
                 }
             }
         });
@@ -44,6 +67,11 @@ class MovementController {
         requestAnimationFrame(gameLoop);
     }
 
+    /**
+     * This method return all the interactions that is in front of the player.
+     * 
+     * @returns {Array} - An array of interactions that the player can trigger
+     */
     checkForInteraction() {
         const playerPos = this.player.position;
         const size = this.player.size;
@@ -86,6 +114,15 @@ class MovementController {
             );
         });
 
+        return interactions;
+    }
+
+    /**
+     * This method check if the player is in front of an interaction. (using {@link checkForInteraction})
+     * If the player is in front of an interaction, it will trigger the interaction.
+     */
+    checkForAndTriggerInteraction() {
+        const interactions = this.checkForInteraction();
         if (interactions.length > 0) {
             interactions.forEach(interaction => {
                 InteractionManager.triggerInteraction(interaction.interaction);
