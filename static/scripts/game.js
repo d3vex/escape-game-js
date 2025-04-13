@@ -1,6 +1,6 @@
 import Player from './models/player.js';
 import MovementController from './controllers/move.js';
-import { actualSizeMultiplier, setBoardBackground } from './models/renderer.js';
+import { actualSizeMultiplier, setBoardBackground, preloadAllGameAssets } from './models/renderer.js';
 import { loadInteractionsData } from './utils.js';
 
 const CYCLE_DURATION = 1000 / 30;
@@ -25,38 +25,24 @@ class Game {
         this.lastFrameTime = 0;
         this.interactionsData = [];
         this.currentState = 1;
-
-        document.addEventListener('boardReady', async (event) => {
-            if (!this.player) {
-                console.log('Board ready, initializing player...');
-
-                const boardWidth = event.detail.width;
-                const boardHeight = event.detail.height;
-                const playerSize = 16 * actualSizeMultiplier;
-
-                const initialX = 180;
-                const initialY = 50;
-
-                this.player = new Player(initialX, initialY);
-                await this.loadInteractions();
-                this.player.setCollisionsData(this.interactionsData);
-
-                this.player.updatePosition();
-                this.movementController = new MovementController(this.player);
-
-                console.log('Game initialized successfully!');
-
-                if (!this.isRunning) {
-                    this.start();
-                }
-            } else {
-                console.log('Board resized, updating player position...');
-                this.player.updatePlayerSize();
-            }
-        });
+        this.assetsLoaded = false;
         
         // Store the instance
         Game.#instance = this;
+    }
+
+    async preloadAssets() {
+        try {
+            await preloadAllGameAssets();
+            
+            this.assetsLoaded = true;
+            console.log("All game assets preloaded successfully");
+
+            const assetsLoadedEvent = new CustomEvent('assetsLoaded');
+            document.dispatchEvent(assetsLoadedEvent);
+        } catch (error) {
+            console.error("Error preloading assets:", error);
+        }
     }
 
     async loadInteractions() {
@@ -101,12 +87,15 @@ class Game {
         }
 
         if (this.isRunning) {
-            setTimeout(() => this.gameLoop(), CYCLE_DURATION);
+            requestAnimationFrame(this.gameLoop.bind(this));
         }
     }
 
     update(deltaTime) {
         if (this.player) {
+            // Update player animation on each frame
+            const now = performance.now();
+            this.player.updateAnimation(now);
         }
     }
 
@@ -116,10 +105,41 @@ class Game {
         }
     }
 
-    initialize() {
+    async initialize() {
         console.log('Game initializing...');
+        
+        await this.preloadAssets();
         setBoardBackground(this.currentState);
         window.addEventListener('resize', () => setBoardBackground(this.currentState));
+        
+        document.addEventListener('boardReady', async (event) => {
+            if (!this.player) {
+                console.log('Board ready, initializing player...');
+
+                const boardWidth = event.detail.width;
+                const boardHeight = event.detail.height;
+                const playerSize = 16 * actualSizeMultiplier;
+
+                const initialX = 180;
+                const initialY = 50;
+
+                this.player = new Player(initialX, initialY);
+                await this.loadInteractions();
+                this.player.setCollisionsData(this.interactionsData);
+
+                this.player.updatePosition();
+                this.movementController = new MovementController(this.player);
+
+                console.log('Game initialized successfully!');
+
+                if (!this.isRunning) {
+                    this.start();
+                }
+            } else {
+                console.log('Board resized, updating player position...');
+                this.player.updatePlayerSize();
+            }
+        });
     }
 }
 

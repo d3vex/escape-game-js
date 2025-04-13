@@ -1,5 +1,5 @@
 import { checkCollision } from '../utils.js';
-import {actualSizeMultiplier} from "./renderer.js";
+import { actualSizeMultiplier, preloadImage } from "./renderer.js";
 
 class Player {
     constructor(x, y) {
@@ -8,8 +8,49 @@ class Player {
         this.speed = 1;
         this.boardElement = document.getElementById('board');
         this.collisionsData = [];
-        this.size = 16; // Taille du joueur
-        this.facing = 2; // NORTH = 0, EAST = 1, SOUTH = 2, WEST = 3
+        this.size = 16; // Player size
+        
+        // Direction constants
+        this.NORTH = 'north';
+        this.EAST = 'east';
+        this.SOUTH = 'south';
+        this.WEST = 'west';
+        this.facing = this.SOUTH; // Default facing south
+        
+        // Animation properties
+        this.currentAnimation = 'idle';
+        this.animationFrame = 1;
+        this.animationFrameCount = 4;
+        this.animationSpeed = 200; // ms between frames
+        this.lastAnimationTime = 0;
+        this.animationFrames = {}; // Cache for preloaded animation frames
+
+        this.preloadAnimations().then(() => {
+            this.startIdleAnimation();
+        });
+    }
+
+    async preloadAnimations() {
+        const baseUrl = 'static/assets/images/sprite/';
+        const directions = [this.NORTH, this.EAST, this.SOUTH, this.WEST];
+        
+        const promises = [];
+        
+        for (const direction of directions) {
+            const animKey = `${this.currentAnimation}-${direction}`;
+            this.animationFrames[animKey] = [];
+            
+            for (let i = 1; i <= this.animationFrameCount; i++) {
+                const src = `${baseUrl}${this.currentAnimation}/${direction}${i}.png`;
+                promises.push(preloadImage(src).then(img => {
+                    this.animationFrames[animKey][i] = src;
+                }).catch(err => {
+                    console.warn(`Failed to preload ${src}:`, err);
+                }));
+            }
+        }
+        
+        return Promise.all(promises);
     }
 
     setCollisionsData(data) {
@@ -17,6 +58,12 @@ class Player {
     }
 
     move(dx, dy) {
+        // Update facing direction based on movement
+        if (dx > 0) this.facing = this.EAST;
+        else if (dx < 0) this.facing = this.WEST;
+        else if (dy < 0) this.facing = this.NORTH;
+        else if (dy > 0) this.facing = this.SOUTH;
+        
         const boardRect = this.boardElement.getBoundingClientRect();
         const playerRect = this.element.getBoundingClientRect();
         const playerSize = playerRect.width;
@@ -35,6 +82,7 @@ class Player {
         this.position = checkCollision(this.collisionsData, this.position, newPosition, this.size);
 
         this.updatePosition();
+        this.updateSprite(); // Update sprite when direction changes
     }
 
     updatePosition() {
@@ -46,8 +94,54 @@ class Player {
     }
 
     updatePlayerSize() {
-        this.element.style.width = `${16 * actualSizeMultiplier}px`;
-        this.element.style.height = `${16 * actualSizeMultiplier}px`;
+        if (this.element) {
+            this.element.style.width = `${16 * actualSizeMultiplier}px`;
+            this.element.style.height = `${16 * actualSizeMultiplier}px`;
+            this.element.style.imageRendering = 'pixelated';
+        }
+    }
+    
+    startIdleAnimation() {
+        this.currentAnimation = 'idle';
+        this.animationFrame = 1;
+        this.updateSprite();
+    }
+
+    updateSprite() {
+        if (this.element) {
+            const animKey = `${this.currentAnimation}-${this.facing}`;
+
+            if (this.animationFrames[animKey] &&
+                this.animationFrames[animKey][this.animationFrame]) {
+                this.element.style.backgroundImage = `url('${this.animationFrames[animKey][this.animationFrame]}')`;
+            } else {
+                const url = `static/assets/images/sprite/${this.currentAnimation}/${this.facing}${this.animationFrame}.png`;
+                this.element.style.backgroundImage = `url('${url}')`;
+                preloadImage(url).then(img => {
+                    if (!this.animationFrames[animKey]) {
+                        this.animationFrames[animKey] = [];
+                    }
+                    this.animationFrames[animKey][this.animationFrame] = url;
+                }).catch(err => {
+                    console.warn(`Failed to load sprite ${url}:`, err);
+                });
+            }
+        }
+    }
+
+    updateAnimation(timestamp) {
+        if (!this.lastAnimationTime) {
+            this.lastAnimationTime = timestamp;
+            return;
+        }
+
+        const deltaTime = timestamp - this.lastAnimationTime;
+
+        if (deltaTime >= this.animationSpeed) {
+            this.lastAnimationTime = timestamp;
+            this.animationFrame = (this.animationFrame % this.animationFrameCount) + 1;
+            this.updateSprite();
+        }
     }
 }
 
