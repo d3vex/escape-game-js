@@ -19,26 +19,6 @@ function preloadImage(src) {
     });
 }
 
-function preloadSpriteFrames(baseUrl, animation, directionOrFrameCount, frameCount) {
-    const promises = [];
-
-    if (typeof directionOrFrameCount === 'string') {
-        const direction = directionOrFrameCount;
-        for (let i = 1; i <= frameCount; i++) {
-            const src = `${baseUrl}${animation}/${direction}${i}.png`;
-            promises.push(preloadImage(src));
-        }
-    } else {
-        const actualFrameCount = directionOrFrameCount;
-        for (let i = 1; i <= actualFrameCount; i++) {
-            const src = `${baseUrl}${animation}${i}.png`;
-            promises.push(preloadImage(src));
-        }
-    }
-
-    return Promise.all(promises);
-}
-
 function setBoardBackground(state) {
     // Ensure state is a valid number
     if (typeof state !== 'number') {
@@ -183,13 +163,15 @@ async function preloadMapAssets(maxState = 2) {
 async function preloadCharacterAnimations() {
     console.log('Preloading character animations...');
     const baseUrl = 'static/assets/images/sprite/';
-    const animations = ['idle', 'walk']; // Add all animation types here
+    const animations = {
+        'idle': 4,
+        'walk': 8
+    };
     const directions = ['north', 'east', 'south', 'west'];
-    const frameCount = 4; // Assuming each animation has 4 frames
 
     const promises = [];
 
-    for (const animation of animations) {
+    for (const [animation, frameCount] of Object.entries(animations)) {
         for (const direction of directions) {
             for (let i = 1; i <= frameCount; i++) {
                 const src = `${baseUrl}${animation}/${direction}${i}.png`;

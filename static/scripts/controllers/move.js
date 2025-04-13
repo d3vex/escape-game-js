@@ -36,8 +36,6 @@ class MovementController {
 
         this.setupEventListeners();
         this.startGameLoop();
-
-
     }
 
     setupEventListeners() {
@@ -136,19 +134,19 @@ class MovementController {
 
         if (this.keys.ArrowUp) {
             dy -= this.speed;
-            this.player.facing = 0; // NORTH
+            this.player.facing = this.player.NORTH;
         }
         if (this.keys.ArrowDown) {
             dy += this.speed;
-            this.player.facing = 2; // SOUTH
+            this.player.facing = this.player.SOUTH;
         }
         if (this.keys.ArrowLeft) {
             dx -= this.speed;
-            this.player.facing = 3; // WEST
+            this.player.facing = this.player.WEST;
         }
         if (this.keys.ArrowRight) {
             dx += this.speed;
-            this.player.facing = 1; // EAST
+            this.player.facing = this.player.EAST;
         }
 
         // Normalise the speed
@@ -163,9 +161,11 @@ class MovementController {
 
         if (dx !== 0 || dy !== 0) {
             this.player.move(dx, dy);
+        } else if (this.player.isMoving) {
+            // If no keys are pressed but the player was moving, switch to idle animation
+            this.player.stopMoving();
         }
     }
 }
 
 export default MovementController;
-

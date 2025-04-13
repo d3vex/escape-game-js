@@ -20,10 +20,19 @@ class Player {
         // Animation properties
         this.currentAnimation = 'idle';
         this.animationFrame = 1;
-        this.animationFrameCount = 4;
+        this.animationFrameCount = 4; // Default frame count for idle
         this.animationSpeed = 200; // ms between frames
         this.lastAnimationTime = 0;
         this.animationFrames = {}; // Cache for preloaded animation frames
+        
+        // Mapping of animation types to their frame counts
+        this.animationTypes = {
+            'idle': 4,
+            'walk': 8
+        };
+        
+        // Track if player is currently moving
+        this.isMoving = false;
 
         this.preloadAnimations().then(() => {
             this.startIdleAnimation();
@@ -33,20 +42,25 @@ class Player {
     async preloadAnimations() {
         const baseUrl = 'static/assets/images/sprite/';
         const directions = [this.NORTH, this.EAST, this.SOUTH, this.WEST];
+        const animationTypes = Object.keys(this.animationTypes);
         
         const promises = [];
         
-        for (const direction of directions) {
-            const animKey = `${this.currentAnimation}-${direction}`;
-            this.animationFrames[animKey] = [];
+        for (const animType of animationTypes) {
+            const frameCount = this.animationTypes[animType];
             
-            for (let i = 1; i <= this.animationFrameCount; i++) {
-                const src = `${baseUrl}${this.currentAnimation}/${direction}${i}.png`;
-                promises.push(preloadImage(src).then(img => {
-                    this.animationFrames[animKey][i] = src;
-                }).catch(err => {
-                    console.warn(`Failed to preload ${src}:`, err);
-                }));
+            for (const direction of directions) {
+                const animKey = `${animType}-${direction}`;
+                this.animationFrames[animKey] = [];
+                
+                for (let i = 1; i <= frameCount; i++) {
+                    const src = `${baseUrl}${animType}/${direction}${i}.png`;
+                    promises.push(preloadImage(src).then(img => {
+                        this.animationFrames[animKey][i] = src;
+                    }).catch(err => {
+                        console.warn(`Failed to preload ${src}:`, err);
+                    }));
+                }
             }
         }
         
@@ -79,6 +93,11 @@ class Player {
 
         const newPosition = { x: newX, y: newY };
 
+        // Start walking animation if not already walking
+        if (!this.isMoving) {
+            this.startWalkAnimation();
+        }
+        
         this.position = checkCollision(this.collisionsData, this.position, newPosition, this.size);
 
         this.updatePosition();
@@ -104,7 +123,23 @@ class Player {
     startIdleAnimation() {
         this.currentAnimation = 'idle';
         this.animationFrame = 1;
+        this.animationFrameCount = this.animationTypes['idle'];
+        this.isMoving = false;
         this.updateSprite();
+    }
+    
+    startWalkAnimation() {
+        this.currentAnimation = 'walk';
+        this.animationFrame = 1;
+        this.animationFrameCount = this.animationTypes['walk'];
+        this.isMoving = true;
+        this.updateSprite();
+    }
+    
+    stopMoving() {
+        if (this.isMoving) {
+            this.startIdleAnimation();
+        }
     }
 
     updateSprite() {
