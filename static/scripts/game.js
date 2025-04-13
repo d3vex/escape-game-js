@@ -4,7 +4,6 @@ import { actualSizeMultiplier, setBoardBackground } from "./models/renderer.js";
 import { loadInteractionsData } from "./utils.js";
 import { CYCLE_DURATION } from "./variables.js";
 
-
 class Game {
   static #instance = null;
 
