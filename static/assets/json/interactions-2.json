@@ -205,11 +205,6 @@
         "interaction": "walls"
     },
     {
-        "x": 128,
-        "y": 96,
-        "interaction": "walls"
-    },
-    {
         "x": 144,
         "y": 96,
         "interaction": "walls"
@@ -603,5 +598,15 @@
         "x": 352,
         "y": 96,
         "interaction": "walls"
+    },
+    {
+        "x": 128,
+        "y": 96,
+        "interaction": "Enigme2.takeHelmet"
+    },
+    {
+        "x": 304,
+        "y": 128,
+        "interaction": "Enigme2.manipulateTheKnigth"
     }
 ]
