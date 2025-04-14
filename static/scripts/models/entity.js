@@ -8,7 +8,7 @@ class Entity {
     #speed = 1;
     #boardElement;
     #size = 16;
-    #facing = 2;
+    #facing = 1;
     #positionUpdated = false;
     #lastFrameTime = performance.now();
 
@@ -26,7 +26,7 @@ class Entity {
         this.#speed = 1;
         this.#boardElement = document.getElementById("board");
         this.#size = 16; // Taille du joueur
-        this.#facing = 2; // NORTH = 0, EAST = 1, SOUTH = 2, WEST = 3
+        this.#facing = 1; // NORTH = 0, EAST = 1, SOUTH = 2, WEST = 3
     }
 
     turnLeft() {
