@@ -1,6 +1,7 @@
 import Game from "../game.js";
 import LocalStorageService from "../services/localStorageService.js";
 import Entity from "../models/entity.js";
+import popUpManager from "../GUI/messagePopUp.js";
 
 const maxTimer = 15 * 60 * 1000; // 15 minutes in milliseconds
 
@@ -161,13 +162,17 @@ class Enigme2 {
                 Date.now()
             );
             Game.getInstance().nextState();
+            popUpManager.messagePopUp("Success", "You made the knigth open the door.");
             return true;
         }
         let initialPosition = Game.getInstance().entities.filter(
             (x) => x.id == this.#elementId
         )[0];
         entity.goTo(initialPosition.x, initialPosition.y);
-
+        popUpManager.messagePopUp(
+            "Fail",
+            "The knigth didn't reach the door. Try again."
+        );
         return false;
     }
 
