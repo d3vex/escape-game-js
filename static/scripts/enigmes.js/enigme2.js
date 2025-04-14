@@ -1,5 +1,6 @@
 import Game from "../game.js";
 import LocalStorageService from "../services/localStorageService.js";
+import Entity from "../models/entity.js";
 
 const maxTimer = 15 * 60 * 1000; // 15 minutes in milliseconds
 
@@ -143,7 +144,7 @@ class Enigme2 {
     }
 
     static async runDragNDrop(command) {
-        if (command == "frfl") {
+        if (command == "f;r;f;l") {
             const dragNdropContainer =
                 document.querySelector(".enigme2_dragNdrop");
             if (!dragNdropContainer) return;
@@ -164,6 +165,7 @@ class Enigme2 {
 
     static async #moveKnigth(command = "") {
         const entity = new Entity(this.#elementId);
+        entity.start()
         for (const c of command.split("")) {
             switch (c) {
                 case "f":
@@ -177,6 +179,7 @@ class Enigme2 {
                     break;
             }
         }
+        entity.stop();
     }
 
     static isQuestEnded() {
