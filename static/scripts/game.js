@@ -9,8 +9,8 @@ class Game {
   static #instance = null;
   static #entities = [{
     id: "knight",
-    x: 140,
-    y: 140,
+    x: 304,
+    y: 128,
     img: "static/assets/images/knight.png",
   }]
 
