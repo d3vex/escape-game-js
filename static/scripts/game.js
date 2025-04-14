@@ -6,6 +6,12 @@ import { CYCLE_DURATION } from "./variables.js";
 
 class Game {
   static #instance = null;
+  static #entities = [{
+    id: "knight",
+    x: 140,
+    y: 140,
+    img: "static/assets/images/knight.png",
+  }]
 
   static getInstance() {
     if (!Game.#instance) {
@@ -120,6 +126,11 @@ class Game {
       setBoardBackground(this.currentState)
     );
   }
+
+  get entities() {
+    return Game.#entities;
+  }
+
 }
 
 export default Game;
