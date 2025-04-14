@@ -3,6 +3,7 @@ import MovementController from "./controllers/move.js";
 import { actualSizeMultiplier, setBoardBackground } from "./models/renderer.js";
 import { loadInteractionsData } from "./utils.js";
 import { CYCLE_DURATION } from "./variables.js";
+import Entity from "./models/entity.js";
 
 class Game {
   static #instance = null;
@@ -57,6 +58,10 @@ class Game {
       } else {
         console.log("Board resized, updating player position...");
         this.player.updatePlayerSize();
+        for(const e in Game.#entities) {
+          const entity = new Entity(e.id);
+          entity.updateEntitySize();
+        }
       }
     });
 
