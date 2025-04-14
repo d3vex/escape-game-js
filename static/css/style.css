@@ -247,10 +247,9 @@ body {
 }
 
 .gameOver {
-  padding: 15px;
+  padding: 35px;
   position: absolute;
   text-align: center;
-  width: 35vw;
   background-color: #33333370;
   border: 3px solid #cecece;
   border-right: none;
