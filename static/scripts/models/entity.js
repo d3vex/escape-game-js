@@ -1,5 +1,6 @@
 import { checkCollision } from "../utils.js";
 import { actualSizeMultiplier } from "./renderer.js";
+import { CYCLE_DURATION } from "../variables.js";
 
 class Entity {
     #position;
@@ -9,9 +10,19 @@ class Entity {
     #size = 16;
     #facing = 2;
     #positionUpdated = false;
-    constructor(x, y, id) {
+    #lastFrameTime = performance.now();
+
+    constructor(id, x = -1, y = -1) {
         this.#position = { x: x, y: y };
         this.#element = document.getElementById(id);
+        if (x == -1 && y == -1) {
+            this.#position.x = Math.floor(
+                this.#element.offsetLeft / actualSizeMultiplier
+            );
+            this.#position.y = Math.floor(
+                this.#element.offsetTop / actualSizeMultiplier
+            );
+        }
         this.#speed = 1;
         this.#boardElement = document.getElementById("board");
         this.#size = 16; // Taille du joueur
@@ -20,12 +31,10 @@ class Entity {
 
     turnLeft() {
         this.#facing = (this.#facing + 3) % 4;
-        this.updateRotation();
     }
 
     turnRight() {
         this.#facing = (this.#facing + 1) % 4;
-        this.updateRotation();
     }
 
     async moveForward() {
@@ -94,12 +103,21 @@ class Entity {
         }
     }
 
+    start() {
+        this.isRunning = true;
+        this.moveLoop();
+    }
+
+    stop() {
+        this.isRunning = false;
+    }
+
     moveLoop() {
         const now = performance.now();
-        const deltaTime = now - this.lastFrameTime;
+        const deltaTime = now - this.#lastFrameTime;
 
         if (deltaTime >= CYCLE_DURATION) {
-            this.lastFrameTime = now - (deltaTime % CYCLE_DURATION);
+            this.#lastFrameTime = now - (deltaTime % CYCLE_DURATION);
 
             this.updatePosition();
         }
