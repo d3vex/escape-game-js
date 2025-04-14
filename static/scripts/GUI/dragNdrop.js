@@ -1,11 +1,12 @@
 import Enigme2 from "../enigmes.js/enigme2.js";
 
-const workspace = document.querySelector(".enigme2_dragNdrop #workspace");
+const workspace = document.querySelector(".enigme2_dragNdrop>#workspace");
+console.log(workspace)
 const blockTypes = ["forward", "left", "right"];
 const blockClasses = ["go-forward", "turn-left", "turn-right"];
 
 blockTypes.forEach((text, index) => {
-  let block = documsent.createElement("div");
+  let block = document.createElement("div");
   block.className = `block ${blockClasses[index]} demo`;
   block.textContent = text;
   block.style.top = `${20 + index * 60}px`;
@@ -78,14 +79,14 @@ document.addEventListener("mouseup", () => {
   selectedBlock = null;
 });
 
-document.getElementById("run").addEventListener("click", () => {
+/* document.getElementById("run").addEventListener("click", () => {
   document.querySelectorAll(".workspace > .block").forEach((block) => {
     if (block.classList.contains("demo")) return; // Skip demo blocks
     let res = getChildText(block, "");
     Enigme2.runDragNDrop(res);
 });
 });
-
+ */
 function getChildText(block, seperator=" ->") {
   let text = getTextWithoutChildren(block);
   if (text == "") return "";

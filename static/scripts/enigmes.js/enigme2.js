@@ -64,6 +64,12 @@ class Enigme2 {
      *     subMessage: String}
      */
     static takeHelmet_interact() {
+      if(LocalStorageService.getUserAttributes("enigme2.helmet")) {
+        return {
+          mainMessage: "Nothing more..",
+          subMessage: "You already took the helmet.",
+        };
+      }
         return {
             mainMessage: "Put on the helmet",
             subMessage: "This helmet look good.",
