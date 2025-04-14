@@ -1,14 +1,15 @@
 import Enigme2 from "../enigmes.js/enigme2.js";
 
 const workspace = document.querySelector(".enigme2_dragNdrop>#workspace");
-console.log(workspace);
 const blockTypes = ["forward", "left", "right"];
 const blockClasses = ["go-forward", "turn-left", "turn-right"];
+const blockValue = ["f", "l", "r"];
 
 blockTypes.forEach((text, index) => {
     let block = document.createElement("div");
     block.className = `block ${blockClasses[index]} demo`;
     block.textContent = text;
+    block.value = blockValue[index];
     block.style.top = `${20 + index * 60}px`;
     block.style.left = `${20}px`;
     workspace.appendChild(block);
@@ -23,12 +24,17 @@ function addDragHandlers(block, isOriginal) {
     block.addEventListener("mousedown", (e) => {
         if (isOriginal) {
             let clone = block.cloneNode(true);
-            clone.classList.remove("demo");
             let blockRect = block.getBoundingClientRect();
+            clone.classList.remove("demo");
+            clone.value = block.value;
+
             clone.style.left = `${
-                e.clientX - (blockRect.left/2 + block.width/2)
+                e.clientX - (blockRect.left / 2 + block.width / 2)
             }px`; // 1/2 of (the initial block width + the initial block left) ((120+20)/2 = 140/2 = 70)
-            clone.style.top = `${e.clientY - (blockRect.top/2 + block.height/2)}px`; // 1/2 of (the initial block height + the initial block top) ((50+20)/2 = 70/2 = 35)
+            clone.style.top = `${
+                e.clientY - (blockRect.top / 2 + block.height / 2)
+            }px`; // 1/2 of (the initial block height + the initial block top) ((50+20)/2 = 70/2 = 35)
+
             workspace.appendChild(clone);
             selectedBlock = clone;
             addDragHandlers(clone, false);
@@ -57,13 +63,19 @@ document.addEventListener("mouseup", () => {
     if (!selectedBlock) return;
     let blockRect = selectedBlock.getBoundingClientRect();
     let snapped = false;
-
     document.querySelectorAll(".block").forEach((otherBlock) => {
         if (otherBlock !== selectedBlock) {
             let otherRect = otherBlock.getBoundingClientRect();
             let dx = Math.abs(blockRect.left - otherRect.left);
             let dy = Math.abs(blockRect.top - otherRect.bottom);
-            otherBlock.classList.add("nested");
+            let parent = otherBlock;
+            while (
+                parent.parentElement != null &&
+                parent.parentElement.classList.contains("block")
+            ) {
+                parent = parent.parentElement;
+            }
+
             if (dx < snapDistance && dy < snapDistance) {
                 while (otherBlock.children.length > 0) {
                     otherBlock = otherBlock.children.item(0);
@@ -84,20 +96,39 @@ document.addEventListener("mouseup", () => {
     selectedBlock = null;
 });
 
-/* document.getElementById("run").addEventListener("click", () => {
-  document.querySelectorAll(".workspace > .block").forEach((block) => {
-    if (block.classList.contains("demo")) return; // Skip demo blocks
-    let res = getChildText(block, "");
-    Enigme2.runDragNDrop(res);
+document.getElementById("egnime2_run").addEventListener("click", () => {
+    let blocks = document.querySelectorAll(
+        ".enigme2_dragNdrop>#workspace>.block"
+    );
+    Array.from(blocks)
+        .filter(
+            (block) =>
+                !block.classList.contains("demo") && // SKip demo blocks
+                block.children.length != 0 // Skip blocks that have no nest
+        )
+        .forEach((block) => {
+            let cmd = getCommandValue(block, ";");
+            Enigme2.runDragNDrop(cmd);
+        });
 });
-});
- */
+
+function getCommandValue(block, seperator = ";") {
+    let text = block.value;
+    if (text == "") return "";
+    block.childNodes.forEach((child) => {
+        if (child.classList && child.classList.contains("block")) {
+            text += seperator + getCommandValue(child, seperator);
+        }
+    });
+    return text;
+}
+/* 
 function getChildText(block, seperator = " ->") {
     let text = getTextWithoutChildren(block);
     if (text == "") return "";
     block.childNodes.forEach((child) => {
         if (child.classList && child.classList.contains("block")) {
-            text += seperator + getChildText(child);
+            text += seperator + getChildText(child, seperator);
         }
     });
     return text;
@@ -111,3 +142,4 @@ function getTextWithoutChildren(element) {
     });
     return text.trim();
 }
+ */
