@@ -59,7 +59,7 @@ class Game {
         console.log("Board resized, updating player position...");
         this.player.updatePlayerSize();
         for(const e of Game.#entities) {
-          const entity = new Entity(e.x, e.y, e.id);
+          const entity = new Entity(e.id, e.x, e.y);
           entity.updateEntitySize();
           entity.updatePosition();
         }
