@@ -144,7 +144,7 @@ class Enigme2 {
     }
 
     static async runDragNDrop(command) {
-        if (command == "f;f;f;f;l;f;f;r;f;f;f;l;f;f") {
+        if (command ) {
             const dragNdropContainer =
                 document.querySelector(".enigme2_dragNdrop");
             if (!dragNdropContainer) return;

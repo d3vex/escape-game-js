@@ -1,6 +1,7 @@
 import { checkCollision } from "../utils.js";
 import { actualSizeMultiplier } from "./renderer.js";
 import { CYCLE_DURATION } from "../variables.js";
+import Game from "../game.js";
 
 class Entity {
     #position;
@@ -40,26 +41,22 @@ class Entity {
     async moveForward() {
         switch (this.#facing) {
             case 0: // NORTH
-                for (let i = 0; i < 16; i++) {
-                    this.#move(0, -this.#speed);
+                while (this.#move(0, -this.#speed)) {
                     await this.waitForPositionToUpdate();
                 }
                 break;
             case 1: // EAST
-                for (let i = 0; i < 16; i++) {
-                    this.#move(this.#speed, 0);
+                while (this.#move(this.#speed, 0)) {
                     await this.waitForPositionToUpdate();
                 }
                 break;
             case 2: // SOUTH
-                for (let i = 0; i < 16; i++) {
-                    this.#move(0, this.#speed);
+                while(this.#move(0, this.#speed)) {
                     await this.waitForPositionToUpdate();
                 }
                 break;
             case 3: // WEST
-                for (let i = 0; i < 16; i++) {
-                    this.#move(-this.#speed, 0);
+                while (this.#move(-this.#speed, 0)) {
                     await this.waitForPositionToUpdate();
                 }
                 break;
@@ -80,7 +77,21 @@ class Entity {
         newX = Math.max(0, Math.min(newX, maxX));
         newY = Math.max(0, Math.min(newY, maxY));
 
+        let finalPosition = checkCollision(
+            Game.getInstance().collisionsData,
+            this.#position,
+            {
+                x: newX,
+                y: newY,
+            },
+            this.#size
+        );
+        if (finalPosition.x != newX || finalPosition.y != newY) {
+            this.#position = finalPosition;
+            return false;
+        }
         this.#position = { x: newX, y: newY };
+        return true;
     }
 
     updatePosition() {
