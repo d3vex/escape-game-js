@@ -6,6 +6,7 @@ import { CYCLE_DURATION } from "./variables.js";
 import Entity from "./models/entity.js";
 import Enigme1 from "./enigmes.js/enigme1.js";
 import Enigme2 from "./enigmes.js/enigme2.js";
+import LocalStorageService from "./services/localStorageService.js";
 
 class Game {
     static #instance = null;
@@ -46,10 +47,20 @@ class Game {
                 const boardHeight = event.detail.height;
                 const playerSize = 16 * actualSizeMultiplier;
 
-                const initialX = 180;
-                const initialY = 50;
+                let playerPosition =
+                    LocalStorageService.getItem("playerPosition");
+                if (playerPosition != false) {
+                    playerPosition = JSON.parse(playerPosition);
+                }
 
-                this.player = new Player(initialX, initialY);
+                if (!playerPosition || !playerPosition.x || !playerPosition.y) {
+                    playerPosition = {
+                        x: 180,
+                        y: 50,
+                    };
+                }
+
+                this.player = new Player(playerPosition.x, playerPosition.y);
                 await this.loadInteractions();
                 this.player.setCollisionsData(this.interactionsData);
 
@@ -144,7 +155,7 @@ class Game {
     }
 
     #fetchCurrentState() {
-      console.log("Fetching current state...");
+        console.log("Fetching current state...");
         for (const enigme of this.#enigmes) {
             if (enigme.isQuestEnded()) {
                 this.currentState++;
