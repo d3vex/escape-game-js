@@ -148,7 +148,6 @@ class Enigme2 {
         const dragNdropContainer = document.querySelector(".enigme2_dragNdrop");
         if (!dragNdropContainer) return;
         dragNdropContainer.style.display = "none";
-        Game.getInstance().start();
         await this.#moveKnigth(command);
         const entity = new Entity(this.#elementId);
         if (
@@ -165,6 +164,7 @@ class Enigme2 {
             popUpManager.messagePopUp("Success", "You made the knigth open the door.");
             return true;
         }
+        Game.getInstance().start();
         let initialPosition = Game.getInstance().entities.filter(
             (x) => x.id == this.#elementId
         )[0];
@@ -197,7 +197,13 @@ class Enigme2 {
     }
 
     static isQuestEnded() {
-        return false;
+        let helmetIsEquiped = LocalStorageService.getUserAttributes(
+            "enigme2.helmet"
+        );
+        let isFinished = LocalStorageService.getUserAttributes(
+            "enigme2.isFinished"
+        );
+        return helmetIsEquiped && isFinished;
     }
 }
 
