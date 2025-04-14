@@ -1,3 +1,4 @@
+import LocalStorageService from '../services/localStorageService.js';
 import { checkCollision } from '../utils.js';
 import {actualSizeMultiplier} from "./renderer.js";
 
@@ -38,6 +39,7 @@ class Player {
     }
 
     updatePosition() {
+        LocalStorageService.setItem('playerPosition', this.position);
         if (this.element) {
             this.element.style.transform = 'none';
             this.element.style.top = `${this.position.y * actualSizeMultiplier}px`;
