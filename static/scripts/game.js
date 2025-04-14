@@ -87,6 +87,9 @@ class Game {
       this.player.setCollisionsData(this.interactionsData);
     }
   }
+  get collisionsData() {
+    return this.player.collisionsData;
+  }
 
   start() {
     console.log("Starting game loop...");
