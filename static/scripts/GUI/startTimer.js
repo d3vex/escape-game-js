@@ -3,6 +3,11 @@ import gameOver from "./gameOver.js";
 function startTimer(durationInMinutes, displayElement) {
     
     let remainingTime = durationInMinutes * 60; // Seconds to Minutes conversion
+    const timer = localStorage.getItem("remainingTime");
+
+    if (timer) {
+        remainingTime = parseInt(timer, 10)
+    }
 
     function updateTimer() {
         const minutes = Math.floor(remainingTime / 60);
@@ -14,9 +19,11 @@ function startTimer(durationInMinutes, displayElement) {
 
         if (remainingTime > 0) {
             remainingTime--;
+            localStorage.setItem("remainingTime", remainingTime);
         } else {
             clearInterval(timerInterval); //Stop when arrived at 0
             displayElement.textContent = "Time's up!";
+            localStorage.removeItem("remainingTime");
             gameOver();
         }
     }
@@ -28,6 +35,6 @@ function startTimer(durationInMinutes, displayElement) {
 
 // Timer initialised
 const timerElement = document.querySelector('.timer');
-startTimer(0, timerElement);
+startTimer(15, timerElement);
 
 export default startTimer
