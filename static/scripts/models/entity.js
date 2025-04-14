@@ -30,6 +30,16 @@ class Entity {
         this.#facing = 1; // NORTH = 0, EAST = 1, SOUTH = 2, WEST = 3
     }
 
+    get position() {
+        return this.#position;
+    }
+
+    goTo(x, y) {
+        this.#position.x = x;
+        this.#position.y = y;
+        this.updatePosition();
+    }
+
     turnLeft() {
         this.#facing = (this.#facing + 3) % 4;
     }
@@ -51,7 +61,7 @@ class Entity {
                 }
                 break;
             case 2: // SOUTH
-                while(this.#move(0, this.#speed)) {
+                while (this.#move(0, this.#speed)) {
                     await this.waitForPositionToUpdate();
                 }
                 break;
@@ -127,7 +137,7 @@ class Entity {
         const now = performance.now();
         const deltaTime = now - this.#lastFrameTime;
 
-        if (deltaTime >= CYCLE_DURATION) {
+        if (deltaTime >= CYCLE_DURATION && this.isRunning) {
             this.#lastFrameTime = now - (deltaTime % CYCLE_DURATION);
 
             this.updatePosition();
