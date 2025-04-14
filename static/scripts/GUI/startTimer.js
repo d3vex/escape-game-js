@@ -1,3 +1,5 @@
+import gameOver from "./gameOver.js";
+
 function startTimer(durationInMinutes, displayElement) {
     
     let remainingTime = durationInMinutes * 60; // Seconds to Minutes conversion
@@ -15,6 +17,7 @@ function startTimer(durationInMinutes, displayElement) {
         } else {
             clearInterval(timerInterval); //Stop when arrived at 0
             displayElement.textContent = "Time's up!";
+            gameOver();
         }
     }
 
@@ -25,4 +28,6 @@ function startTimer(durationInMinutes, displayElement) {
 
 // Timer initialised
 const timerElement = document.querySelector('.timer');
-startTimer(15, timerElement); // 15 minutes
+startTimer(0, timerElement);
+
+export default startTimer

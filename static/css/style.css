@@ -245,3 +245,35 @@ body {
   margin-top: -0.2rem; 
   margin-bottom: 1rem;
 }
+
+.gameOver {
+  padding: 15px;
+  position: absolute;
+  text-align: center;
+  width: 35vw;
+  background-color: #33333370;
+  border: 3px solid #cecece;
+  border-right: none;
+  border-bottom: 2px solid #000;
+  box-shadow: 0 0 5px black;
+  backdrop-filter: blur(6px);
+  transition: 0.3;
+  opacity: 0;
+
+  &.gameOverActive {
+    opacity: 1;
+  }
+}
+
+.gameOver h4 {
+  font-size: x-large;
+}
+
+.gameOverContent {
+  font-size: small;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  padding-top: 2vh;
+}
+
