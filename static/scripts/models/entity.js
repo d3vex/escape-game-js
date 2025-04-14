@@ -88,8 +88,10 @@ class Entity {
     }
 
     updateEntitySize() {
-        this.#element.style.width = `${16 * actualSizeMultiplier}px`;
-        this.#element.style.height = `${16 * actualSizeMultiplier}px`;
+        if (this.#element) {
+            this.#element.style.width = `${16 * actualSizeMultiplier}px`;
+            this.#element.style.height = `${16 * actualSizeMultiplier}px`;
+        }
     }
 
     moveLoop() {
@@ -103,7 +105,7 @@ class Entity {
         }
 
         if (this.isRunning) {
-            setTimeout(() => this.gameLoop(), CYCLE_DURATION);
+            setTimeout(() => this.moveLoop(), CYCLE_DURATION);
         }
     }
 
