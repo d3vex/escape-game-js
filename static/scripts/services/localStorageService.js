@@ -56,6 +56,16 @@ class LocalStorageService {
   }
 
   /**
+   * This method allow to reset all user attributes stored in localStorage
+   * 
+   */
+  static resetAttributes() {
+    localStorage.removeItem("userAttributes");
+    localStorage.removeItem("playerPosition");
+
+  }
+
+  /**
    * This method allow to fetch an item from localStorage
    * It will return the value of the key if it exists, otherwise it will return false
    *
@@ -80,6 +90,7 @@ class LocalStorageService {
     }
     localStorage.setItem(key, value);
   }
+
 }
 
 export default LocalStorageService;
