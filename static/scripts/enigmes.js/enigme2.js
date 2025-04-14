@@ -1,5 +1,7 @@
 import Game from "../game.js";
 import LocalStorageService from "../services/localStorageService.js";
+import Entity from "../models/entity.js";
+import popUpManager from "../GUI/messagePopUp.js";
 
 const maxTimer = 15 * 60 * 1000; // 15 minutes in milliseconds
 
@@ -64,6 +66,12 @@ class Enigme2 {
      *     subMessage: String}
      */
     static takeHelmet_interact() {
+        if (LocalStorageService.getUserAttributes("enigme2.helmet")) {
+            return {
+                mainMessage: "Nothing more..",
+                subMessage: "You already took the helmet.",
+            };
+        }
         return {
             mainMessage: "Put on the helmet",
             subMessage: "This helmet look good.",
@@ -137,27 +145,40 @@ class Enigme2 {
     }
 
     static async runDragNDrop(command) {
-        if (command == "frfl") {
-            const dragNdropContainer =
-                document.querySelector(".enigme2_dragNdrop");
-            if (!dragNdropContainer) return;
-            dragNdropContainer.style.display = "none";
-            Game.getInstance().start();
+        const dragNdropContainer = document.querySelector(".enigme2_dragNdrop");
+        if (!dragNdropContainer) return;
+        dragNdropContainer.style.display = "none";
+        Game.getInstance().start();
+        await this.#moveKnigth(command);
+        const entity = new Entity(this.#elementId);
+        if (
+            entity.position.x >= 28 * 16 &&
+            entity.position.x <= 29 * 16 &&
+            entity.position.y == 16 * 16
+        ) {
             LocalStorageService.setUserAttributes("enigme2.isFinished", true);
             LocalStorageService.setUserAttributes(
                 "enigme2.timestampWhenEnded",
                 Date.now()
             );
-            await this.#moveKnigth(command);
             Game.getInstance().nextState();
+            popUpManager.messagePopUp("Success", "You made the knigth open the door.");
             return true;
-        } else {
-            return false;
         }
+        let initialPosition = Game.getInstance().entities.filter(
+            (x) => x.id == this.#elementId
+        )[0];
+        entity.goTo(initialPosition.x, initialPosition.y);
+        popUpManager.messagePopUp(
+            "Fail",
+            "The knigth didn't reach the door. Try again."
+        );
+        return false;
     }
 
     static async #moveKnigth(command = "") {
         const entity = new Entity(this.#elementId);
+        entity.start();
         for (const c of command.split("")) {
             switch (c) {
                 case "f":
@@ -171,6 +192,8 @@ class Enigme2 {
                     break;
             }
         }
+        entity.stop();
+        return true;
     }
 
     static isQuestEnded() {

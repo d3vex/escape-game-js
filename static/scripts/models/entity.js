@@ -1,5 +1,7 @@
 import { checkCollision } from "../utils.js";
 import { actualSizeMultiplier } from "./renderer.js";
+import { CYCLE_DURATION } from "../variables.js";
+import Game from "../game.js";
 
 class Entity {
     #position;
@@ -7,50 +9,64 @@ class Entity {
     #speed = 1;
     #boardElement;
     #size = 16;
-    #facing = 2;
+    #facing = 1;
     #positionUpdated = false;
-    constructor(x, y, id) {
+    #lastFrameTime = performance.now();
+
+    constructor(id, x = -1, y = -1) {
         this.#position = { x: x, y: y };
         this.#element = document.getElementById(id);
+        if (x == -1 && y == -1) {
+            this.#position.x = Math.floor(
+                this.#element.offsetLeft / actualSizeMultiplier
+            );
+            this.#position.y = Math.floor(
+                this.#element.offsetTop / actualSizeMultiplier
+            );
+        }
         this.#speed = 1;
         this.#boardElement = document.getElementById("board");
         this.#size = 16; // Taille du joueur
-        this.#facing = 2; // NORTH = 0, EAST = 1, SOUTH = 2, WEST = 3
+        this.#facing = 1; // NORTH = 0, EAST = 1, SOUTH = 2, WEST = 3
+    }
+
+    get position() {
+        return this.#position;
+    }
+
+    goTo(x, y) {
+        this.#position.x = x;
+        this.#position.y = y;
+        this.updatePosition();
     }
 
     turnLeft() {
         this.#facing = (this.#facing + 3) % 4;
-        this.updateRotation();
     }
 
     turnRight() {
         this.#facing = (this.#facing + 1) % 4;
-        this.updateRotation();
     }
 
     async moveForward() {
         switch (this.#facing) {
             case 0: // NORTH
-                for (let i = 0; i < 16; i++) {
-                    this.#move(0, -this.#speed);
+                while (this.#move(0, -this.#speed)) {
                     await this.waitForPositionToUpdate();
                 }
                 break;
             case 1: // EAST
-                for (let i = 0; i < 16; i++) {
-                    this.#move(this.#speed, 0);
+                while (this.#move(this.#speed, 0)) {
                     await this.waitForPositionToUpdate();
                 }
                 break;
             case 2: // SOUTH
-                for (let i = 0; i < 16; i++) {
-                    this.#move(0, this.#speed);
+                while (this.#move(0, this.#speed)) {
                     await this.waitForPositionToUpdate();
                 }
                 break;
             case 3: // WEST
-                for (let i = 0; i < 16; i++) {
-                    this.#move(-this.#speed, 0);
+                while (this.#move(-this.#speed, 0)) {
                     await this.waitForPositionToUpdate();
                 }
                 break;
@@ -71,7 +87,21 @@ class Entity {
         newX = Math.max(0, Math.min(newX, maxX));
         newY = Math.max(0, Math.min(newY, maxY));
 
+        let finalPosition = checkCollision(
+            Game.getInstance().collisionsData,
+            this.#position,
+            {
+                x: newX,
+                y: newY,
+            },
+            this.#size
+        );
+        if (finalPosition.x != newX || finalPosition.y != newY) {
+            this.#position = finalPosition;
+            return false;
+        }
         this.#position = { x: newX, y: newY };
+        return true;
     }
 
     updatePosition() {
@@ -88,22 +118,33 @@ class Entity {
     }
 
     updateEntitySize() {
-        this.#element.style.width = `${16 * actualSizeMultiplier}px`;
-        this.#element.style.height = `${16 * actualSizeMultiplier}px`;
+        if (this.#element) {
+            this.#element.style.width = `${16 * actualSizeMultiplier}px`;
+            this.#element.style.height = `${16 * actualSizeMultiplier}px`;
+        }
+    }
+
+    start() {
+        this.isRunning = true;
+        this.moveLoop();
+    }
+
+    stop() {
+        this.isRunning = false;
     }
 
     moveLoop() {
         const now = performance.now();
-        const deltaTime = now - this.lastFrameTime;
+        const deltaTime = now - this.#lastFrameTime;
 
-        if (deltaTime >= CYCLE_DURATION) {
-            this.lastFrameTime = now - (deltaTime % CYCLE_DURATION);
+        if (deltaTime >= CYCLE_DURATION && this.isRunning) {
+            this.#lastFrameTime = now - (deltaTime % CYCLE_DURATION);
 
             this.updatePosition();
         }
 
         if (this.isRunning) {
-            setTimeout(() => this.gameLoop(), CYCLE_DURATION);
+            setTimeout(() => this.moveLoop(), CYCLE_DURATION);
         }
     }
 
