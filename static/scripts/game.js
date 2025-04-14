@@ -2,8 +2,7 @@ import Player from "./models/player.js";
 import MovementController from "./controllers/move.js";
 import { actualSizeMultiplier, setBoardBackground } from "./models/renderer.js";
 import { loadInteractionsData } from "./utils.js";
-
-const CYCLE_DURATION = 1000 / 30;
+import { CYCLE_DURATION } from "./variables.js";
 
 class Game {
   static #instance = null;
