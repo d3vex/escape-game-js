@@ -48,7 +48,7 @@ function setBoardBackground(state) {
                 createSquare();
             }
 
-            for (const e in Game.getInstance().entities) {
+            for (const e of Game.getInstance().entities) {
                 if (!document.getElementById(e.id)) {
                     createEntity(e.id, e.x, e.y);
                 }
