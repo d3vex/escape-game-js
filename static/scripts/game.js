@@ -15,6 +15,9 @@ class Game {
             id: "knight",
             x: 304,
             y: 128,
+            x2: 448,
+            y2: 256,
+            secondCondition: Enigme2.isQuestEnded,
             img: "static/assets/images/knight.png",
         },
     ];
@@ -76,6 +79,10 @@ class Game {
                 console.log("Board resized, updating player position...");
                 this.player.updatePlayerSize();
                 for (const e of Game.#entities) {
+                    if(e.secondCondition && e.secondCondition()) {
+                        e.x = e.x2;
+                        e.y = e.y2;
+                    }
                     const entity = new Entity(e.id, e.x, e.y);
                     entity.updateEntitySize();
                     entity.updatePosition();
