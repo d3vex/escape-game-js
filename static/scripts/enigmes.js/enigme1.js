@@ -147,12 +147,8 @@ class Enigme1 {
     let timestampWhenEnded = LocalStorageService.getUserAttributes(
       "enigme1.timestampWhenEnded"
     );
-    if (!keyIsAvailableToTake && doorIsOpen && isFinished) {
-      let currentTime = Date.now();
-      if (currentTime - timestampWhenEnded > maxTimer) return false; // Timer is over
-      return true;
-    }
-    return false;
+
+    return !keyIsAvailableToTake && doorIsOpen && isFinished
   }
 }
 

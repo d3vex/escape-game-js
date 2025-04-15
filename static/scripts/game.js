@@ -168,6 +168,8 @@ class Game {
         for (const enigme of this.#enigmes) {
             if (enigme.isQuestEnded(true)) {
                 this.currentState++;
+            }else {
+                break
             }
         }
         console.log(`Current state is ${this.currentState}`);
