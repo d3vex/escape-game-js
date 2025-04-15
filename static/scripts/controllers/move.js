@@ -43,7 +43,7 @@ class MovementController {
         MovementController.#instance = this;
 
         this.setupEventListeners();
-        this.startGameLoop();
+        //this.startGameLoop();
     }
 
     setupEventListeners() {

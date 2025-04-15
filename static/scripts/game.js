@@ -131,7 +131,7 @@ class Game {
 
         if (deltaTime >= CYCLE_DURATION) {
             this.lastFrameTime = now - (deltaTime % CYCLE_DURATION);
-
+            MovementController.getInstance().updatePlayerPosition();
             this.update(deltaTime);
             this.render();
         }
