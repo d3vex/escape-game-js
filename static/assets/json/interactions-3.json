@@ -957,7 +957,7 @@
     {
         "x": 592,
         "y": 288,
-        "interaction": "Enigme3.takePotion"
+        "interaction": "Enigme3.takeVial"
     },
     {
         "x": 592,
