@@ -6,6 +6,7 @@ import { CYCLE_DURATION } from "./variables.js";
 import Entity from "./models/entity.js";
 import Enigme1 from "./enigmes.js/enigme1.js";
 import Enigme2 from "./enigmes.js/enigme2.js";
+import Enigme3 from "./enigmes.js/enigme3.js";
 import LocalStorageService from "./services/localStorageService.js";
 
 class Game {
@@ -22,7 +23,7 @@ class Game {
         },
     ];
 
-    #enigmes = [Enigme1, Enigme2];
+    #enigmes = [Enigme1, Enigme2, Enigme3];
 
     static getInstance() {
         if (!Game.#instance) {
@@ -165,7 +166,7 @@ class Game {
     #fetchCurrentState() {
         console.log("Fetching current state...");
         for (const enigme of this.#enigmes) {
-            if (enigme.isQuestEnded()) {
+            if (enigme.isQuestEnded(true)) {
                 this.currentState++;
             }
         }
