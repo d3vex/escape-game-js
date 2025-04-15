@@ -153,7 +153,7 @@ class Enigme2 {
         if (
             entity.position.x >= 28 * 16 &&
             entity.position.x <= 29 * 16 &&
-            entity.position.y == 16 * 16
+            entity.position.y == 15 * 16
         ) {
             LocalStorageService.setUserAttributes("enigme2.isFinished", true);
             LocalStorageService.setUserAttributes(
@@ -162,7 +162,7 @@ class Enigme2 {
             );
             Game.getInstance().nextState();
             messagePopUp("Success", "You made the knigth open the door.");
-            togglePopUp()
+            togglePopUp();
             return true;
         }
         Game.getInstance().start();
@@ -171,8 +171,8 @@ class Enigme2 {
         )[0];
         entity.goTo(initialPosition.x, initialPosition.y);
         messagePopUp("Fail", "The knigth didn't reach the door. Try again.");
-        togglePopUp()
-        
+        togglePopUp();
+
         return false;
     }
 
