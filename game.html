@@ -124,9 +124,21 @@
 
 <div class="enigme2_dragNdrop">
   <div class="overlay"></div>
-  <div class="workspace" id="workspace">
+  <div class="dragNdrop_top">
+    <div class="dragNdrop_title">    
+      <h3>Drag N Drop</h3>
+      <span>Choose the next knight's movement</span>
+    </div>
+  
+    <span class="closeSymbol" onclick="document.querySelector('.enigme2_dragNdrop').style.display='none'">    &times;
+    </span>
   </div>
-  <button class="run-button" id="egnime2_run">Run</button>
+  <div class="workspace" id="workspace"></div>
+
+  <div class="dragNdrop_bottom">
+    <button class="clear-btn" id="enigme2_clear">Clear</button>
+    <button class="run-button" id="egnime2_run">Run</button>
+  </div>
 </div>
 </body>
 </html>

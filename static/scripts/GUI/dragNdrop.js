@@ -43,7 +43,7 @@ function addDragHandlers(block, isOriginal) {
         }
         let rect = selectedBlock.getBoundingClientRect();
         offsetX = e.clientX - rect.left + window.innerWidth * 0.15; // 1/2  of the initial block left (20/2 = 10)
-        offsetY = e.clientY - rect.top + window.innerHeight * 0.25 -50; // 1/2 of the default block top
+        offsetY = e.clientY - rect.top + window.innerHeight * 0.30 - 50; // 1/2 of the default block top
         selectedBlock.style.position = "absolute";
         selectedBlock.style.zIndex = 1000;
     });
@@ -64,6 +64,7 @@ document.addEventListener("mouseup", () => {
     let blockRect = selectedBlock.getBoundingClientRect();
     let snapped = false;
     document.querySelectorAll(".block").forEach((otherBlock) => {
+        if(otherBlock.classList.contains("demo")) return;
         if (otherBlock !== selectedBlock) {
             let otherRect = otherBlock.getBoundingClientRect();
             let dx = Math.abs(blockRect.left - otherRect.left);
@@ -109,6 +110,21 @@ document.getElementById("egnime2_run").addEventListener("click", () => {
         .forEach((block) => {
             let cmd = getCommandValue(block, ";");
             Enigme2.runDragNDrop(cmd);
+        });
+});
+document.getElementById("enigme2_clear").addEventListener("click", () => {
+    if(!confirm("Are you sure you want to clear the workspace?")) {
+        return alert("Canceled!")
+    }
+    let blocks = document.querySelectorAll(
+        ".enigme2_dragNdrop>#workspace>.block"
+    );
+    Array.from(blocks)
+        .filter(
+            (block) => !block.classList.contains("demo") // SKip demo blocks
+        )
+        .forEach((block) => {
+            workspace.removeChild(block)
         });
 });
 

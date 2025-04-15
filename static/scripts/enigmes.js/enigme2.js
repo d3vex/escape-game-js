@@ -1,7 +1,7 @@
 import Game from "../game.js";
 import LocalStorageService from "../services/localStorageService.js";
 import Entity from "../models/entity.js";
-import popUpManager from "../GUI/messagePopUp.js";
+import {messagePopUp} from "../GUI/messagePopUp.js";
 
 const maxTimer = 15 * 60 * 1000; // 15 minutes in milliseconds
 
