@@ -1,3 +1,5 @@
+import LocalStorageService from "../services/localStorageService.js";
+
 function gameOver() {
     const gameOver = document.querySelector(".gameOver");
     gameOver.classList.toggle("gameOverActive");
@@ -7,6 +9,7 @@ function gameOver() {
     const gameContainer = document.querySelector("#game");
     gameContainer.style.pointerEvents = "none";
     gameContainer.style.opacity = "0.5";
+    LocalStorageService.resetAttributes()
 }
 
 export default gameOver

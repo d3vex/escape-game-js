@@ -21,4 +21,4 @@ function togglePopUp() {
   popUpBox.addEventListener("click", toggler);
 }
 
-export default { messagePopUp, togglePopUp }
+export { messagePopUp, togglePopUp }
