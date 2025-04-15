@@ -1,13 +1,13 @@
 function messagePopUp(popUpTitleArg, popUpMessageArg) {
-  const popUpTitle = document.querySelector(".messagePopUp p").textContent;
-  const popUpMessage = document.querySelector(".messagePopUp span").textContent;
+  let popUpTitle = document.querySelector(".messagePopUp p");
+  let popUpMessage = document.querySelector(".messagePopUp span");
 
   if (popUpTitle) {
-    popUpTitle = popUpTitleArg;
+    popUpTitle.textContent = popUpTitleArg;
   }
 
   if (popUpMessage) {
-    popUpMessage = popUpMessageArg;
+    popUpMessage.textContent = popUpMessageArg;
   }
 }
 
