@@ -1,4 +1,4 @@
-@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css");
+/*@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css");*/
 @import url("/static/assets/fonts/PressStart2P-Regular.ttf");
 @font-face {
     font-family: PressStart;
@@ -251,12 +251,15 @@ span {
 .enigme2_dragNdrop {
     z-index: 100;
     display: none;
-    background-color: red;
+    background: transparent;
     position: absolute;
     margin: auto;
     align-items: center;
     width: 70vw;
-    height: 60vh;
+    border: 3px solid #cecece;
+    border-left: 3px solid #cecece;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
 
     .overlay {
         position: fixed; /* Full screen */
@@ -268,83 +271,128 @@ span {
         z-index: -1; /* Behind the box */
     }
 
+    .dragNdrop_top {
+        background-color: rgba(100, 114, 146, 0.5);
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap-reverse;
+        justify-content: space-between;
+        flex-direction: row;
+    }
+    .dragNdrop_title {
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: column;
+        h3 {
+            margin: 10px;
+            margin-bottom: 10px;
+            margin-left: 10px;
+        }
+    }
+
     .workspace {
-      width: 100%;
-      height: 50vh;
-      background: #647292;
-      position: relative;
-      border: 2px dashed #ccc;
-      margin-bottom: 20px;
+        width: auto;
+        height: 50vh;
+        background: #64729265;
+        position: relative;
+        border: 1px dashed #ccc;
     }
     .block {
-      padding-left: 10px;
-      padding-right: 10px;
-      height: 50px;
-      color: white;
-      text-align: center;
-      line-height: 50px;
-      border-radius: 5px;
-      position: absolute;
-      cursor: grab;
-      -webkit-user-select: none;
-      -khtml-user-select: none;
-      -moz-user-select: none;
-      -o-user-select: none;
-      user-select: none;
+        padding-left: 10px;
+        padding-right: 10px;
+        height: 50px;
+        color: white;
+        text-align: center;
+        line-height: 50px;
+        border-radius: 5px;
+        position: absolute;
+        cursor: grab;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -o-user-select: none;
+        user-select: none;
     }
     .go-forward {
-      background: #3498db;
+        background: #3498db;
     }
     .turn-left {
-      background: #e74c3c;
+        background: #e74c3c;
     }
     .turn-right {
-      background: #f1c40f;
+        background: #f1c40f;
     }
     .nested {
-      position: relative;
-      top: 0;
-      left: 0;
+        position: relative;
+        top: 0;
+        left: 0;
+    }
+
+    .dragNdrop_bottom {
+        padding: 10px 10px;
+        background-color: rgba(100, 114, 146, 0.5);
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap-reverse;
+        flex-direction: row;
+        gap: 2vw;
     }
     .run-button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      background: #27ae60;
-      color: white;
-      border: none;
-      border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 5px;
+    }
+    .clear-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background: rgba(255, 0, 0, 0.2);
+        color: white;
+        border: none;
+        border-radius: 5px;
+    }
+    .clear-btn:hover {
+        background-color: rgba(255, 0, 0, 0.8);
     }
 }
 
 .gameOver {
-  padding: 35px;
-  position: absolute;
-  text-align: center;
-  background-color: #33333370;
-  border: 3px solid #cecece;
-  border-right: none;
-  border-bottom: 2px solid #000;
-  box-shadow: 0 0 5px black;
-  backdrop-filter: blur(6px);
-  transition: 0.3;
-  opacity: 0;
+    padding: 35px;
+    position: absolute;
+    text-align: center;
+    background-color: #33333370;
+    border: 3px solid #cecece;
+    border-right: none;
+    border-bottom: 2px solid #000;
+    box-shadow: 0 0 5px black;
+    backdrop-filter: blur(6px);
+    transition: 0.3;
+    opacity: 0;
 
-  &.gameOverActive {
-    opacity: 1;
-  }
+    &.gameOverActive {
+        opacity: 1;
+    }
 }
 
 .gameOver h4 {
-  font-size: x-large;
+    font-size: x-large;
 }
 
 .gameOverContent {
-  font-size: small;
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: row;
-  padding-top: 2vh;
+    font-size: small;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    padding-top: 2vh;
 }
 
+.closeSymbol {
+    cursor: pointer;
+    font-size: x-large;
+    width: 4vw;
+    height: 4vh;
+}
