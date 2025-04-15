@@ -47,13 +47,13 @@ class Enigme2 {
                 : false;
         if (helmetAvailableToTake) {
             LocalStorageService.setUserAttributes("enigme2.helmet", true);
-            showInteraction()
+            showInteraction();
             return {
                 success: true,
                 message: "You took the helmet.",
             };
         } else {
-            showInteraction()
+            showInteraction();
             return {
                 success: false,
                 message: "You already took the key.",
@@ -97,13 +97,13 @@ class Enigme2 {
                 ? true
                 : false;
         if (helmetAvailableToTake) {
-            showInteraction()
+            showInteraction();
             return {
                 success: false,
                 message: "You need to put the helmet on before..",
             };
         } else {
-            showInteraction()
+            showInteraction();
             const dragNdropContainer =
                 document.querySelector(".enigme2_dragNdrop");
             if (!dragNdropContainer) return;
@@ -137,7 +137,7 @@ class Enigme2 {
                 subMessage: "The knigth don't talk with lambda...",
             };
         }
-        if (LocalStorageService.setUserAttributes("enigme2.isFinished", true)) {
+        if (LocalStorageService.getUserAttributes("enigme2.isFinished")) {
             return {
                 mainMessage: "Nothing more to do",
                 subMessage: "You made the knigth open the door.",
@@ -165,13 +165,13 @@ class Enigme2 {
                 "enigme2.timestampWhenEnded",
                 Date.now()
             );
-            showInteraction()
+            showInteraction();
             Game.getInstance().nextState();
             messagePopUp("Success", "You made the knigth open the door.");
             togglePopUp();
             return true;
         }
-        showInteraction()
+        showInteraction();
         Game.getInstance().start();
         let initialPosition = Game.getInstance().entities.filter(
             (x) => x.id == this.#elementId
