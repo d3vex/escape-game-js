@@ -12,6 +12,11 @@
 
 <body>
 
+<div class="pseudo">
+  <label>Pseudo :   </label>
+  <input type="text" placeholder="Enter you Pseudo here">
+</div>
+
 <div id="game">
   <div id="board"></div>
   <div id="player"></div>
@@ -41,7 +46,7 @@
     </span>
 </div>
 
-<div class="messagePopUp" onclick='popUpBox.classList.toggle("popActive")'>
+<div class="messagePopUp" onclick='this.classList.toggle("popActive")'>
   <p>
     messagePopUp here
   </p>

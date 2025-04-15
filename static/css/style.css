@@ -51,6 +51,17 @@ span {
     overflow: visible;
 }
 
+.pseudo {
+    display: grid;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+
+.pseudo label {
+    margin-bottom: 5px;
+}
+
 .hideMessage {
     position: absolute;
     bottom: 1rem;
