@@ -78,6 +78,13 @@ export function checkCollision(collisionsData, oldPosition, newPosition, size) {
         y: oldPosition.y + finalMovementY
     };
 
+    showInteraction()
+
+    return finalPosition
+}
+
+
+export function showInteraction() {
     let collisions = MovementController.getInstance().checkForInteraction()
     if(collisions.length == 1) {
         let message = interactionManager.getInteractionHandler(
@@ -89,7 +96,4 @@ export function checkCollision(collisionsData, oldPosition, newPosition, size) {
         manageInteractBox.hideInteractBox();
     }
     
-
-    return finalPosition
 }
-
