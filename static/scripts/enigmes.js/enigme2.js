@@ -1,7 +1,7 @@
 import Game from "../game.js";
 import LocalStorageService from "../services/localStorageService.js";
 import Entity from "../models/entity.js";
-import {messagePopUp} from "../GUI/messagePopUp.js";
+import { messagePopUp, togglePopUp } from "../GUI/messagePopUp.js";
 
 const maxTimer = 15 * 60 * 1000; // 15 minutes in milliseconds
 
@@ -161,7 +161,8 @@ class Enigme2 {
                 Date.now()
             );
             Game.getInstance().nextState();
-            popUpManager.messagePopUp("Success", "You made the knigth open the door.");
+            messagePopUp("Success", "You made the knigth open the door.");
+            togglePopUp()
             return true;
         }
         Game.getInstance().start();
@@ -169,10 +170,9 @@ class Enigme2 {
             (x) => x.id == this.#elementId
         )[0];
         entity.goTo(initialPosition.x, initialPosition.y);
-        popUpManager.messagePopUp(
-            "Fail",
-            "The knigth didn't reach the door. Try again."
-        );
+        messagePopUp("Fail", "The knigth didn't reach the door. Try again.");
+        togglePopUp()
+        
         return false;
     }
 
@@ -197,12 +197,10 @@ class Enigme2 {
     }
 
     static isQuestEnded() {
-        let helmetIsEquiped = LocalStorageService.getUserAttributes(
-            "enigme2.helmet"
-        );
-        let isFinished = LocalStorageService.getUserAttributes(
-            "enigme2.isFinished"
-        );
+        let helmetIsEquiped =
+            LocalStorageService.getUserAttributes("enigme2.helmet");
+        let isFinished =
+            LocalStorageService.getUserAttributes("enigme2.isFinished");
         return helmetIsEquiped && isFinished;
     }
 }
