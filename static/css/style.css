@@ -56,6 +56,9 @@ span {
     position: absolute;
     top: 15px;
     left: 15px;
+    * {
+        z-index: 10;
+    }
 }
 
 .pseudo label {
@@ -267,6 +270,17 @@ span {
     margin-bottom: 1rem;
 }
 
+.overlay {
+    position: fixed; /* Full screen */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1; /* Behind the box */
+}
+
+
 .enigme2_dragNdrop {
     z-index: 100;
     display: none;
@@ -279,16 +293,6 @@ span {
     border-left: 3px solid #cecece;
     border-right: 2px solid #000;
     border-bottom: 2px solid #000;
-
-    .overlay {
-        position: fixed; /* Full screen */
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: -1; /* Behind the box */
-    }
 
     .dragNdrop_top {
         background-color: rgba(100, 114, 146, 0.5);
