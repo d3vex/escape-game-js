@@ -16,7 +16,7 @@ class Game {
             x: 304,
             y: 128,
             x2: 448,
-            y2: 256,
+            y2: 240,
             secondCondition: Enigme2.isQuestEnded,
             img: "static/assets/images/knight.png",
         },
