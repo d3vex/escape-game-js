@@ -50,6 +50,10 @@ function setBoardBackground(state) {
 
             for (const e of Game.getInstance().entities) {
                 if (!document.getElementById(e.id)) {
+                    if(e.secondCondition && e.secondCondition()) {
+                        e.x = e.x2
+                        e.y = e.y2
+                    }
                     createEntity(e.id, e.x, e.y);
                 }
             }
