@@ -17,8 +17,6 @@ function togglePopUp() {
   const toggler = () => popUpBox.classList.toggle("popActive");
   
   toggler();
-  
-  popUpBox.addEventListener("click", toggler);
-}
+  }
 
 export { messagePopUp, togglePopUp }
