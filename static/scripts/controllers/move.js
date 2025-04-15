@@ -180,19 +180,17 @@ class MovementController {
     randomizeMovementKeys() {
         const keys = Object.keys(this.virtualKeys);
         const values = Object.values(this.virtualKeys);
-        
+
         while (values.length > 0) {
             const randomIndex = Math.floor(Math.random() * values.length);
             const rdn2 = Math.floor(Math.random() * keys.length);
-            if(this.virtualKeys[keys[rdn2]] == values[randomIndex]){
+            if (this.virtualKeys[keys[rdn2]] == values[randomIndex]) {
                 continue;
             }
             const randomValue = values.splice(randomIndex, 1)[0];
             const randomKey = keys.splice(rdn2, 1)[0];
             this.virtualKeys[randomKey] = randomValue;
         }
-
-        console.log(this.virtualKeys)
     }
 
     /**
