@@ -79,7 +79,8 @@ class Game {
                 console.log("Board resized, updating player position...");
                 this.player.updatePlayerSize();
                 for (const e of Game.#entities) {
-                    if(e.secondCondition && e.secondCondition()) {
+                    
+                    if(typeof e.secondCondition == "function" && e.secondCondition()) {
                         e.x = e.x2;
                         e.y = e.y2;
                     }
