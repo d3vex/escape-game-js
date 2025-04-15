@@ -3,6 +3,9 @@ import InteractionManager from "../models/interactionManager.js";
 import Game from "../game.js";
 
 class MovementController {
+    /**
+     * @type {MovementController}
+     */
     static #instance = null;
 
     /**
@@ -20,11 +23,25 @@ class MovementController {
     }
 
     constructor(player) {
+        if (player) {
+            if (
+                MovementController.#instance != null &&
+                MovementController.#instance.player == null
+            ) {
+                MovementController.#instance.player = player;
+                MovementController.#instance.speed = player.speed;
+            }
+            if (MovementController.#instance == null) {
+                this.player = player;
+                this.speed = player.speed;
+            }
+        }
+
         if (MovementController.#instance) {
             return MovementController.#instance;
         }
 
-        this.player = player;
+
         this.keys = {
             ArrowUp: false,
             ArrowDown: false,
@@ -38,11 +55,14 @@ class MovementController {
             Left: "ArrowLeft",
             Right: "ArrowRight",
         };
-        this.speed = player.speed;
+
+
+        this.setupEventListeners();
 
         MovementController.#instance = this;
 
-        this.setupEventListeners();
+
+
         //this.startGameLoop();
     }
 
@@ -168,7 +188,7 @@ class MovementController {
         dx *= this.speed;
         dy *= this.speed;
 
-        if (dx !== 0 || dy !== 0) {
+        if ((dx !== 0 || dy !== 0) && this.player != null) {
             this.player.move(dx, dy);
         }
     }
@@ -180,11 +200,12 @@ class MovementController {
     randomizeMovementKeys() {
         const keys = Object.keys(this.virtualKeys);
         const values = Object.values(this.virtualKeys);
-
+        let attempt = 0
         while (values.length > 0) {
             const randomIndex = Math.floor(Math.random() * values.length);
             const rdn2 = Math.floor(Math.random() * keys.length);
-            if (this.virtualKeys[keys[rdn2]] == values[randomIndex]) {
+            if (this.virtualKeys[keys[rdn2]] == values[randomIndex] && attempt < 10) {
+                attempt++;
                 continue;
             }
             const randomValue = values.splice(randomIndex, 1)[0];
