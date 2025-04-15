@@ -43,7 +43,7 @@ function addDragHandlers(block, isOriginal) {
         }
         let rect = selectedBlock.getBoundingClientRect();
         offsetX = e.clientX - rect.left + window.innerWidth * 0.15; // 1/2  of the initial block left (20/2 = 10)
-        offsetY = e.clientY - rect.top + window.innerHeight * 0.25 - 50; // 1/2 of the default block top
+        offsetY = e.clientY - rect.top + window.innerHeight * 0.30 - 50; // 1/2 of the default block top
         selectedBlock.style.position = "absolute";
         selectedBlock.style.zIndex = 1000;
     });
@@ -64,6 +64,7 @@ document.addEventListener("mouseup", () => {
     let blockRect = selectedBlock.getBoundingClientRect();
     let snapped = false;
     document.querySelectorAll(".block").forEach((otherBlock) => {
+        if(otherBlock.classList.contains("demo")) return;
         if (otherBlock !== selectedBlock) {
             let otherRect = otherBlock.getBoundingClientRect();
             let dx = Math.abs(blockRect.left - otherRect.left);
