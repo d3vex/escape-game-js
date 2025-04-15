@@ -62,6 +62,14 @@ span {
     margin-bottom: 5px;
 }
 
+.pseudo input {
+    padding: 10px;
+    color: white;
+    font-family: PressStart; 
+    font-size: smaller;
+    background-color: #18142570;
+}
+
 .hideMessage {
     position: absolute;
     bottom: 1rem;
