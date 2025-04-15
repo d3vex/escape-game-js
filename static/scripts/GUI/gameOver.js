@@ -1,6 +1,8 @@
 import LocalStorageService from "../services/localStorageService.js";
+import Game from "../game.js";
 
 function gameOver() {
+    Game.getInstance().stop()
     const gameOver = document.querySelector(".gameOver");
     gameOver.classList.toggle("gameOverActive");
     gameOver.style.display = "block";

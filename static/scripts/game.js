@@ -129,7 +129,7 @@ class Game {
         const now = performance.now();
         const deltaTime = now - this.lastFrameTime;
 
-        if (deltaTime >= CYCLE_DURATION) {
+        if (deltaTime >= CYCLE_DURATION && this.isRunning) {
             this.lastFrameTime = now - (deltaTime % CYCLE_DURATION);
             MovementController.getInstance().updatePlayerPosition();
             this.update(deltaTime);
