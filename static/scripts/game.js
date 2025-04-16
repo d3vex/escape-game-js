@@ -86,7 +86,7 @@ class Game {
         this.currentState++;
         console.log(`Loading state ${this.currentState}...`);
 
-        setBoardBackground(this.currentState);
+        await setBoardBackground(this.currentState);
 
         await this.loadInteractions();
 

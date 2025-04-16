@@ -21,91 +21,97 @@ function preloadImage(src) {
     });
 }
 
-function setBoardBackground(state) {
+async function setBoardBackground(state) {
     // Ensure state is a valid number
-    if (typeof state !== 'number') {
-        console.error('Invalid state provided to setBoardBackground:', state);
+    if (typeof state !== "number") {
+        console.error("Invalid state provided to setBoardBackground:", state);
         return;
     }
 
-    const board = document.getElementById('board');
+    const board = document.getElementById("board");
     if (board) {
         const imgSrc = `static/assets/images/map/Map-${state}.png`;
 
-        preloadImage(imgSrc).then(img => {
-            const imageWidth = img.width;
-            const imageHeight = img.height;
-
-            const windowWidth = window.innerWidth;
-            const windowHeight = window.innerHeight;
-
-            let finalWidth = imageWidth;
-            let finalHeight = imageHeight;
-            actualSizeMultiplier = 1;
-
-            if (windowWidth >= imageWidth * sizeMultiplier && windowHeight >= imageHeight * sizeMultiplier) {
-                finalWidth = imageWidth * sizeMultiplier;
-                finalHeight = imageHeight * sizeMultiplier;
-                actualSizeMultiplier = sizeMultiplier;
-            }
-
-            board.style.width = `${finalWidth}px`;
-            board.style.height = `${finalHeight}px`;
-            board.style.backgroundImage = `url(${imgSrc})`;
-            board.style.backgroundSize = `${finalWidth}px ${finalHeight}px`;
-            board.style.backgroundRepeat = 'no-repeat';
-            board.style.backgroundPosition = 'center';
-            board.style.imageRendering = 'pixelated';
-
-            console.log(`Actual size multiplier used: ${actualSizeMultiplier}`);
-
-            if (!document.getElementById('pixel-square')) {
-                createSquare();
-            }
-
-            for (const e of Game.getInstance().entities) {
-                if (!document.getElementById(e.id)) {
-                    if(typeof e.secondCondition == "function" && e.secondCondition()) {
-                        e.x = e.x2;
-                        e.y = e.y2;
-                    }
-                    createEntity(e.id, e.x, e.y, e.img);
-                }
-            }
-
-            const boardReadyEvent = new CustomEvent('boardReady', {
-                detail: { width: finalWidth, height: finalHeight }
-            });
-            document.dispatchEvent(boardReadyEvent);
-        }).catch(error => {
-            console.error('Error loading background image:', error);
+        let img = await preloadImage(imgSrc).catch((error) => {
+            console.error("Error loading background image:", error);
         });
+        const imageWidth = img.width;
+        const imageHeight = img.height;
+
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+
+        let finalWidth = imageWidth;
+        let finalHeight = imageHeight;
+        actualSizeMultiplier = 1;
+
+        if (
+            windowWidth >= imageWidth * sizeMultiplier &&
+            windowHeight >= imageHeight * sizeMultiplier
+        ) {
+            finalWidth = imageWidth * sizeMultiplier;
+            finalHeight = imageHeight * sizeMultiplier;
+            actualSizeMultiplier = sizeMultiplier;
+        }
+
+        board.style.width = `${finalWidth}px`;
+        board.style.height = `${finalHeight}px`;
+        board.style.backgroundImage = `url(${imgSrc})`;
+        board.style.backgroundSize = `${finalWidth}px ${finalHeight}px`;
+        board.style.backgroundRepeat = "no-repeat";
+        board.style.backgroundPosition = "center";
+        board.style.imageRendering = "pixelated";
+
+        console.log(`Actual size multiplier used: ${actualSizeMultiplier}`);
+
+        if (!document.getElementById("pixel-square")) {
+            createSquare();
+        }
+
+        for (const e of Game.getInstance().entities) {
+            if (!document.getElementById(e.id)) {
+                if (
+                    typeof e.secondCondition == "function" &&
+                    e.secondCondition()
+                ) {
+                    e.x = e.x2;
+                    e.y = e.y2;
+                }
+                createEntity(e.id, e.x, e.y, e.img);
+            }
+        }
+
+        const boardReadyEvent = new CustomEvent("boardReady", {
+            detail: { width: finalWidth, height: finalHeight },
+        });
+        document.dispatchEvent(boardReadyEvent);
     } else {
-        console.log('Board element not found');
+        console.log("Board element not found");
     }
 }
 
 function createSquare() {
-    const existingSquare = document.getElementById('pixel-square');
+    const existingSquare = document.getElementById("pixel-square");
     if (existingSquare) {
         existingSquare.remove();
     }
 
-    const player = document.createElement('div');
-    player.id = 'pixel-square'; // Keep the same ID for compatibility
+    const player = document.createElement("div");
+    player.id = "pixel-square"; // Keep the same ID for compatibility
     const spriteSize = 16 * actualSizeMultiplier;
 
     player.style.width = `${spriteSize}px`;
     player.style.height = `${spriteSize}px`;
-    player.style.position = 'absolute';
-    player.style.backgroundImage = "url('static/assets/images/sprite/idle/south1.png')";
-    player.style.backgroundSize = 'contain';
-    player.style.backgroundRepeat = 'no-repeat';
-    player.style.zIndex = '10';
+    player.style.position = "absolute";
+    player.style.backgroundImage =
+        "url('static/assets/images/sprite/idle/south1.png')";
+    player.style.backgroundSize = "contain";
+    player.style.backgroundRepeat = "no-repeat";
+    player.style.zIndex = "10";
     // Fix blurry images
-    player.style.imageRendering = 'pixelated';
+    player.style.imageRendering = "pixelated";
 
-    const board = document.getElementById('board');
+    const board = document.getElementById("board");
     if (board) {
         const boardWidth = parseInt(board.style.width);
         const boardHeight = parseInt(board.style.height);
@@ -117,7 +123,9 @@ function createSquare() {
         player.style.top = `${initialY}px`;
 
         board.appendChild(player);
-        console.log(`Player sprite created with size: ${spriteSize}x${spriteSize}px at position (${initialX}, ${initialY})`);
+        console.log(
+            `Player sprite created with size: ${spriteSize}x${spriteSize}px at position (${initialX}, ${initialY})`
+        );
     }
 }
 
@@ -134,24 +142,24 @@ function createEntity(id, x, y, imgSrc) {
     if (existingSquare) {
         existingSquare.remove();
     }
-    const entity = document.createElement('div');
+    const entity = document.createElement("div");
     entity.id = id;
     const squareSize = 16 * actualSizeMultiplier;
 
     entity.style.width = `${squareSize}px`;
     entity.style.height = `${squareSize}px`;
-    entity.style.position = 'absolute';
+    entity.style.position = "absolute";
 
     if (imgSrc) {
         entity.style.backgroundImage = `url(${imgSrc})`;
-        entity.style.backgroundSize = 'contain';
-        entity.style.backgroundRepeat = 'no-repeat';
-        entity.style.imageRendering = 'pixelated';
+        entity.style.backgroundSize = "contain";
+        entity.style.backgroundRepeat = "no-repeat";
+        entity.style.imageRendering = "pixelated";
     } else {
-        entity.style.backgroundColor = 'red';
+        entity.style.backgroundColor = "red";
     }
 
-    const board = document.getElementById('board');
+    const board = document.getElementById("board");
     if (board) {
         const initialX = x * actualSizeMultiplier;
         const initialY = y * actualSizeMultiplier;
@@ -164,7 +172,7 @@ function createEntity(id, x, y, imgSrc) {
 }
 
 async function preloadMapAssets(maxState = 3) {
-    console.log('Preloading all map backgrounds...');
+    console.log("Preloading all map backgrounds...");
     const mapPromises = [];
 
     for (let state = 1; state <= maxState; state++) {
@@ -176,19 +184,19 @@ async function preloadMapAssets(maxState = 3) {
         await Promise.all(mapPromises);
         console.log(`Successfully preloaded ${maxState} map backgrounds`);
     } catch (error) {
-        console.error('Error preloading map assets:', error);
+        console.error("Error preloading map assets:", error);
         throw error;
     }
 }
 
 async function preloadCharacterAnimations() {
-    console.log('Preloading character animations...');
-    const baseUrl = 'static/assets/images/sprite/';
+    console.log("Preloading character animations...");
+    const baseUrl = "static/assets/images/sprite/";
     const animations = {
-        'idle': 4,
-        'walk': 8
+        idle: 4,
+        walk: 8,
     };
-    const directions = ['north', 'east', 'south', 'west'];
+    const directions = ["north", "east", "south", "west"];
 
     const promises = [];
 
@@ -203,15 +211,17 @@ async function preloadCharacterAnimations() {
 
     try {
         await Promise.all(promises);
-        console.log(`Successfully preloaded ${promises.length} character animation frames`);
+        console.log(
+            `Successfully preloaded ${promises.length} character animation frames`
+        );
     } catch (error) {
-        console.error('Error preloading character animations:', error);
+        console.error("Error preloading character animations:", error);
         throw error;
     }
 }
 
 async function preloadEntityImages() {
-    console.log('Preloading entity images...');
+    console.log("Preloading entity images...");
     const promises = [];
 
     // Précharger les images des entités
@@ -225,23 +235,23 @@ async function preloadEntityImages() {
         await Promise.all(promises);
         console.log(`Successfully preloaded ${promises.length} entity images`);
     } catch (error) {
-        console.error('Error preloading entity images:', error);
+        console.error("Error preloading entity images:", error);
         throw error;
     }
 }
 
 async function preloadAllGameAssets(maxState = 3) {
-    console.log('Starting preloading of all game assets...');
+    console.log("Starting preloading of all game assets...");
 
     try {
         await preloadMapAssets(maxState);
         await preloadCharacterAnimations();
         await preloadEntityImages();
 
-        console.log('All game assets preloaded successfully!');
+        console.log("All game assets preloaded successfully!");
         return true;
     } catch (error) {
-        console.error('Error during comprehensive asset preloading:', error);
+        console.error("Error during comprehensive asset preloading:", error);
         throw error;
     }
 }
@@ -253,5 +263,5 @@ export {
     preloadCharacterAnimations,
     preloadMapAssets,
     preloadImage,
-    preloadAllGameAssets
+    preloadAllGameAssets,
 };

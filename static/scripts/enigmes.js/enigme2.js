@@ -92,6 +92,7 @@ class Enigme2 {
      * }
      */
     static manipulateTheKnigth() {
+        document.querySelector(".enigme2_dragNdrop .closeSymbol").onclick = Enigme2.#closeModal;
         let helmetAvailableToTake =
             LocalStorageService.getUserAttributes("enigme2.helmet") == false
                 ? true
@@ -154,6 +155,8 @@ class Enigme2 {
         if (!dragNdropContainer) return;
         dragNdropContainer.style.display = "none";
         await this.#moveKnigth(command);
+        Game.getInstance().start();
+
         const entity = new Entity(this.#elementId);
         if (
             entity.position.x >= 28 * 16 &&
@@ -165,14 +168,13 @@ class Enigme2 {
                 "enigme2.timestampWhenEnded",
                 Date.now()
             );
+            await Game.getInstance().nextState();
             showInteraction();
-            Game.getInstance().nextState();
             messagePopUp("Success", "You made the knigth open the door.");
             togglePopUp();
             return true;
         }
         showInteraction();
-        Game.getInstance().start();
         let initialPosition = Game.getInstance().entities.filter(
             (x) => x.id == this.#elementId
         )[0];
@@ -201,6 +203,13 @@ class Enigme2 {
         }
         entity.stop();
         return true;
+    }
+
+    static #closeModal() {
+        Game.getInstance().start();
+        const dragNdropContainer = document.querySelector(".enigme2_dragNdrop");
+        if (!dragNdropContainer) return;
+        dragNdropContainer.style.display = "none";
     }
 
     static isQuestEnded() {
