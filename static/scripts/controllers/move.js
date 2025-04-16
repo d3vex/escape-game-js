@@ -23,24 +23,14 @@ class MovementController {
     }
 
     constructor(player) {
-        if (player) {
-            if (
-                MovementController.#instance != null &&
-                MovementController.#instance.player == null
-            ) {
-                MovementController.#instance.player = player;
-                MovementController.#instance.speed = player.speed;
-            }
-            if (MovementController.#instance == null) {
-                this.player = player;
-                this.speed = player.speed;
-            }
-        }
-
         if (MovementController.#instance) {
             return MovementController.#instance;
         }
 
+        this.player = player;
+        if (player) {
+            this.speed = player.speed;
+        }
 
         this.keys = {
             ArrowUp: false,
@@ -49,6 +39,7 @@ class MovementController {
             ArrowRight: false,
             e: false,
         };
+
         this.virtualKeys = {
             Up: "ArrowUp",
             Down: "ArrowDown",
@@ -56,14 +47,9 @@ class MovementController {
             Right: "ArrowRight",
         };
 
-
-        this.setupEventListeners();
-
         MovementController.#instance = this;
 
-
-
-        //this.startGameLoop();
+        this.setupEventListeners();
     }
 
     setupEventListeners() {
@@ -82,15 +68,6 @@ class MovementController {
                 this.keys[e.key] = false;
             }
         });
-    }
-
-    startGameLoop() {
-        const gameLoop = () => {
-            this.updatePlayerPosition();
-            requestAnimationFrame(gameLoop);
-        };
-
-        requestAnimationFrame(gameLoop);
     }
 
     /**
@@ -190,6 +167,9 @@ class MovementController {
 
         if ((dx !== 0 || dy !== 0) && this.player != null) {
             this.player.move(dx, dy);
+        } else if (this.player && this.player.isMoving) {
+            // If no keys are pressed but the player was moving, switch to idle animation
+            this.player.stopMoving();
         }
     }
 
@@ -200,7 +180,7 @@ class MovementController {
     randomizeMovementKeys() {
         const keys = Object.keys(this.virtualKeys);
         const values = Object.values(this.virtualKeys);
-        let attempt = 0
+        let attempt = 0;
         while (values.length > 0) {
             const randomIndex = Math.floor(Math.random() * values.length);
             const rdn2 = Math.floor(Math.random() * keys.length);

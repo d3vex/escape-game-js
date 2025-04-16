@@ -57,6 +57,22 @@ span {
     overflow: visible;
 }
 
+.quitGame {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 10vw;
+    height: 6vh;
+    opacity: 0.7;
+    font-family: PressStart;
+    color: white;
+    background-color: #181425;
+
+    &:hover {
+        background-color: red;
+    }
+}
+
 .pseudo {
     display: grid;
     position: absolute;
