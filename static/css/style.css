@@ -7,6 +7,12 @@
     font-style: normal;
 }
 
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
 body {
     font-family: "PressStart";
     font-size: 2vh;
@@ -150,6 +156,11 @@ span {
     text-align: center;
     box-shadow: 0 0 5px black;
     transition: background-color 0.3s ease, transform 0.3s ease;
+
+    &.timerDanger {
+        color: red;
+        animation: blink 1s infinite;
+    }
 }
 
 .messagePopUp {
