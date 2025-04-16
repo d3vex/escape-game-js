@@ -1,4 +1,5 @@
 import gameOver from "./gameOver.js";
+import startButton from "./pseudo.js";
 
 function startTimer(durationInMinutes, displayElement) {
     
@@ -33,8 +34,12 @@ function startTimer(durationInMinutes, displayElement) {
     updateTimer();
 }
 
+const timerEl = document.querySelector(".timer");
+
 // Timer initialised
-const timerElement = document.querySelector('.timer');
-startTimer(15, timerElement);
+startButton.addEventListener("click", () => {
+    startTimer(15, timerEl); 
+    startButton.disabled = true; 
+});
 
 export default startTimer

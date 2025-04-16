@@ -1,7 +1,8 @@
+const startButton = document.querySelector(".pseudo button");
+
 function pseudo() {
     const overlayEl = document.querySelector(".overlay").style;
     const pseudoTxt = document.querySelector(".pseudo input");
-    const startButton = document.querySelector(".pseudo button");
 
     pseudoTxt.addEventListener("input", () => {
         if (pseudoTxt.value.trim() !== "") {
@@ -22,4 +23,4 @@ function pseudo() {
 
 pseudo();
 
-export default pseudo
+export default startButton
