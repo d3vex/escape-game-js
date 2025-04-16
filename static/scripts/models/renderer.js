@@ -28,7 +28,7 @@ function setBoardBackground(state) {
 
     const board = document.getElementById('board');
     if (board) {
-        const imgSrc = 'static/assets/images/Map-' + state + '.png';
+        const imgSrc = 'static/assets/images/map/Map-' + state + '.png';
 
         preloadImage(imgSrc).then(img => {
             const imageWidth = img.width;
