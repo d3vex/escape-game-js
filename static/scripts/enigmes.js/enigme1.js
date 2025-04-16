@@ -20,7 +20,7 @@ class Enigme1 {
     static get enigme() {
         return {
             id: 1,
-            name: "Find the key",
+            name: "Finding the key",
             description:
                 "You are locked in a room and you need to find the key to escape.",
             hint: "Search in the box.",

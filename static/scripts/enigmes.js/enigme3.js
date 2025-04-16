@@ -106,7 +106,7 @@ class Enigme3 {
         } else {
             LocalStorageService.setUserAttributes("enigme3.vial", false);
             LocalStorageService.setUserAttributes("enigme3.door", true);
-            LocalStorageService.setUserAttributes("enigme3.isFinish", true);
+            LocalStorageService.setUserAttributes("enigme3.isFinished", true);
             LocalStorageService.setUserAttributes(
                 "enigme3.timestampWhenEnded",
                 Date.now()
@@ -116,7 +116,7 @@ class Enigme3 {
             MovementController.getInstance().resetMovementKeys();
             messagePopUp("Success", "You unlock the next room! And the effect of the vial is gone.");
             togglePopUp();
-            hiddenQuest(this.enigme.id)
+            hiddenQuest(Enigme3.enigme.id)
             return {
                 success: true,
                 message: "You open the door.",
@@ -162,12 +162,13 @@ class Enigme3 {
             // This means this method is called at the game initialization process
             if(holdingVial) { // If the user leave while holding the vial
                 MovementController.getInstance().randomizeMovementKeys() // Randomize his movement keys
+            }
+            if(isFinished || holdingVial) {
                 Game.getInstance().nextState()
             }
         }
-
         if(doorIsOpen && !holdingVial && isFinished) {
-            hiddenQuest(this.enigme.id)
+            hiddenQuest(Enigme3.enigme.id)
             return true
         }
         return false;

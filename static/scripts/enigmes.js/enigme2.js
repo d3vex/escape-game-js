@@ -174,7 +174,7 @@ class Enigme2 {
             showInteraction();
             messagePopUp("Success", "You made the knigth open the door.");
             togglePopUp();
-            hiddenQuest(this.enigme.id);
+            hiddenQuest(Enigme2.enigme.id);
             return true;
         }
         showInteraction();
