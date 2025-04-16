@@ -1,12 +1,14 @@
 import Enigme1 from "../enigmes.js/enigme1.js";
 import Enigme2 from "../enigmes.js/enigme2.js";
+import Enigme3 from "../enigmes.js/enigme3.js";
 
 class InteractionManager {
   constructor() {
     this.interactionHandlers = {
       PrintConsole: this.printConsole,
       Enigme1: Enigme1,
-      Enigme2: Enigme2
+      Enigme2: Enigme2,
+      Enigme3: Enigme3,
     };
   }
 
