@@ -1,5 +1,6 @@
 import LocalStorageService from "../services/localStorageService.js";
 import Game from "../game.js";
+import { showInteraction } from "../utils.js";
 const maxTimer = 15 * 60 * 1000; // 15 minutes in milliseconds
 
 class Enigme1 {
@@ -42,11 +43,13 @@ class Enigme1 {
         : false;
     if (keyIsAvailableToTake) {
       LocalStorageService.setUserAttributes("enigme1.Key", true);
+      showInteraction()
       return {
         success: true,
         message: "You took the key.",
       };
     } else {
+      showInteraction()
       return {
         success: false,
         message: "You already took the key.",
@@ -90,6 +93,7 @@ class Enigme1 {
         ? true
         : false;
     if (keyIsAvailableToTake) {
+      showInteraction()
       return {
         success: false,
         message: "You need to find the key first.",
@@ -102,6 +106,7 @@ class Enigme1 {
       );
       LocalStorageService.setUserAttributes("enigme1.isFinished", true);
 
+      showInteraction()
       await Game.getInstance().nextState();
 
       return {
@@ -142,12 +147,8 @@ class Enigme1 {
     let timestampWhenEnded = LocalStorageService.getUserAttributes(
       "enigme1.timestampWhenEnded"
     );
-    if (!keyIsAvailableToTake && doorIsOpen && isFinished) {
-      let currentTime = Date.now();
-      if (currentTime - timestampWhenEnded > maxTimer) return false; // Timer is over
-      return true;
-    }
-    return false;
+
+    return !keyIsAvailableToTake && doorIsOpen && isFinished
   }
 }
 

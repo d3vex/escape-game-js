@@ -6,6 +6,7 @@ import { CYCLE_DURATION } from "./variables.js";
 import Entity from "./models/entity.js";
 import Enigme1 from "./enigmes.js/enigme1.js";
 import Enigme2 from "./enigmes.js/enigme2.js";
+import Enigme3 from "./enigmes.js/enigme3.js";
 import LocalStorageService from "./services/localStorageService.js";
 
 class Game {
@@ -22,7 +23,7 @@ class Game {
         },
     ];
 
-    #enigmes = [Enigme1, Enigme2];
+    #enigmes = [Enigme1, Enigme2, Enigme3];
 
     static getInstance() {
         if (!Game.#instance) {
@@ -79,7 +80,8 @@ class Game {
                 console.log("Board resized, updating player position...");
                 this.player.updatePlayerSize();
                 for (const e of Game.#entities) {
-                    if(e.secondCondition && e.secondCondition()) {
+                    
+                    if(typeof e.secondCondition == "function" && e.secondCondition()) {
                         e.x = e.x2;
                         e.y = e.y2;
                     }
@@ -164,8 +166,10 @@ class Game {
     #fetchCurrentState() {
         console.log("Fetching current state...");
         for (const enigme of this.#enigmes) {
-            if (enigme.isQuestEnded()) {
+            if (enigme.isQuestEnded(true)) {
                 this.currentState++;
+            }else {
+                break
             }
         }
         console.log(`Current state is ${this.currentState}`);
