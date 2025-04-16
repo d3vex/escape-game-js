@@ -1,9 +1,7 @@
 import Game from "../game.js";
 import LocalStorageService from "../services/localStorageService.js";
-import Entity from "../models/entity.js";
 import { messagePopUp, togglePopUp } from "../GUI/messagePopUp.js";
-import { showInteraction } from "../utils.js";
-import MovementController from "../controllers/move.js";
+import hiddenQuest from "../GUI/hiddenQuest.js";
 
 class Enigme4 {
     static #eventDefined = false;
@@ -25,7 +23,7 @@ class Enigme4 {
      */
     static get enigme() {
         return {
-            id: 1,
+            id: 4,
             name: "The port is weird...",
             description:
                 "This wall might be a fake one. Find the good combination to open it.",
@@ -75,13 +73,13 @@ class Enigme4 {
      * }
      */
     static #setListener() {
+        document.querySelectorAll(".enigme4_findOrder img").forEach((img) => {
+            console.log(img);
+            img.addEventListener("click", Enigme4.clickHandler);
+        });
         document
-            .querySelectorAll(".enigme4_findOrder img")
-            .forEach((img) => {
-                console.log(img)
-                img.addEventListener("click", Enigme4.clickHandler);
-            });
-        document.querySelector(".enigme4_findOrder .closeSymbol").addEventListener("click", Enigme4.#closeModal)
+            .querySelector(".enigme4_findOrder .closeSymbol")
+            .addEventListener("click", Enigme4.#closeModal);
         Enigme4.#eventDefined = true;
     }
 
@@ -115,6 +113,7 @@ class Enigme4 {
                 Game.getInstance().start();
                 document.querySelector(".enigme4_findOrder").style.display =
                     "none";
+                hiddenQuest(this.enigme.id);
             } else {
                 // Reset the combination and the opacity of the images selected
                 Enigme4.#combination = "";
@@ -124,7 +123,7 @@ class Enigme4 {
                     .forEach((img) => {
                         img.style.opacity = "1";
                     });
-                    Enigme4.#closeModal()
+                Enigme4.#closeModal();
                 // Display a message to the user to say that is not the good combination
                 messagePopUp("This is not the good combination", "Try again.");
                 togglePopUp();
@@ -139,9 +138,14 @@ class Enigme4 {
 
     static isQuestEnded() {
         let doorIsOpen = LocalStorageService.getUserAttributes("enigme4.door");
-        let isFinished = LocalStorageService.getUserAttributes("egnime4.isFinished");
+        let isFinished =
+            LocalStorageService.getUserAttributes("egnime4.isFinished");
 
-        return doorIsOpen && isFinished;
+        if(doorIsOpen && isFinished) {
+            hiddenQuest(this.enigme.id);
+            return true;
+        }
+        return false
     }
 }
 

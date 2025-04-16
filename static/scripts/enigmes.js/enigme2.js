@@ -3,6 +3,7 @@ import LocalStorageService from "../services/localStorageService.js";
 import Entity from "../models/entity.js";
 import { messagePopUp, togglePopUp } from "../GUI/messagePopUp.js";
 import { showInteraction } from "../utils.js";
+import hiddenQuest from "../GUI/hiddenQuest.js";
 
 const maxTimer = 15 * 60 * 1000; // 15 minutes in milliseconds
 
@@ -22,7 +23,7 @@ class Enigme2 {
      */
     static get enigme() {
         return {
-            id: 1,
+            id: 2,
             name: "Manage the knigth",
             description:
                 "Only the knigth can open the door. You need to find a way to talk with him.",
@@ -92,7 +93,8 @@ class Enigme2 {
      * }
      */
     static manipulateTheKnigth() {
-        document.querySelector(".enigme2_dragNdrop .closeSymbol").onclick = Enigme2.#closeModal;
+        document.querySelector(".enigme2_dragNdrop .closeSymbol").onclick =
+            Enigme2.#closeModal;
         let helmetAvailableToTake =
             LocalStorageService.getUserAttributes("enigme2.helmet") == false
                 ? true
@@ -172,6 +174,7 @@ class Enigme2 {
             showInteraction();
             messagePopUp("Success", "You made the knigth open the door.");
             togglePopUp();
+            hiddenQuest(this.enigme.id);
             return true;
         }
         showInteraction();
@@ -217,7 +220,11 @@ class Enigme2 {
             LocalStorageService.getUserAttributes("enigme2.helmet");
         let isFinished =
             LocalStorageService.getUserAttributes("enigme2.isFinished");
-        return helmetIsEquiped && isFinished;
+        if (helmetIsEquiped && isFinished) {
+            hiddenQuest(Enigme2.enigme.id);
+            return true;
+        }
+        return false;
     }
 }
 

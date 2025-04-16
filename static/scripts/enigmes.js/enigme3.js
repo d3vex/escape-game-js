@@ -4,6 +4,7 @@ import Entity from "../models/entity.js";
 import { messagePopUp, togglePopUp } from "../GUI/messagePopUp.js";
 import { showInteraction } from "../utils.js";
 import MovementController from "../controllers/move.js";
+import hiddenQuest from "../GUI/hiddenQuest.js";
 
 class Enigme3 {
     /**
@@ -20,7 +21,7 @@ class Enigme3 {
      */
     static get enigme() {
         return {
-            id: 1,
+            id: 3,
             name: "Find the cursed vial...",
             description:
                 "You must retrieve the cursed vial and place it near the door.",
@@ -115,6 +116,7 @@ class Enigme3 {
             MovementController.getInstance().resetMovementKeys();
             messagePopUp("Success", "You unlock the next room! And the effect of the vial is gone.");
             togglePopUp();
+            hiddenQuest(this.enigme.id)
             return {
                 success: true,
                 message: "You open the door.",
@@ -164,7 +166,11 @@ class Enigme3 {
             }
         }
 
-        return doorIsOpen && !holdingVial && isFinished;
+        if(doorIsOpen && !holdingVial && isFinished) {
+            hiddenQuest(this.enigme.id)
+            return true
+        }
+        return false;
     }
 }
 
