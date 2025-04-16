@@ -38,26 +38,26 @@ class Enigme3 {
      * }
      *
      */
-    static takeVial() {
+    static drinkVial() {
         let vialAvailableToTake =
             LocalStorageService.getUserAttributes("enigme3.vial") == false
                 ? true
                 : false;
         if (vialAvailableToTake) {
             LocalStorageService.setUserAttributes("enigme3.vial", true);
+            Game.getInstance().nextState()
             MovementController.getInstance().randomizeMovementKeys();
             showInteraction();
+            messagePopUp("You are drunk", "You're drunk and lose your sense of direction.");
+            togglePopUp();
             return {
                 success: true,
-                message: "You took the helmet.",
+                message: "You drink this weird vial.",
             };
         } else {
-            LocalStorageService.setUserAttributes("enigme3.vial", false);
-            MovementController.getInstance().resetMovementKeys();
-            showInteraction();
             return {
                 success: false,
-                message: "You drop the vial.",
+                message: "The vial is empty.",
             };
         }
     }
@@ -69,16 +69,16 @@ class Enigme3 {
      *     mainMessage: String,
      *     subMessage: String}}
      */
-    static takeVial_interact() {
+    static drinkVial_interact() {
         if (LocalStorageService.getUserAttributes("enigme3.vial")) {
             return {
-                mainMessage: "Take off the vial",
-                subMessage: "The movement keys will be back to normal.",
+                mainMessage: "There is nothing left...",
+                subMessage: "You're drunk... Deal with the consequences.",
             };
         }
         return {
-            mainMessage: "Take the cursed vial",
-            subMessage: "You will be cursed while holding it.",
+            mainMessage: "Drink the vial",
+            subMessage: "This is the only thing you can do anyway.",
         };
     }
 
@@ -91,7 +91,7 @@ class Enigme3 {
      *      message: String}
      * }
      */
-    static dropOnThePlate() {
+    static vomitOnDoor() {
         let vialAvailableToTake =
             LocalStorageService.getUserAttributes("enigme3.vial") == false
                 ? true
@@ -100,7 +100,7 @@ class Enigme3 {
             showInteraction();
             return {
                 success: false,
-                message: "You need to take the vial before..",
+                message: "You need to dring the vial before..",
             };
         } else {
             LocalStorageService.setUserAttributes("enigme3.vial", false);
@@ -113,11 +113,11 @@ class Enigme3 {
             showInteraction();
             Game.getInstance().nextState();
             MovementController.getInstance().resetMovementKeys();
-            messagePopUp("Success", "You unlock the next room!");
+            messagePopUp("Success", "You unlock the next room! And the effect of the vial is gone.");
             togglePopUp();
             return {
                 success: true,
-                message: "You drop the vial on the plate.",
+                message: "You open the door.",
             };
         }
     }
@@ -130,23 +130,22 @@ class Enigme3 {
      *     mainMessage: String,
      *     subMessage: String}
      */
-    static dropOnThePlate_interact() {
+    static vomitOnDoor_interact() {
         if (!LocalStorageService.getUserAttributes("enigme3.vial")) {
             return {
-                mainMessage: "Something is missing",
-                subMessage:
-                    "This space is weird... It migth be something missing...",
+                mainMessage: "This door is tough",
+                subMessage: "It cannot be broken by hand, but some acid might do the trick.",
             };
         }
         if (LocalStorageService.getUserAttributes("enigme3.isFinished")) {
             return {
                 mainMessage: "Nothing more to do",
-                subMessage: "You find what was missing.",
+                subMessage: "You open the door.",
             };
         }
         return {
-            mainMessage: "Place the vial",
-            subMessage: "The vial make the perfect size for fit in this space",
+            mainMessage: "The drunk effect is overwhelming...",
+            subMessage: "You feel nauseous and might vomit any moment.",
         };
     }
 
@@ -161,6 +160,7 @@ class Enigme3 {
             // This means this method is called at the game initialization process
             if(holdingVial) { // If the user leave while holding the vial
                 MovementController.getInstance().randomizeMovementKeys() // Randomize his movement keys
+                Game.getInstance().nextState()
             }
         }
 
