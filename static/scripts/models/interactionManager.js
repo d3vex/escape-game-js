@@ -2,6 +2,7 @@ import Enigme1 from "../enigmes.js/enigme1.js";
 import Enigme2 from "../enigmes.js/enigme2.js";
 import Enigme3 from "../enigmes.js/enigme3.js";
 import Enigme4 from "../enigmes.js/enigme4.js";
+import Enigme5 from "../enigmes.js/enigme5.js";
 
 class InteractionManager {
   constructor() {
@@ -10,7 +11,8 @@ class InteractionManager {
       Enigme1: Enigme1,
       Enigme2: Enigme2,
       Enigme3: Enigme3,
-      Enigme4: Enigme4
+      Enigme4: Enigme4,
+      Enigme5: Enigme5
     };
   }
 

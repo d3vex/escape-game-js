@@ -145,7 +145,6 @@ class Enigme1 {
         let doorIsOpen = LocalStorageService.getUserAttributes("enigme1.Door");
         let isFinished =
             LocalStorageService.getUserAttributes("enigme1.isFinished");
-        console.log(!keyIsAvailableToTake && doorIsOpen && isFinished)
         if (!keyIsAvailableToTake && doorIsOpen && isFinished) {
             hiddenQuest(Enigme1.enigme.id);
             return true;

@@ -139,10 +139,9 @@ class Enigme4 {
     static isQuestEnded() {
         let doorIsOpen = LocalStorageService.getUserAttributes("enigme4.door");
         let isFinished =
-            LocalStorageService.getUserAttributes("egnime4.isFinished");
-
+            LocalStorageService.getUserAttributes("enigme4.isFinished");
         if(doorIsOpen && isFinished) {
-            hiddenQuest(this.enigme.id);
+            hiddenQuest(Enigme4.enigme.id);
             return true;
         }
         return false

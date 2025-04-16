@@ -5,8 +5,140 @@ import { messagePopUp, togglePopUp } from "../GUI/messagePopUp.js";
 import { showInteraction } from "../utils.js";
 import MovementController from "../controllers/move.js";
 
-class Enigme4 {
+/**
+ * Represents the Enigme5 class, which contains the logic for the fifth enigma in the game.
+ * This class includes methods for interacting with various elements of the enigma,
+ * checking combinations, playing audio, and managing the enigma's state.
+ *
+ * @class Enigme5
+ */
+
+/**
+ * Retrieves the details of the enigma.
+ *
+ * @static
+ * @returns {Object} An object containing the enigma's properties:
+ * - id {number}: The ID of the enigma.
+ * - name {string}: The name of the enigma.
+ * - description {string}: A description of the enigma.
+ * - hint {string}: A hint for solving the enigma.
+ * - hintPrice {number}: The price of the hint.
+ * - level {number}: The difficulty level of the enigma.
+ */
+
+/**
+ * Handles interaction with the parchment.
+ *
+ * @static
+ * @returns {Object} An object containing:
+ * - success {boolean}: Whether the interaction was successful.
+ * - message {string}: A message describing the interaction result.
+ */
+
+/**
+ * Provides the message to display when interacting with the parchment.
+ *
+ * @static
+ * @returns {Object} An object containing:
+ * - mainMessage {string}: The main message to display.
+ * - subMessage {string}: The sub-message to display.
+ */
+
+/**
+ * Handles interaction with Stele 1.
+ *
+ * @static
+ */
+
+/**
+ * Handles interaction with Stele 2.
+ *
+ * @static
+ */
+
+/**
+ * Handles interaction with Stele 3.
+ *
+ * @static
+ */
+
+/**
+ * Handles interaction with Stele 4.
+ *
+ * @static
+ */
+
+/**
+ * Provides the message to display when interacting with Stele 1.
+ *
+ * @static
+ * @returns {Object} An object containing:
+ * - mainMessage {string}: The main message to display.
+ * - subMessage {string}: The sub-message to display.
+ */
+
+/**
+ * Provides the message to display when interacting with Stele 2.
+ *
+ * @static
+ * @returns {Object} An object containing:
+ * - mainMessage {string}: The main message to display.
+ * - subMessage {string}: The sub-message to display.
+ */
+
+/**
+ * Provides the message to display when interacting with Stele 3.
+ *
+ * @static
+ * @returns {Object} An object containing:
+ * - mainMessage {string}: The main message to display.
+ * - subMessage {string}: The sub-message to display.
+ */
+
+/**
+ * Provides the message to display when interacting with Stele 4.
+ *
+ * @static
+ * @returns {Object} An object containing:
+ * - mainMessage {string}: The main message to display.
+ * - subMessage {string}: The sub-message to display.
+ */
+
+/**
+ * Checks the combination and adds a value to it. Plays audio if the combination is incomplete.
+ * Ends the enigma if the combination is correct.
+ *
+ * @static
+ * @async
+ * @private
+ * @param {string} value - The value to add to the combination.
+ */
+
+/**
+ * Ends the enigma, plays the final audio, and transitions to the next game state.
+ *
+ * @static
+ * @async
+ * @private
+ */
+
+/**
+ * Closes the modal and resumes the game.
+ *
+ * @static
+ * @private
+ */
+
+/**
+ * Checks if the enigma has been completed.
+ *
+ * @static
+ * @returns {boolean} True if the enigma is finished, false otherwise.
+ */
+class Enigme5 {
     static #combination = "";
+    static #goodCombination = "3124";
+    static #playList = [];
 
     constructor() {}
     /**
@@ -23,10 +155,9 @@ class Enigme4 {
      */
     static get enigme() {
         return {
-            id: 1,
+            id: 5,
             name: "Become the king",
-            description:
-                "The last thing you need to do is to create your hymn",
+            description: "The last thing you need to do is to create your hymn",
             hint: "All stellar will make a song",
             hintPrice: 50,
             level: 1,
@@ -41,7 +172,7 @@ class Enigme4 {
      * }
      *
      */
-    static seeScroll() {
+    static interactWithParchment() {
         Game.getInstance().stop();
         document.querySelector(".enigme5_scroll").style.display = "block";
     }
@@ -53,11 +184,125 @@ class Enigme4 {
      *     mainMessage: String,
      *     subMessage: String}}
      */
-    static seeScroll_interact() {
+    static interactWithParchment_interact() {
         return {
             mainMessage: "This migth be a clue",
-            subMessage: "Something is ",
+            subMessage: "Something is writen on the scroll",
         };
+    }
+
+    static interactWithStele1() {
+        Enigme5.#combinationCheckAndAdd("1");
+    }
+    static interactWithStele2() {
+        Enigme5.#combinationCheckAndAdd("2");
+    }
+    static interactWithStele3() {
+        Enigme5.#combinationCheckAndAdd("3");
+    }
+    static interactWithStele4() {
+        Enigme5.#combinationCheckAndAdd("4");
+    }
+
+    static interactWithStele1_interact() {
+        return {
+            mainMessage: "Press it",
+            subMessage: "It's like the stele can sink",
+        };
+    }
+    static interactWithStele2_interact() {
+        return {
+            mainMessage: "Press it",
+            subMessage: "It's like the stele can sink",
+        };
+    }
+    static interactWithStele3_interact() {
+        return {
+            mainMessage: "Press it",
+            subMessage: "It's like the stele can sink",
+        };
+    }
+    static interactWithStele4_interact() {
+        return {
+            mainMessage: "Press it",
+            subMessage: "It's like the stele can sink",
+        };
+    }
+
+    /**
+     * Fetches an audio file and returns an Audio object.
+     *
+     * @static
+     * @async
+     * @param {string} path - The path to the audio file.
+     * @returns {Promise<HTMLAudioElement>} A promise that resolves to an Audio object.
+     */
+    static async fetchSong(path) {
+        const audio = new Audio(path);
+        return new Promise((resolve, reject) => {
+            audio.addEventListener("canplaythrough", () => {
+                resolve(audio);
+            });
+            audio.addEventListener("error", (e) => {
+                console.error("Error loading audio:", e);
+                reject(e);
+            });
+        });
+    }
+
+    static async #combinationCheckAndAdd(value) {
+        if (Enigme5.#combination.length < 4) {
+            Enigme5.#combination += value;
+        }
+        if (Enigme5.#combination.length == 4) {
+            if (Enigme5.#combination == Enigme5.#goodCombination) {
+                Enigme5.#end();
+                Enigme5.#closeModal();
+            } else {
+                messagePopUp("The combination is incorrect");
+                Enigme5.#combination = "";
+            }
+        } else {
+            const audio = await Enigme5.fetchSong(
+                "./static/assets/song/Fur_elise-" + value + ".mp3"
+            );
+            Enigme5.#playList.push(audio);
+            Enigme5.#playAudio();
+        }
+    }
+
+    static async #end() {
+        LocalStorageService.getUserAttributes("enigme5.isFinished", true);
+        const audio = await Enigme5.fetchSong(
+            "./static/assets/song/Fur_elise.mp3"
+        );
+        Enigme5.#playList.push(audio);
+        Enigme5.#playAudio();
+        messagePopUp(
+            "Now the king",
+            "You find your hymn, now go to your throne"
+        );
+        togglePopUp();
+        await Game.getInstance().nextState();
+        showInteraction();
+    }
+
+    static #playAudio() {
+        if (Enigme5.#playList.length > 0) {
+            let audio = Enigme5.#playList[0];
+            if (!audio.paused && !audio.ended && audio.currentTime > 0) {
+                audio.onended = () => {
+                    Enigme5.#playList.shift();
+                    Enigme5.#playAudio();
+                };
+            } else {
+                audio.onended = () => {
+                    Enigme5.#playList.shift();
+                    Enigme5.#playAudio();
+                };
+                audio.play();
+            }
+        }
     }
 
     /**
@@ -75,11 +320,11 @@ class Enigme4 {
     }
 
     static isQuestEnded() {
-        let doorIsOpen = LocalStorageService.getUserAttributes("enigme4.door");
-        let isFinished = LocalStorageService.getUserAttributes("egnime4.isFinished");
+        let isFinished =
+            LocalStorageService.getUserAttributes("egnime5.isFinished");
 
-        return doorIsOpen && isFinished;
+        return isFinished;
     }
 }
 
-export default Enigme4;
+export default Enigme5;

@@ -8,6 +8,8 @@ import Enigme1 from "./enigmes.js/enigme1.js";
 import Enigme2 from "./enigmes.js/enigme2.js";
 import Enigme3 from "./enigmes.js/enigme3.js";
 import LocalStorageService from "./services/localStorageService.js";
+import Enigme4 from "./enigmes.js/enigme4.js";
+import Enigme5 from "./enigmes.js/enigme5.js";
 
 class Game {
     static #instance = null;
@@ -23,7 +25,7 @@ class Game {
         },
     ];
 
-    #enigmes = [Enigme1, Enigme2, Enigme3];
+    #enigmes = [Enigme1, Enigme2, Enigme3, Enigme4, Enigme5];
 
     static getInstance() {
         if (!Game.#instance) {
