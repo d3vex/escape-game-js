@@ -1405,16 +1405,6 @@
         "interaction": "walls"
     },
     {
-        "x": 256,
-        "y": 384,
-        "interaction": "walls"
-    },
-    {
-        "x": 272,
-        "y": 384,
-        "interaction": "walls"
-    },
-    {
         "x": 288,
         "y": 384,
         "interaction": "walls"
@@ -1503,5 +1493,255 @@
         "x": 208,
         "y": 400,
         "interaction": "walls"
+    },
+    {
+        "x": 176,
+        "y": 384,
+        "interaction": "walls"
+    },
+    {
+        "x": 160,
+        "y": 384,
+        "interaction": "walls"
+    },
+    {
+        "x": 144,
+        "y": 384,
+        "interaction": "walls"
+    },
+    {
+        "x": 128,
+        "y": 384,
+        "interaction": "walls"
+    },
+    {
+        "x": 112,
+        "y": 384,
+        "interaction": "walls"
+    },
+    {
+        "x": 96,
+        "y": 384,
+        "interaction": "walls"
+    },
+    {
+        "x": 80,
+        "y": 384,
+        "interaction": "walls"
+    },
+    {
+        "x": 64,
+        "y": 384,
+        "interaction": "walls"
+    },
+    {
+        "x": 48,
+        "y": 384,
+        "interaction": "walls"
+    },
+    {
+        "x": 32,
+        "y": 384,
+        "interaction": "walls"
+    },
+    {
+        "x": 16,
+        "y": 384,
+        "interaction": "walls"
+    },
+    {
+        "x": 0,
+        "y": 384,
+        "interaction": "walls"
+    },
+    {
+        "x": 0,
+        "y": 368,
+        "interaction": "walls"
+    },
+    {
+        "x": 0,
+        "y": 352,
+        "interaction": "walls"
+    },
+    {
+        "x": 0,
+        "y": 336,
+        "interaction": "walls"
+    },
+    {
+        "x": 0,
+        "y": 320,
+        "interaction": "walls"
+    },
+    {
+        "x": 0,
+        "y": 304,
+        "interaction": "walls"
+    },
+    {
+        "x": 0,
+        "y": 288,
+        "interaction": "walls"
+    },
+    {
+        "x": 0,
+        "y": 272,
+        "interaction": "walls"
+    },
+    {
+        "x": 0,
+        "y": 256,
+        "interaction": "walls"
+    },
+    {
+        "x": 0,
+        "y": 240,
+        "interaction": "walls"
+    },
+    {
+        "x": 0,
+        "y": 224,
+        "interaction": "walls"
+    },
+    {
+        "x": 0,
+        "y": 208,
+        "interaction": "walls"
+    },
+    {
+        "x": 0,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 16,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 32,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 48,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 64,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 80,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 96,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 112,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 128,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 144,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 160,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 176,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 192,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 208,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 224,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 240,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 256,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 272,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 288,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 304,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 320,
+        "y": 192,
+        "interaction": "walls"
+    },
+    {
+        "x": 160,
+        "y": 304,
+        "interaction": "Enigme5.interactWithParchment"
+    },
+    {
+        "x": 176,
+        "y": 304,
+        "interaction": "Enigme5.interactWithParchment"
+    },
+    {
+        "x": 64,
+        "y": 288,
+        "interaction": "Enigme5.interactWithStele1"
+    },
+    {
+        "x": 112,
+        "y": 272,
+        "interaction": "Enigme5.interactWithStele2"
+    },
+    {
+        "x": 224,
+        "y": 272,
+        "interaction": "Enigme5.interactWithStele3"
+    },
+    {
+        "x": 272,
+        "y": 288,
+        "interaction": "Enigme5.interactWithStele4"
     }
 ]

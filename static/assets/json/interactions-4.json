@@ -1091,11 +1091,6 @@
     },
     {
         "x": 528,
-        "y": 352,
-        "interaction": "walls"
-    },
-    {
-        "x": 528,
         "y": 336,
         "interaction": "walls"
     },
@@ -1111,46 +1106,6 @@
     },
     {
         "x": 512,
-        "y": 336,
-        "interaction": "walls"
-    },
-    {
-        "x": 512,
-        "y": 352,
-        "interaction": "walls"
-    },
-    {
-        "x": 544,
-        "y": 352,
-        "interaction": "walls"
-    },
-    {
-        "x": 496,
-        "y": 336,
-        "interaction": "walls"
-    },
-    {
-        "x": 480,
-        "y": 336,
-        "interaction": "walls"
-    },
-    {
-        "x": 464,
-        "y": 336,
-        "interaction": "walls"
-    },
-    {
-        "x": 448,
-        "y": 336,
-        "interaction": "walls"
-    },
-    {
-        "x": 432,
-        "y": 336,
-        "interaction": "walls"
-    },
-    {
-        "x": 416,
         "y": 336,
         "interaction": "walls"
     },
