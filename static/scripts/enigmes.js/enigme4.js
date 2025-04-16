@@ -85,7 +85,7 @@ class Enigme4 {
         Enigme4.#eventDefined = true;
     }
 
-    static clickHandler(e) {
+    static async clickHandler(e) {
         let imgClicked = e.target;
         let imgId = imgClicked.getAttribute("id").split("_")[1];
         if (Enigme4.#combination.includes(imgId)) {
@@ -102,7 +102,7 @@ class Enigme4 {
                     "You hear a weird noise and the wall have move out."
                 );
                 togglePopUp();
-                Game.getInstance().nextState();
+                await Game.getInstance().nextState();
                 LocalStorageService.setUserAttributes(
                     "enigme4.isFinished",
                     true

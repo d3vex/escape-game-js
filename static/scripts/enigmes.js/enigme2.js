@@ -168,8 +168,8 @@ class Enigme2 {
                 "enigme2.timestampWhenEnded",
                 Date.now()
             );
+            await Game.getInstance().nextState();
             showInteraction();
-            Game.getInstance().nextState();
             messagePopUp("Success", "You made the knigth open the door.");
             togglePopUp();
             return true;

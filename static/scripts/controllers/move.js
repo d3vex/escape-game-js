@@ -23,13 +23,18 @@ class MovementController {
     }
 
     constructor(player) {
+        if(player) {
+            if(MovementController.#instance == null) {
+                this.player = player;
+                this.speed = player.speed;
+            }
+            if(MovementController.#instance != null && MovementController.#instance.player == null) {
+                MovementController.#instance.player = player;
+                MovementController.#instance.speed = player.speed;
+            }
+        }
         if (MovementController.#instance) {
             return MovementController.#instance;
-        }
-
-        this.player = player;
-        if (player) {
-            this.speed = player.speed;
         }
 
         this.keys = {

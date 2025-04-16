@@ -91,7 +91,7 @@ class Enigme3 {
      *      message: String}
      * }
      */
-    static vomitOnDoor() {
+    static async vomitOnDoor() {
         let vialAvailableToTake =
             LocalStorageService.getUserAttributes("enigme3.vial") == false
                 ? true
@@ -110,8 +110,8 @@ class Enigme3 {
                 "enigme3.timestampWhenEnded",
                 Date.now()
             );
+            await Game.getInstance().nextState();
             showInteraction();
-            Game.getInstance().nextState();
             MovementController.getInstance().resetMovementKeys();
             messagePopUp("Success", "You unlock the next room! And the effect of the vial is gone.");
             togglePopUp();

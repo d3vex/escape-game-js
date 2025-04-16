@@ -105,9 +105,9 @@ class Enigme1 {
         Date.now()
       );
       LocalStorageService.setUserAttributes("enigme1.isFinished", true);
+      await Game.getInstance().nextState();
 
       showInteraction()
-      await Game.getInstance().nextState();
 
       return {
         success: true,
