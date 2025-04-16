@@ -552,7 +552,7 @@
     {
         "x": 128,
         "y": 112,
-        "interaction": "walls"
+        "interaction": "Enigme2.takeHelmet"
     },
     {
         "x": 144,

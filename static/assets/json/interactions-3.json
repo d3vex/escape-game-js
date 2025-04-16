@@ -1258,5 +1258,10 @@
         "x": 624,
         "y": 352,
         "interaction": "walls"
+    },
+    {
+        "x": 464,
+        "y": 240,
+        "interaction": "walls"
     }
 ]

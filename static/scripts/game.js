@@ -14,9 +14,9 @@ class Game {
     static #entities = [
         {
             id: "knight",
-            x: 304,
+            x: 336,
             y: 128,
-            x2: 448,
+            x2: 464,
             y2: 240,
             secondCondition: Enigme2.isQuestEnded,
             img: "static/assets/images/knight.png",
