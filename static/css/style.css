@@ -7,6 +7,12 @@
     font-style: normal;
 }
 
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
 body {
     font-family: "PressStart";
     font-size: 2vh;
@@ -56,10 +62,21 @@ span {
     position: absolute;
     top: 15px;
     left: 15px;
+    * {
+        z-index: 10;
+    }
 }
 
 .pseudo label {
     margin-bottom: 5px;
+}
+
+.pseudo input {
+    padding: 10px;
+    color: white;
+    font-family: PressStart; 
+    font-size: smaller;
+    background-color: #302f35be;
 }
 
 .hideMessage {
@@ -139,6 +156,11 @@ span {
     text-align: center;
     box-shadow: 0 0 5px black;
     transition: background-color 0.3s ease, transform 0.3s ease;
+
+    &.timerDanger {
+        color: red;
+        animation: blink 1s infinite;
+    }
 }
 
 .messagePopUp {
@@ -259,6 +281,17 @@ span {
     margin-bottom: 1rem;
 }
 
+.overlay {
+    position: fixed; /* Full screen */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1; /* Behind the box */
+}
+
+
 .enigme2_dragNdrop {
     z-index: 100;
     display: none;
@@ -271,16 +304,6 @@ span {
     border-left: 3px solid #cecece;
     border-right: 2px solid #000;
     border-bottom: 2px solid #000;
-
-    .overlay {
-        position: fixed; /* Full screen */
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: -1; /* Behind the box */
-    }
 
     .dragNdrop_top {
         background-color: rgba(100, 114, 146, 0.5);

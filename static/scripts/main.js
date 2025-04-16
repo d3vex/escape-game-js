@@ -4,6 +4,7 @@ import "./GUI/manageATH.js";
 import "./GUI/messagePopUp.js";
 import "./GUI/startTimer.js";
 import "./GUI/gameOver.js"
+import "./GUI/pseudo.js"
 
 document.addEventListener("DOMContentLoaded", () => {
   const game = new Game();

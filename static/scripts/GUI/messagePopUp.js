@@ -13,9 +13,7 @@ function messagePopUp(popUpTitleArg, popUpMessageArg) {
 
 function togglePopUp() {
   const popUpBox = document.querySelector(".messagePopUp");
-
   const toggler = () => popUpBox.classList.toggle("popActive");
-  
   toggler();
   }
 
