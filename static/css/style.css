@@ -333,8 +333,8 @@ span {
             margin-left: 10px;
         }
         span {
-            margin: 10px;
             margin-left: 15px;
+            margin-bottom: 5px;
         }
     }
 
@@ -444,79 +444,29 @@ span {
             margin-left: 10px;
         }
         span {
-            margin: 10px;
             margin-left: 15px;
+            margin-bottom: 5px;
         }
     }
 
     .workspace {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
         width: auto;
-        height: 50vh;
+        height: 25vh;
         background: #64729265;
         position: relative;
         border: 1px dashed #ccc;
-    }
-    .block {
-        padding-left: 10px;
-        padding-right: 10px;
-        height: 50px;
-        color: white;
-        text-align: center;
-        line-height: 50px;
-        border-radius: 5px;
-        position: absolute;
-        cursor: grab;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -o-user-select: none;
-        user-select: none;
-    }
-    .go-forward {
-        background: #3498db;
-    }
-    .turn-left {
-        background: #e74c3c;
-    }
-    .turn-right {
-        background: #f1c40f;
-    }
-    .nested {
-        position: relative;
-        top: 0;
-        left: 0;
-    }
 
-    .dragNdrop_bottom {
-        padding: 10px 10px;
-        background-color: rgba(100, 114, 146, 0.5);
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap-reverse;
-        flex-direction: row;
-        gap: 2vw;
+        img {
+            width: 5vh;
+            image-rendering: pixelated;
+        }
     }
-    .run-button {
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        background: #27ae60;
-        color: white;
-        border: none;
-        border-radius: 5px;
-    }
-    .clear-btn {
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        background: rgba(255, 0, 0, 0.2);
-        color: white;
-        border: none;
-        border-radius: 5px;
-    }
-    .clear-btn:hover {
-        background-color: rgba(255, 0, 0, 0.8);
-    }
+   
 }
 
 .gameOver {
