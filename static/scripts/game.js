@@ -19,7 +19,7 @@ class Game {
             x2: 464,
             y2: 240,
             secondCondition: Enigme2.isQuestEnded,
-            img: "static/assets/images/knight.png",
+            img: "static/assets/images/sprite/knight/idle.png",
         },
     ];
 
