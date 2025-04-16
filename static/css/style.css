@@ -278,7 +278,12 @@ span {
 .questBox span {
     display: block;
     margin-top: -0.2rem;
+    margin-left: 3rem;
     margin-bottom: 1rem;
+}
+
+.hiddenQuest {
+    display: none;
 }
 
 .overlay {

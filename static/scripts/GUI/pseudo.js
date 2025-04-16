@@ -5,7 +5,7 @@ function pseudo() {
     const pseudoTxt = document.querySelector(".pseudo input");
 
     pseudoTxt.addEventListener("input", () => {
-        if (pseudoTxt.value.trim() !== "") {
+        if (pseudoTxt.value !== "") {
             startButton.disabled = false ;
         } else {
             startButton.disabled = true ;
