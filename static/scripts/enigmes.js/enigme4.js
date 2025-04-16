@@ -94,7 +94,7 @@ class Enigme4 {
             imgClicked.style.opacity = "0.5";
         }
         if (Enigme4.#combination.length == 4) {
-            if (Enigme4.#combination == "6142") {
+            if (Enigme4.#combination == "5142") {
                 messagePopUp(
                     "Oh... A noise!",
                     "You hear a weird noise and the wall have move out."

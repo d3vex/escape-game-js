@@ -109,7 +109,7 @@ class Enigme1 {
             await Game.getInstance().nextState();
 
             showInteraction();
-            hiddenQuest(this.enigme.id);
+            hiddenQuest(Enigme1.enigme.id);
             return {
                 success: true,
                 message: "You opened the door.",
@@ -145,11 +145,9 @@ class Enigme1 {
         let doorIsOpen = LocalStorageService.getUserAttributes("enigme1.Door");
         let isFinished =
             LocalStorageService.getUserAttributes("enigme1.isFinished");
-        let timestampWhenEnded = LocalStorageService.getUserAttributes(
-            "enigme1.timestampWhenEnded"
-        );
+        console.log(!keyIsAvailableToTake && doorIsOpen && isFinished)
         if (!keyIsAvailableToTake && doorIsOpen && isFinished) {
-            hiddenQuest(this.enigme.id);
+            hiddenQuest(Enigme1.enigme.id);
             return true;
         }
         return false

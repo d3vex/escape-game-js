@@ -1407,12 +1407,12 @@
     {
         "x": 256,
         "y": 384,
-        "interaction": "walls"
+        "interaction": "Enigme4.interactWithWall"
     },
     {
         "x": 272,
         "y": 384,
-        "interaction": "walls"
+        "interaction": "Enigme4.interactWithWall"
     },
     {
         "x": 288,
