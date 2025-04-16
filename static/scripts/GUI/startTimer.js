@@ -50,5 +50,6 @@ function toggleDanger() {
     const toggler = () => timerBox.classList.toggle("timerDanger");
     toggler()
 }
+ 
 
-export default startTimer
+export {startTimer}
