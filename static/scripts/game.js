@@ -178,9 +178,6 @@ class Game {
 
                 console.log("Game initialized successfully!");
 
-                if (!this.isRunning) {
-                    this.start();
-                }
             } else {
                 console.log("Board resized, updating player position...");
                 this.player.updatePlayerSize();

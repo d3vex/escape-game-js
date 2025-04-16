@@ -7,6 +7,6 @@ import "./GUI/gameOver.js"
 import "./GUI/pseudo.js"
 
 document.addEventListener("DOMContentLoaded", () => {
-  const game = new Game();
+  const game = Game.getInstance()
   game.initialize();
 });

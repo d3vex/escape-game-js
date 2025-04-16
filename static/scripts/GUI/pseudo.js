@@ -1,4 +1,5 @@
 import {startTimer} from "./startTimer.js";
+import Game from "../game.js";
 
 const startButton = document.querySelector(".pseudo button");
     
@@ -22,12 +23,14 @@ function pseudo() {
             overlayEl.display = "none";
             startButton.style.display = "none";
             pseudoTxt.disabled = true;
+            Game.getInstance().start()
         });
     } else {
         pseudoTxt.value = pseudoStored;
         overlayEl.display = "none";
         startButton.style.display = "none";
         pseudoTxt.disabled = true;
+        Game.getInstance().start()
         startTimer(10, document.querySelector(".timer"))
     }
 }
