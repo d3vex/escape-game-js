@@ -62,10 +62,11 @@ class MovementController {
      */
     setupEventListeners() {
         window.addEventListener("keydown", (e) => {
+            const game = Game.getInstance()
             if (this.keys.hasOwnProperty(e.key)) {
                 this.keys[e.key] = true;
 
-                if (e.key === "e") {
+                if (e.key === "e" && game.isRunning) {
                     this.checkForAndTriggerInteraction();
                 }
             }

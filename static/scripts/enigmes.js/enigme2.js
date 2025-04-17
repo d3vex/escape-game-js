@@ -92,7 +92,9 @@ class Enigme2 {
     static manipulateTheKnigth() {
         // Set event to close the modal and restart the game
         document.querySelector(".enigme2_dragNdrop .closeSymbol").onclick =
-            Enigme2.#updateModal(false);
+            () => {
+                Enigme2.#updateModal(false);
+            };
 
         let helmetAvailableToTake =
             LocalStorageService.getUserAttributes("enigme2.helmet") == false
@@ -106,7 +108,7 @@ class Enigme2 {
         } else {
             showInteraction(); // Update the interaction message
             // Fetch the modal and display it if it exists
-            this.#updateModal(true); // Show the modal
+            Enigme2.#updateModal(true); // Show the modal
         }
     }
 
@@ -158,7 +160,6 @@ class Enigme2 {
         dragNdropContainer.style.display = "none";
         // Wait for and perform the knight movement
         await this.#moveKnigth(command);
-
         // Restart the game loop
         Game.getInstance().start();
         // Fetch the knight enity and check if it reach the door
