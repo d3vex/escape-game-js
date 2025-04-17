@@ -1,6 +1,5 @@
 import Game from "../game.js";
 import LocalStorageService from "../services/localStorageService.js";
-import Entity from "../models/entity.js";
 import { messagePopUp, togglePopUp } from "../GUI/messagePopUp.js";
 import { showInteraction } from "../utils.js";
 import MovementController from "../controllers/move.js";
@@ -32,7 +31,7 @@ class Enigme3 {
     }
 
     /**
-     * This method allow the user to grap the cursed vial.
+     * This method allow the user to drink the vial.
      * @returns {{
      *      success: Boolean,
      *      message: String}
@@ -45,11 +44,20 @@ class Enigme3 {
                 ? true
                 : false;
         if (vialAvailableToTake) {
+            // Set the vial as drunk and fetch next game state
             LocalStorageService.setUserAttributes("enigme3.vial", true);
-            Game.getInstance().nextState()
+            Game.getInstance().nextState();
+            // Randomize the movement keys
             MovementController.getInstance().randomizeMovementKeys();
-            showInteraction();
-            messagePopUp("You are drunk", "You're drunk and lose your sense of direction.");
+
+            showInteraction(); // Update the interaction message
+
+            // Display the message pop up to inform the user
+            // that he is drunk and lost his sense of direction
+            messagePopUp(
+                "You are drunk",
+                "You're drunk and lose your sense of direction."
+            );
             togglePopUp();
             return {
                 success: true,
@@ -62,6 +70,7 @@ class Enigme3 {
             };
         }
     }
+
     /**
      * This method return the message to display when
      * the user can interact with the vial.
@@ -84,7 +93,7 @@ class Enigme3 {
     }
 
     /**
-     * This method allow to take off the vial on the plate.
+     * This method allow to vomit and smelt the door.
      * It will end the enigme and unlock the next room.
      *
      * @returns {{
@@ -98,25 +107,12 @@ class Enigme3 {
                 ? true
                 : false;
         if (vialAvailableToTake) {
-            showInteraction();
             return {
                 success: false,
                 message: "You need to dring the vial before..",
             };
         } else {
-            LocalStorageService.setUserAttributes("enigme3.vial", false);
-            LocalStorageService.setUserAttributes("enigme3.door", true);
-            LocalStorageService.setUserAttributes("enigme3.isFinished", true);
-            LocalStorageService.setUserAttributes(
-                "enigme3.timestampWhenEnded",
-                Date.now()
-            );
-            await Game.getInstance().nextState();
-            showInteraction();
-            MovementController.getInstance().resetMovementKeys();
-            messagePopUp("Success", "You unlock the next room! And the effect of the vial is gone.");
-            togglePopUp();
-            hiddenQuest(Enigme3.enigme.id)
+            await Enigme3.#end(); // End the enigme
             return {
                 success: true,
                 message: "You open the door.",
@@ -136,7 +132,8 @@ class Enigme3 {
         if (!LocalStorageService.getUserAttributes("enigme3.vial")) {
             return {
                 mainMessage: "This door is tough",
-                subMessage: "It cannot be broken by hand, but some acid might do the trick.",
+                subMessage:
+                    "It cannot be broken by hand, but some acid might do the trick.",
             };
         }
         if (LocalStorageService.getUserAttributes("enigme3.isFinished")) {
@@ -151,6 +148,39 @@ class Enigme3 {
         };
     }
 
+    static async #end() {
+        // Set all the attributes to end the enigme
+        LocalStorageService.setUserAttributes("enigme3.vial", false);
+        LocalStorageService.setUserAttributes("enigme3.door", true);
+        LocalStorageService.setUserAttributes("enigme3.isFinished", true);
+        LocalStorageService.setUserAttributes(
+            "enigme3.timestampWhenEnded",
+            Date.now()
+        );
+        // Fetching next game state
+        await Game.getInstance().nextState();
+        showInteraction(); // Update the interaction message
+        // Reset the movement keys to default
+        MovementController.getInstance().resetMovementKeys();
+
+        // Display the message pop up to inform the user
+        // that he is no more drunk and he found back his sense of direction
+        messagePopUp(
+            "Success",
+            "You unlock the next room! And the effect of the vial is gone."
+        );
+        togglePopUp();
+        hiddenQuest(Enigme3.enigme.id); // Unlock the next clue
+    }
+
+    /**
+     * This method allow to check if the quest is ended.
+     * If the quest is finished, it will show the next clue.
+     * This method will also be used to get back to the old state (drunk/not drunk)
+     * after the user rejoin the game.
+     * 
+     * @returns {Boolean}
+     */
     static isQuestEnded() {
         let doorIsOpen = LocalStorageService.getUserAttributes("enigme3.door");
 
@@ -158,18 +188,20 @@ class Enigme3 {
         let isFinished =
             LocalStorageService.getUserAttributes("enigme3.isFinished");
 
-        if (arguments.length == 1 && arguments[0] == true) { // If there is a given parameter and the first one is set to true
-            // This means this method is called at the game initialization process
-            if(holdingVial) { // If the user leave while holding the vial
-                MovementController.getInstance().randomizeMovementKeys() // Randomize his movement keys
-            }
-            if(isFinished || holdingVial) {
-                Game.getInstance().nextState()
+        if (arguments.length == 1 && arguments[0] == true) {
+            // If there is a given parameter and  is set to true
+            // This means the method is called at the game initialization process
+            if (holdingVial) {
+                Game.getInstance().nextState(); // Fetch the state corresponding to a drunk vial
+                // If the user leave while drunk
+                MovementController.getInstance().randomizeMovementKeys(); // Randomize his movement keys
             }
         }
-        if(doorIsOpen && !holdingVial && isFinished) {
-            hiddenQuest(Enigme3.enigme.id)
-            return true
+        // If the enigme is ended, we unlock the next clue
+        if (doorIsOpen && !holdingVial && isFinished) {
+            Game.getInstance().nextState(); // Fetch the state corresponding to a drunk vial
+            hiddenQuest(Enigme3.enigme.id); // Unlock the next clue
+            return true;
         }
         return false;
     }

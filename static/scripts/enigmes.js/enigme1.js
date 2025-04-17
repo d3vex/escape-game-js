@@ -2,7 +2,6 @@ import LocalStorageService from "../services/localStorageService.js";
 import Game from "../game.js";
 import { showInteraction } from "../utils.js";
 import hiddenQuest from "../GUI/hiddenQuest.js";
-const maxTimer = 15 * 60 * 1000; // 15 minutes in milliseconds
 
 class Enigme1 {
     /**
@@ -44,13 +43,12 @@ class Enigme1 {
                 : false;
         if (keyIsAvailableToTake) {
             LocalStorageService.setUserAttributes("enigme1.Key", true);
-            showInteraction();
+            showInteraction(); // Update the interaction message
             return {
                 success: true,
                 message: "You took the key.",
             };
         } else {
-            showInteraction();
             return {
                 success: false,
                 message: "You already took the key.",
@@ -93,28 +91,30 @@ class Enigme1 {
             LocalStorageService.getUserAttributes("enigme1.Key") == false
                 ? true
                 : false;
-        if (keyIsAvailableToTake) {
-            showInteraction();
-            return {
-                success: false,
-                message: "You need to find the key first.",
-            };
-        } else {
+        if (!keyIsAvailableToTake) {
+            // If the key is taken
+            // Set all attributes that are needed to finish the enigme
             LocalStorageService.setUserAttributes("enigme1.Door", true);
             LocalStorageService.setUserAttributes(
                 "enigme1.timestampWhenEnded",
                 Date.now()
             );
             LocalStorageService.setUserAttributes("enigme1.isFinished", true);
+            // Fetch the next game state
             await Game.getInstance().nextState();
 
-            showInteraction();
-            hiddenQuest(Enigme1.enigme.id);
+            showInteraction(); // Update the interaction message
+            hiddenQuest(Enigme1.enigme.id); // Unlock the next clue
             return {
                 success: true,
                 message: "You opened the door.",
             };
         }
+
+        return {
+            success: false,
+            message: "You need to find the key first.",
+        };
     }
 
     /**
@@ -137,6 +137,13 @@ class Enigme1 {
             subMessage: "You have the key, escape now!",
         };
     }
+
+    /**
+     * This method return true if the quest is ended.
+     * If the quest is ended, it will also show the next clues
+     *
+     * @returns {Boolean}
+     */
     static isQuestEnded() {
         let keyIsAvailableToTake =
             LocalStorageService.getUserAttributes("enigme1.Key") == false
@@ -146,10 +153,10 @@ class Enigme1 {
         let isFinished =
             LocalStorageService.getUserAttributes("enigme1.isFinished");
         if (!keyIsAvailableToTake && doorIsOpen && isFinished) {
-            hiddenQuest(Enigme1.enigme.id);
+            hiddenQuest(Enigme1.enigme.id); // Means that the quest is ended, so we unlock the next clue
             return true;
         }
-        return false
+        return false;
     }
 }
 

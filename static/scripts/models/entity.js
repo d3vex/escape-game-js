@@ -23,6 +23,7 @@ class Entity {
         this.#position = { x: x, y: y };
         this.#element = document.getElementById(id);
         if (x == -1 && y == -1) {
+            // If no position is given, fetch it from the element
             this.#position.x = Math.floor(
                 this.#element.offsetLeft / actualSizeMultiplier
             );
@@ -32,9 +33,9 @@ class Entity {
         }
         this.#speed = 1;
         this.#boardElement = document.getElementById("board");
-        this.#size = 16; // Taille du joueur
+        this.#size = 16; // Entity size
         this.#facing = 1; // NORTH = 0, EAST = 1, SOUTH = 2, WEST = 3
-        
+
         // Preload walking animations
         this.#preloadAnimations();
         this.updateSprite();
@@ -44,6 +45,12 @@ class Entity {
         return this.#position;
     }
 
+    /**
+     * This method will teleport entity to a specific point
+     *
+     * @param {Number} x
+     * @param {Number} y
+     */
     goTo(x, y) {
         this.#position.x = x;
         this.#position.y = y;
@@ -60,9 +67,13 @@ class Entity {
         this.updateSprite();
     }
 
+    /**
+     * This method will move the entity forward in the direction it is facing
+     * until it hits a wall.
+     */
     async moveForward() {
         this.#isMoving = true;
-        
+
         switch (this.#facing) {
             case 0: // NORTH
                 while (this.#move(0, -this.#speed)) {
@@ -85,10 +96,18 @@ class Entity {
                 }
                 break;
         }
-        
+
         this.#isMoving = false;
     }
 
+    /**
+     * This method will move the entity in absolute coordinates
+     * It will return false if the entity hit a wall and cannot do the move
+     *
+     * @param {Number} dx
+     * @param {Number} dy
+     * @returns {Boolean}
+     */
     #move(dx, dy) {
         const boardRect = this.#boardElement.getBoundingClientRect();
         const playerRect = this.#element.getBoundingClientRect();
@@ -120,6 +139,9 @@ class Entity {
         return true;
     }
 
+    /**
+     * This method will update the entity position
+     */
     updatePosition() {
         if (this.#element) {
             this.#positionUpdated = true;
@@ -133,6 +155,9 @@ class Entity {
         }
     }
 
+    /**
+     * This method will update the entity size
+     */
     updateEntitySize() {
         if (this.#element) {
             this.#element.style.width = `${16 * actualSizeMultiplier}px`;
@@ -140,15 +165,25 @@ class Entity {
         }
     }
 
+    /**
+     * This method will start the entity render loop
+     */
     start() {
         this.isRunning = true;
         this.moveLoop();
     }
 
+    /**
+     * This method will stop the entity render loop
+     */
     stop() {
         this.isRunning = false;
     }
 
+    /**
+     * This method is a loop that update the entity position
+     * and the animation
+     */
     moveLoop() {
         const now = performance.now();
         const deltaTime = now - this.#lastFrameTime;
@@ -156,7 +191,7 @@ class Entity {
         if (deltaTime >= CYCLE_DURATION && this.isRunning) {
             this.#lastFrameTime = now - (deltaTime % CYCLE_DURATION);
             this.updatePosition();
-            
+
             // Update animation frames only if moving
             if (this.#isMoving) {
                 this.#updateAnimation(now);
@@ -168,6 +203,10 @@ class Entity {
         }
     }
 
+    /**
+     * This method allow to wait the next entity position update
+     * It will return a promise that will resolve when the position is updated
+     */
     async waitForPositionToUpdate() {
         return new Promise((resolve) => {
             const interval = setInterval(() => {
@@ -180,36 +219,50 @@ class Entity {
         });
     }
 
+    /**
+     * This method allow to load in cache all animations
+     * @returns {Promise}
+     */
     async #preloadAnimations() {
         // Map directions to string representation for file paths
         const directionMap = {
             0: "north",
             1: "east",
             2: "south",
-            3: "west"
+            3: "west",
         };
-        
-        const baseUrl = 'static/assets/images/sprite/knight/';
+
+        const baseUrl = "static/assets/images/sprite/knight/";
         const promises = [];
-        
+
         for (const [dirNum, dirName] of Object.entries(directionMap)) {
             const animKey = `walk-${dirNum}`;
             this.#animationFrames[animKey] = [];
-            
+
             // Knight animations have 8 frames
             for (let i = 1; i <= 8; i++) {
                 const src = `${baseUrl}walk/${dirName}${i}.png`;
-                promises.push(preloadImage(src).then(img => {
-                    this.#animationFrames[animKey][i-1] = src;
-                }).catch(err => {
-                    console.warn(`Failed to preload entity animation ${src}:`, err);
-                }));
+                promises.push(
+                    preloadImage(src)
+                        .then((img) => {
+                            this.#animationFrames[animKey][i - 1] = src;
+                        })
+                        .catch((err) => {
+                            console.warn(
+                                `Failed to preload entity animation ${src}:`,
+                                err
+                            );
+                        })
+                );
             }
         }
-        
+
         return Promise.all(promises);
     }
 
+    /**
+     * This method will update the animation frame
+     */
     #updateAnimation(timestamp) {
         if (!this.#lastAnimationTime) {
             this.#lastAnimationTime = timestamp;
@@ -220,37 +273,56 @@ class Entity {
 
         if (deltaTime >= this.#animationSpeed) {
             this.#lastAnimationTime = timestamp;
-            this.#animationFrame = (this.#animationFrame % this.#animationFrameCount) + 1;
+            this.#animationFrame =
+                (this.#animationFrame % this.#animationFrameCount) + 1;
             this.updateSprite();
         }
     }
 
+    /**
+     * This method will update the sprite of the entity
+     * depending on the facing direction and the animation frame
+     */
     updateSprite() {
         if (this.#element) {
             const facingNum = this.#facing;
             const animKey = `walk-${facingNum}`;
-            
+
             // Choose the correct walking frame
-            if (this.#animationFrames[animKey] && this.#animationFrames[animKey][this.#animationFrame - 1]) {
-                this.#element.style.backgroundImage = `url('${this.#animationFrames[animKey][this.#animationFrame - 1]}')`;
+            if (
+                this.#animationFrames[animKey] &&
+                this.#animationFrames[animKey][this.#animationFrame - 1]
+            ) {
+                this.#element.style.backgroundImage = `url('${
+                    this.#animationFrames[animKey][this.#animationFrame - 1]
+                }')`;
             } else {
                 const directionMap = ["north", "east", "south", "west"];
-                const url = `static/assets/images/sprite/knight/walk/${directionMap[facingNum]}${this.#animationFrame}.png`;
+                const url = `static/assets/images/sprite/knight/walk/${
+                    directionMap[facingNum]
+                }${this.#animationFrame}.png`;
                 this.#element.style.backgroundImage = `url('${url}')`;
-                
+
                 // Try to cache this image for next time
-                preloadImage(url).then(img => {
-                    if (!this.#animationFrames[animKey]) {
-                        this.#animationFrames[animKey] = [];
-                    }
-                    this.#animationFrames[animKey][this.#animationFrame - 1] = url;
-                }).catch(err => {
-                    console.warn(`Failed to load entity sprite ${url}:`, err);
-                });
+                preloadImage(url)
+                    .then((img) => {
+                        if (!this.#animationFrames[animKey]) {
+                            this.#animationFrames[animKey] = [];
+                        }
+                        this.#animationFrames[animKey][
+                            this.#animationFrame - 1
+                        ] = url;
+                    })
+                    .catch((err) => {
+                        console.warn(
+                            `Failed to load entity sprite ${url}:`,
+                            err
+                        );
+                    });
             }
-            
+
             // Ensure pixelated rendering
-            this.#element.style.imageRendering = 'pixelated';
+            this.#element.style.imageRendering = "pixelated";
         }
     }
 }

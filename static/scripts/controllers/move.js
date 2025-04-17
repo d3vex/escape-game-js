@@ -23,7 +23,7 @@ class MovementController {
     }
 
     constructor(player) {
-        if(player) {
+        if(player) { // Allow to complete incomplete instance
             if(MovementController.#instance == null) {
                 this.player = player;
                 this.speed = player.speed;
@@ -56,7 +56,10 @@ class MovementController {
 
         this.setupEventListeners();
     }
-
+    /**
+     * This method is used to setup the event listeners 
+     * for the movement and interaction keys.
+     */
     setupEventListeners() {
         window.addEventListener("keydown", (e) => {
             if (this.keys.hasOwnProperty(e.key)) {
@@ -139,6 +142,10 @@ class MovementController {
         }
     }
 
+    /**
+     * This method make the player move depending on the keys pressed.
+     * It will update the player position and the facing direction.
+     */
     updatePlayerPosition() {
         let dx = 0;
         let dy = 0;

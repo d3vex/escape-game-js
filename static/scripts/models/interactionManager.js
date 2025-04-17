@@ -7,7 +7,6 @@ import Enigme5 from "../enigmes.js/enigme5.js";
 class InteractionManager {
   constructor() {
     this.interactionHandlers = {
-      PrintConsole: this.printConsole,
       Enigme1: Enigme1,
       Enigme2: Enigme2,
       Enigme3: Enigme3,
@@ -69,9 +68,6 @@ class InteractionManager {
     return handler;
   }
 
-  printConsole() {
-    console.log("Test interaction");
-  }
 }
 
 export default new InteractionManager();

@@ -1,148 +1,21 @@
 import Game from "../game.js";
 import LocalStorageService from "../services/localStorageService.js";
-import Entity from "../models/entity.js";
 import { messagePopUp, togglePopUp } from "../GUI/messagePopUp.js";
 import { showInteraction } from "../utils.js";
-import MovementController from "../controllers/move.js";
 
 /**
  * Represents the Enigme5 class, which contains the logic for the fifth enigma in the game.
  * This class includes methods for interacting with various elements of the enigma,
  * checking combinations, playing audio, and managing the enigma's state.
  *
- * @class Enigme5
- */
-
-/**
- * Retrieves the details of the enigma.
- *
- * @static
- * @returns {Object} An object containing the enigma's properties:
- * - id {number}: The ID of the enigma.
- * - name {string}: The name of the enigma.
- * - description {string}: A description of the enigma.
- * - hint {string}: A hint for solving the enigma.
- * - hintPrice {number}: The price of the hint.
- * - level {number}: The difficulty level of the enigma.
- */
-
-/**
- * Handles interaction with the parchment.
- *
- * @static
- * @returns {Object} An object containing:
- * - success {boolean}: Whether the interaction was successful.
- * - message {string}: A message describing the interaction result.
- */
-
-/**
- * Provides the message to display when interacting with the parchment.
- *
- * @static
- * @returns {Object} An object containing:
- * - mainMessage {string}: The main message to display.
- * - subMessage {string}: The sub-message to display.
- */
-
-/**
- * Handles interaction with Stele 1.
- *
- * @static
- */
-
-/**
- * Handles interaction with Stele 2.
- *
- * @static
- */
-
-/**
- * Handles interaction with Stele 3.
- *
- * @static
- */
-
-/**
- * Handles interaction with Stele 4.
- *
- * @static
- */
-
-/**
- * Provides the message to display when interacting with Stele 1.
- *
- * @static
- * @returns {Object} An object containing:
- * - mainMessage {string}: The main message to display.
- * - subMessage {string}: The sub-message to display.
- */
-
-/**
- * Provides the message to display when interacting with Stele 2.
- *
- * @static
- * @returns {Object} An object containing:
- * - mainMessage {string}: The main message to display.
- * - subMessage {string}: The sub-message to display.
- */
-
-/**
- * Provides the message to display when interacting with Stele 3.
- *
- * @static
- * @returns {Object} An object containing:
- * - mainMessage {string}: The main message to display.
- * - subMessage {string}: The sub-message to display.
- */
-
-/**
- * Provides the message to display when interacting with Stele 4.
- *
- * @static
- * @returns {Object} An object containing:
- * - mainMessage {string}: The main message to display.
- * - subMessage {string}: The sub-message to display.
- */
-
-/**
- * Checks the combination and adds a value to it. Plays audio if the combination is incomplete.
- * Ends the enigma if the combination is correct.
- *
- * @static
- * @async
- * @private
- * @param {string} value - The value to add to the combination.
- */
-
-/**
- * Ends the enigma, plays the final audio, and transitions to the next game state.
- *
- * @static
- * @async
- * @private
- */
-
-/**
- * Closes the modal and resumes the game.
- *
- * @static
- * @private
- */
-
-/**
- * Checks if the enigma has been completed.
- *
- * @static
- * @returns {boolean} True if the enigma is finished, false otherwise.
  */
 class Enigme5 {
     static #combination = "";
     static #goodCombination = "3124";
     static #playList = [];
 
-    constructor() {}
     /**
-     * This method allow to get the Enigme3 object
+     * This method allow to get the Enigme5 object
      * It will return an object with the following properties:
      * - id: the id of the enigme
      * - name: the name of the enigme
@@ -165,7 +38,7 @@ class Enigme5 {
     }
 
     /**
-     * This method allow the user to interact with the fake wall.
+     * This method allow the user to look at the parchment.
      * @returns {{
      *      success: Boolean,
      *      message: String}
@@ -173,12 +46,15 @@ class Enigme5 {
      *
      */
     static interactWithParchment() {
-        Game.getInstance().stop();
+        Game.getInstance().stop(); // Stop the game loop while interacting
         document.querySelector(".enigme5_scroll").style.display = "block";
+        // Close the modal when clicking on the close button
+        document.querySelector(".enigme5_scroll .closeSymbol").onclick =
+            Enigme5.#closeModal;
     }
     /**
      * This method return the message to display when
-     * the user can interact with the vial.
+     * the user can interact with the parchment.
      *
      * @returns {{
      *     mainMessage: String,
@@ -191,6 +67,7 @@ class Enigme5 {
         };
     }
 
+    // All the following methods are used to interact with the stele
     static interactWithStele1() {
         Enigme5.#combinationCheckAndAdd("1");
     }
@@ -204,6 +81,8 @@ class Enigme5 {
         Enigme5.#combinationCheckAndAdd("4");
     }
 
+    // All the following methods are used to display the message
+    // when the user interact with the stele
     static interactWithStele1_interact() {
         return {
             mainMessage: "Press it",
@@ -238,7 +117,9 @@ class Enigme5 {
      * @returns {Promise<HTMLAudioElement>} A promise that resolves to an Audio object.
      */
     static async fetchSong(path) {
-        const audio = new Audio(path);
+        const audio = new Audio(path); // Fetch the audio file
+        // Make a promise that resolve when the audio is loaded and can be played
+        // and reject if there is an error
         return new Promise((resolve, reject) => {
             audio.addEventListener("canplaythrough", () => {
                 resolve(audio);
@@ -250,19 +131,32 @@ class Enigme5 {
         });
     }
 
+    /**
+     * This method is used to add a value to the combinaison
+     * and check if the combinaison is correct.
+     *
+     * @param {Number} value
+     */
     static async #combinationCheckAndAdd(value) {
         if (Enigme5.#combination.length < 4) {
-            Enigme5.#combination += value;
+            // If the combinaison is not full
+            Enigme5.#combination += value; // Add the value to the combinaison
         }
         if (Enigme5.#combination.length == 4) {
+            // If the combinaison is full
             if (Enigme5.#combination == Enigme5.#goodCombination) {
-                Enigme5.#end();
-                Enigme5.#closeModal();
+                // And correct
+                await Enigme5.#end(); // End the enigme
             } else {
+                // If the combinaison is not correct
+                // Display a message to inform the user and reset the combinaison
                 messagePopUp("The combination is incorrect");
+                togglePopUp();
                 Enigme5.#combination = "";
             }
         } else {
+            // If the combinaison is not full
+            // Play the sound of the stele
             const audio = await Enigme5.fetchSong(
                 "./static/assets/song/Fur_elise-" + value + ".mp3"
             );
@@ -271,37 +165,54 @@ class Enigme5 {
         }
     }
 
+    /**
+     * This method allow to end the enigme.
+     * It will set all the attributes to end the enigme
+     * and unlock the next room.
+     * It will also play the song of the enigme.
+     */
     static async #end() {
+        // Set the attributes to end the enigme
         LocalStorageService.getUserAttributes("enigme5.isFinished", true);
         const audio = await Enigme5.fetchSong(
             "./static/assets/song/Fur_elise.mp3"
-        );
+        ); // Fetch the song and add it to the playlist
         Enigme5.#playList.push(audio);
-        Enigme5.#playAudio();
+        Enigme5.#playAudio(); // request the playlist to play the song
+        // Inform the user that he finished the enigme
         messagePopUp(
             "Now the king",
             "You find your hymn, now go to your throne"
         );
         togglePopUp();
+        // Fetching the next game state
         await Game.getInstance().nextState();
         showInteraction();
     }
 
+    /**
+     * This method is used to manage playlist
+     * and make sure only one song is playing at a time.
+     * It will play the next song in the playlist
+     * Only if no other one is currently playing.
+     * Otherwise the next song will be automatically played
+     */
     static #playAudio() {
+        // If the playlist is not empty
         if (Enigme5.#playList.length > 0) {
             let audio = Enigme5.#playList[0];
-            if (!audio.paused && !audio.ended && audio.currentTime > 0) {
-                audio.onended = () => {
-                    Enigme5.#playList.shift();
-                    Enigme5.#playAudio();
-                };
-            } else {
-                audio.onended = () => {
-                    Enigme5.#playList.shift();
-                    Enigme5.#playAudio();
-                };
-                audio.play();
+            // Check if the audio is not playing
+            if (!(!audio.paused && !audio.ended && audio.currentTime > 0)) {
+                audio.play(); // Play the audio
             }
+            // Set the audio listener to play automatically the next song
+            // when the current one is finished
+            audio.onended = () => {
+                // Set the audio event to play the next song
+                // when it will be finished
+                Enigme5.#playList.shift();
+                Enigme5.#playAudio();
+            };
         }
     }
 
@@ -319,6 +230,9 @@ class Enigme5 {
         Game.getInstance().start();
     }
 
+    /**
+     * This method allow to check if the enigme is ended.
+     */
     static isQuestEnded() {
         let isFinished =
             LocalStorageService.getUserAttributes("egnime5.isFinished");
