@@ -26,9 +26,9 @@ class Enigme4 {
     static get enigme() {
         return {
             id: 4,
-            name: "The port is weird...",
+            name: "The forgotten sequence",
             description:
-                "This wall might be a fake one. Find the good combination to open it.",
+                "A massive door blocks your path. On this door are engraved symbols, accompanied by a phrase:\n\"Only the right sequence will open the way.\"\nYou need to observe the clues around you to find the right combination of symbols and unlock the door.",
             hint: "You have all the tools you need to open it.",
             hintPrice: 50,
             level: 1,
@@ -75,7 +75,6 @@ class Enigme4 {
      */
     static #setListener() {
         document.querySelectorAll(".enigme4_findOrder img").forEach((img) => {
-            console.log(img);
             img.addEventListener("click", Enigme4.clickHandler);
         });
         document

@@ -5,6 +5,7 @@ import { showInteraction } from "../utils.js";
 import MovementController from "../controllers/move.js";
 import hiddenQuest from "../GUI/hiddenQuest.js";
 import Enigme4 from "./enigme4.js";
+import { updateEnigmeBoxContent } from "../GUI/enigmeManager.js";
 
 class Enigme3 {
     /**
@@ -22,9 +23,9 @@ class Enigme3 {
     static get enigme() {
         return {
             id: 3,
-            name: "Find the cursed vial...",
+            name: "The balancing act",
             description:
-                "You must retrieve the cursed vial and place it near the door.",
+                "You arrive in a room where everything seems to be wobbling. A commodity catches your eye. \nAn inscription on the wall reads:\n\"You're drunk, but you've got to keep moving. Find your balance to keep going.\"\nYou have to solve a mini-game in which you must maintain perfect balance as you move to the exit.",
             hint: "When you have the vial, your movement will be randomized",
             hintPrice: 50,
             level: 1,

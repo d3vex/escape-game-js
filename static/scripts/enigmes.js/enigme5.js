@@ -2,6 +2,9 @@ import Game from "../game.js";
 import LocalStorageService from "../services/localStorageService.js";
 import { messagePopUp, togglePopUp } from "../GUI/messagePopUp.js";
 import { showInteraction } from "../utils.js";
+import { stopTimer } from "../GUI/startTimer.js";
+import { launchConfetti } from "../GUI/effects.js";
+import { updateEnigmeBoxContent } from "../GUI/enigmeManager.js";
 
 /**
  * Represents the Enigme5 class, which contains the logic for the fifth enigma in the game.
@@ -29,8 +32,9 @@ class Enigme5 {
     static get enigme() {
         return {
             id: 5,
-            name: "Become the king",
-            description: "The last thing you need to do is to create your hymn",
+            name: "The harmony of steles",
+            description:
+                'The room you enter is vast, silent... seemingly empty. Massive columns support a ceiling so high it\'s lost in the darkness. In the center, four stone steles are arranged. Each one looks ancient, engraved with forgotten symbols and adorned with a dull crystal.\n\nWhen you touch the first, it emits a crystalline, brief, almost melancholy sound. The others react in the same way: each stele sings a note, a short, fragmented melody.\n\nOn the floor between the steles, a barely visible phrase appears when you touch it with your fingers:\n\n"Harmony begets revelation. Only the perfect sequence will reveal what lies dormant."',
             hint: "All stellar will make a song",
             hintPrice: 50,
             level: 1,
@@ -109,6 +113,46 @@ class Enigme5 {
     }
 
     /**
+     * This method allow the user to end the game
+     * when interact with the throne.
+     */
+    static async endTheGame() {
+        if (LocalStorageService.getUserAttributes("enigme5.melody") == true) {
+            const audio = await Enigme5.fetchSong(
+                "./static/assets/song/Fur_elise.mp3"
+            ); // Fetch the song and add it to the playlist
+            Enigme5.#playList.push(audio);
+            Enigme5.#playAudio(); // request the playlist to play the song
+            // Inform the user that he finished the enigme
+            messagePopUp("You finished the enigme");
+            togglePopUp();
+            // End the enigme
+            await Enigme5.#end();
+        }
+    }
+
+    /**
+     * This method return the message to display when
+     * the user can interact with the throne.
+     *
+     * @returns {{
+     *     mainMessage: String,
+     *     subMessage: String}}
+     */
+    static endTheGame_interact() {
+        if (LocalStorageService.getUserAttributes("enigme5.melody") == true) {
+            return {
+                mainMessage: "You can now go to your throne",
+                subMessage: "You are the king",
+            };
+        }
+        return {
+            mainMessage: "You can't go to your throne",
+            subMessage: "You need to find your hymn",
+        };
+    }
+
+    /**
      * Fetches an audio file and returns an Audio object.
      *
      * @static
@@ -146,7 +190,7 @@ class Enigme5 {
             // If the combinaison is full
             if (Enigme5.#combination == Enigme5.#goodCombination) {
                 // And correct
-                await Enigme5.#end(); // End the enigme
+                await Enigme5.#unlockThrone(); // End the enigme
             } else {
                 // If the combinaison is not correct
                 // Display a message to inform the user and reset the combinaison
@@ -166,20 +210,14 @@ class Enigme5 {
     }
 
     /**
-     * This method allow to end the enigme.
-     * It will set all the attributes to end the enigme
-     * and unlock the next room.
+     * This method allow to unlock the throne.
+     * It will set the melody as found
      * It will also play the song of the enigme.
      */
-    static async #end() {
-        // Set the attributes to end the enigme
-        LocalStorageService.getUserAttributes("enigme5.isFinished", true);
-        const audio = await Enigme5.fetchSong(
-            "./static/assets/song/Fur_elise.mp3"
-        ); // Fetch the song and add it to the playlist
-        Enigme5.#playList.push(audio);
-        Enigme5.#playAudio(); // request the playlist to play the song
-        // Inform the user that he finished the enigme
+    static async #unlockThrone() {
+        if (Enigme5.#combination != Enigme5.#goodCombination) return;
+        LocalStorageService.setUserAttributes("enigme5.melody", true);
+
         messagePopUp(
             "Now the king",
             "You find your hymn, now go to your throne"
@@ -188,6 +226,26 @@ class Enigme5 {
         // Fetching the next game state
         await Game.getInstance().nextState();
         showInteraction();
+        updateEnigmeBoxContent(
+            "The Coronation",
+            'After solving the five riddles, you sit upon the throne. A brilliant light floods the room, and the chains of your past shatter. You are now the sovereign, master of your destiny. But one question remains:\n"Were you destined for this power, or did the power choose you?"'
+        );
+    }
+
+    /**
+     * This method allow to end the enigme.
+     * It will set all the attributes to end the enigme
+     * and unlock the next room.
+     * It will also play the song of the enigme.
+     */
+    static async #end() {
+        // Set the attributes to end the enigme
+        LocalStorageService.setUserAttributes("enigme5.isFinished", true);
+        stopTimer();
+        Game.getInstance().stop();
+        launchConfetti();
+        document.querySelector(".gameWin")?.style.display = "block";
+        document.querySelector(".interactBox")?.style.bottom = "calc(-10vh - 4px)"
     }
 
     /**
@@ -234,10 +292,18 @@ class Enigme5 {
      * This method allow to check if the enigme is ended.
      */
     static isQuestEnded() {
+        let melody = LocalStorageService.getUserAttributes("enigme5.melody");
         let isFinished =
             LocalStorageService.getUserAttributes("egnime5.isFinished");
 
-        return isFinished;
+        if (melody == true) {
+            Game.getInstance().nextState();
+        }
+        if(melody && isFinished) {
+            Enigme5.#end();
+            return true
+        }
+        return false
     }
 }
 

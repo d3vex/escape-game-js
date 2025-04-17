@@ -308,6 +308,63 @@ span {
     display: none;
 }
 
+.gameOver {
+    padding: 35px;
+    position: absolute;
+    text-align: center;
+    background-color: #33333370;
+    border: 3px solid #cecece;
+    border-right: none;
+    border-bottom: 2px solid #000;
+    box-shadow: 0 0 5px black;
+    backdrop-filter: blur(6px);
+    transition: 0.3;
+    opacity: 0;
+
+    &.gameOverActive {
+        opacity: 1;
+    }
+}
+
+.gameOver h4 {
+    font-size: x-large;
+}
+
+.gameOverContent {
+    font-size: small;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    padding-top: 2vh;
+}
+
+.gameWin {
+    padding: 35px;
+    position: absolute;
+    text-align: center;
+    background-color: #33333370;
+    border: 3px solid #cecece;
+    border-right: none;
+    border-bottom: 2px solid #000;
+    box-shadow: 0 0 5px black;
+    backdrop-filter: blur(6px);
+    transition: 0.3;
+    display: none;
+}
+
+.gameWin h4 {
+    font-size: x-large;
+}
+
+.gameWinContent {
+    font-size: small;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    padding-top: 2vh;
+}
+
+
 .overlay {
     position: fixed; /* Full screen */
     top: 0;
@@ -569,36 +626,6 @@ span {
     }
 }
 
-.gameOver {
-    padding: 35px;
-    position: absolute;
-    text-align: center;
-    background-color: #33333370;
-    border: 3px solid #cecece;
-    border-right: none;
-    border-bottom: 2px solid #000;
-    box-shadow: 0 0 5px black;
-    backdrop-filter: blur(6px);
-    transition: 0.3;
-    opacity: 0;
-
-    &.gameOverActive {
-        opacity: 1;
-    }
-}
-
-.gameOver h4 {
-    font-size: x-large;
-}
-
-.gameOverContent {
-    font-size: small;
-    display: flex;
-    justify-content: space-evenly;
-    flex-direction: row;
-    padding-top: 2vh;
-}
-
 .closeSymbol {
     display: flex;
     cursor: pointer;
@@ -606,4 +633,22 @@ span {
     justify-content: right;
     align-items: center;
     margin-right: 5px;
+}
+
+.confetti {
+    position: fixed;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    opacity: 0.8;
+    z-index: 9999;
+    animation: fall 3s ease-out forwards;
+    border-radius: 2px;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
 }

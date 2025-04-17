@@ -1,6 +1,6 @@
 import gameOver from "./gameOver.js";
 import startButton from "./pseudo.js";
-
+let timerInterval = null;
 function startTimer(durationInMinutes, displayElement) {
     
     let remainingTime = durationInMinutes * 60; // Seconds to Minutes conversion
@@ -32,8 +32,13 @@ function startTimer(durationInMinutes, displayElement) {
     }
 
     // Update timer every seconds
-    const timerInterval = setInterval(updateTimer, 1000);
+    timerInterval = setInterval(updateTimer, 1000);
     updateTimer();
+}
+
+function stopTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
 }
 
 const timerEl = document.querySelector(".timer");
@@ -52,4 +57,4 @@ function toggleDanger() {
 }
  
 
-export {startTimer}
+export { startTimer, stopTimer}

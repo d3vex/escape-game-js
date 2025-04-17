@@ -24,9 +24,9 @@ class Enigme2 {
     static get enigme() {
         return {
             id: 2,
-            name: "Manage the knigth",
+            name: "Guiding the knight",
             description:
-                "Only the knigth can open the door. You need to find a way to talk with him.",
+                'You emerge from the dungeon into a room decorated with knightly equipment. At the end of the hall, a new room forms a labyrinth. A voice whispers to you:"What if I became one of them? I could escape"\nYou must disguise yourself as a knight and guide one of them to the exit, avoiding the traps.',
             hint: "Take the knigth helmet!",
             hintPrice: 50,
             level: 1,
@@ -162,8 +162,8 @@ class Enigme2 {
         dragNdropContainer.style.display = "none";
         // Wait for and perform the knight movement
         await this.#moveKnigth(command);
-        // Restart the game loop
-        Game.getInstance().start();
+        // Restart the game loop if the game is not ended
+        Enigme2.#isGameEnded() ? Game.getInstance().start() : null;
         // Fetch the knight enity and check if it reach the door
         const entity = new Entity(this.#elementId);
         if (
@@ -187,6 +187,14 @@ class Enigme2 {
         messagePopUp("Fail", "The knigth didn't reach the door. Try again.");
         togglePopUp();
 
+        return false;
+    }
+
+    static #isGameEnded() {
+        let remainingTime = localStorage.getItem("remainingTime");
+        if (remainingTime == null || remainingTime == 0) {
+            return true;
+        }
         return false;
     }
 
