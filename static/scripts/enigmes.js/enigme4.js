@@ -3,6 +3,7 @@ import LocalStorageService from "../services/localStorageService.js";
 import { messagePopUp, togglePopUp } from "../GUI/messagePopUp.js";
 import hiddenQuest from "../GUI/hiddenQuest.js";
 import Enigme5 from "./enigme5.js";
+import { updateEnigmeBoxContent } from "../GUI/enigmeManager.js";
 
 class Enigme4 {
     static #eventDefined = false;

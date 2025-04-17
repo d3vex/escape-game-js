@@ -1,203 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script type="module" src="./static/scripts/main.js"></script>
+        <script type="module" src="./static/scripts/GUI/dragNdrop.js"></script>
+        <link rel="stylesheet" href="./static/css/style.css" />
+        <title>Game</title>
+    </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script type="module" src="./static/scripts/main.js"></script>
-  <script type="module" src="./static/scripts/GUI/dragNdrop.js"></script>
-  <link rel="stylesheet" href="./static/css/style.css"></link>
-  <title>Game</title>
-</head>
+    <body>
+        <div class="pseudo">
+            <label>Pseudo</label>
+            <input type="text" placeholder="Enter you Pseudo here" autofocus />
+            <button disabled>Start Game</button>
+            <div class="overlay"></div>
+        </div>
 
-<body>
+        <div id="game">
+            <div id="board"></div>
+            <div id="player"></div>
+        </div>
 
-<div class="pseudo">
-  <label>Pseudo</label>
-  <input type="text" placeholder="Enter you Pseudo here" autofocus>
-  <button disabled>Start Game</button>
-  <div class="overlay"></div>
-</div>
+        <button class="quitGame">Quit Game</button>
 
-<div id="game">
-  <div id="board"></div>
-  <div id="player"></div>
-</div>
+        <div class="timer"></div>
 
-<button class="quitGame">Quit Game</button>
+        <div class="wrapper">
+            <div class="top">
+                <div class="square"><i class="fa-solid fa-arrow-up"></i></div>
+            </div>
 
-<div class="timer"></div>
+            <div class="bottom">
+                <div class="square"><i class="fa-solid fa-arrow-left"></i></div>
+                <div class="square"><i class="fa-solid fa-arrow-down"></i></div>
+                <div class="square">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </div>
+        </div>
 
-<div class="wrapper">
+        <div class="hideMessage">
+            <span>
+                Press [E] to Interact
+                <br />
+                Press [H] to Hide HUD
+            </span>
+        </div>
 
-  <div class="top">
-    <div class="square"><i class="fa-solid fa-arrow-up"></i></div>
-  </div>
+        <div class="messagePopUp" onclick='this.classList.toggle("popActive")'>
+            <p>messagePopUp here</p>
+            <div class="contentMessagePopUp">
+                <span> contentMessagePopUp here </span>
+            </div>
+        </div>
 
-  <div class="bottom">
-    <div class="square"><i class="fa-solid fa-arrow-left"></i></div>
-    <div class="square"><i class="fa-solid fa-arrow-down"></i></div>
-    <div class="square"><i class="fa-solid fa-arrow-right"></i></div>
-  </div>
-  
-</div>
+        <div class="interactBox">
+            <h6>- INTERACTION -</h6>
+            <p>
+                mainMessage here
+                <br />
+                <span> actionRealiseMessage here </span>
+            </p>
+        </div>
 
-<div class="hideMessage">
-    <span>
-      Press [E] to Interact
-      <br>
-      Press [H] to Hide HUD
-    </span>
-</div>
+        <div class="enigmaBox">
+            <h4>Enigma Title</h4>
+            <div class="contentEnigmaBox" dir="ltr">
+                <span>
+                    You open your eyes in oppressive darkness. The air is damp,
+                    and the smell of mold fills your nostrils. You are
+                    imprisoned in a cold, gloomy dungeon, with rusty chains
+                    around your wrists bearing witness to your captivity. You
+                    don't remember how you ended up here, but one thing is
+                    clear: you must escape. A mysterious voice echoes in your
+                    mind: "Only the worthy may escape and claim their destiny.
+                    Solve the riddles and take what is rightfully yours
+                </span>
+            </div>
+        </div>
 
-<div class="messagePopUp" onclick='this.classList.toggle("popActive")'>
-  <p>
-    messagePopUp here
-  </p>
-    <div class="contentMessagePopUp">  
-  <span>
-    contentMessagePopUp here
-  </span>
-    </div>
-</div>
+        <div class="questBox">
+            <h4>Clues</h4>
+            <div class="contentQuestBox">
+                <p>
+                    <input type="radio" disabled />
+                    1st Riddle
+                    <span> Find the key to exit your "Room" </span>
+                </p>
 
-<div class="interactBox">
-  <H6>- INTERACTION -</H6>
-  <p>
-    mainMessage here
-  <br>
-    <span>
-    actionRealiseMessage here
-    </span>
-  </p>
-</div>
+                <p class="hiddenQuest">
+                    <input type="radio" disabled />
+                    2nd Riddle
+                    <span> You must guide the Knight </span>
+                </p>
 
-<div class="enigmaBox">
-  <h4>    
-    Enigma Title
-  </h4>
-  <div class="contentEnigmaBox" dir="ltr">
-      <span> 
-        You open your eyes in oppressive darkness. The air is damp, and the smell of mold fills your nostrils. 
-        You are imprisoned in a cold, gloomy dungeon, with rusty chains around your wrists bearing witness to your captivity. 
-        You don't remember how you ended up here, but one thing is clear: you must escape. A mysterious voice echoes in your mind:
-        "Only the worthy may escape and claim their destiny. Solve the riddles and take what is rightfully yours
-      </span>
-  </div>
-</div>
+                <p class="hiddenQuest">
+                    <input type="radio" disabled />
+                    3rd Riddle
+                    <span> You're drunk. Good Luck. </span>
+                </p>
 
-<div class="questBox">
-  <h4>    
-    Clues
-  </h4>
-  <div class="contentQuestBox">
-      
-    <p> 
-      <input type="radio" disabled>
-      1st Riddle
-      <span>
-      Find the key to exit your "Room"
-      </span>
-    </p>  
+                <p class="hiddenQuest">
+                    <input type="radio" disabled />
+                    4th Riddle
+                    <span> Find the right Sequence </span>
+                </p>
 
-    <p class="hiddenQuest"> 
-      <input type="radio" disabled>
-      2nd Riddle
-      <span>
-      You must guide the Knight
-      </span>
-    </p>  
+                <p class="hiddenQuest">
+                    <input type="radio" disabled />
+                    5th Riddle
+                    <span> Sing the right tune to access the Throne </span>
+                </p>
+            </div>
+        </div>
 
-    <p class="hiddenQuest"> 
-      <input type="radio" disabled>
-      3rd Riddle
-      <span>
-      You're drunk. Good Luck.
-      </span>
-    </p>
+        <div class="gameOver">
+            <h4>Game Over</h4>
+            <div class="gameOverContent">
+                <button>Retry</button>
+                <button>Quit</button>
+            </div>
+        </div>
 
-    <p class="hiddenQuest"> 
-      <input type="radio" disabled>
-      4th Riddle
-      <span>
-      Find the right Sequence
-      </span>
-    </p>
+        <div class="enigme2_dragNdrop">
+            <div class="overlay"></div>
+            <div class="dragNdrop_top">
+                <div class="dragNdrop_title">
+                    <h3>Drag N Drop</h3>
+                    <span>Choose the next knight's movement</span>
+                </div>
 
-    <p class="hiddenQuest"> 
-      <input type="radio" disabled>
-      5th Riddle
-      <span>
-      Sing the right tune to access the Throne
-      </span>  
-    </p>
+                <span
+                    class="closeSymbol"
+                    onclick="document.querySelector('.enigme2_dragNdrop').style.display='none'"
+                >
+                    &times;
+                </span>
+            </div>
+            <div class="workspace" id="workspace"></div>
 
-  </div>
-</div>
+            <div class="dragNdrop_bottom">
+                <button class="clear-btn" id="enigme2_clear">Clear</button>
+                <button class="run-button" id="egnime2_run">Run</button>
+            </div>
+        </div>
 
-<div class="gameOver">
-<h4>Game Over</h4>
-  <div class="gameOverContent">
-    <button>
-      Retry
-    </button>
-    <button>
-      Quit
-    </button>
-  </div>
-</div>
+        <div class="enigme4_findOrder">
+            <div class="overlay"></div>
+            <div class="findOrder_top">
+                <div class="findOrder_title">
+                    <h3>Find the right order</h3>
+                    <span
+                        >Click on the image in the right order to unlock the
+                        next room</span
+                    >
+                </div>
 
-<div class="enigme2_dragNdrop">
-  <div class="overlay"></div>
-  <div class="dragNdrop_top">
-    <div class="dragNdrop_title">    
-      <h3>Drag N Drop</h3>
-      <span>Choose the next knight's movement</span>
-    </div>
-  
-    <span class="closeSymbol" onclick="document.querySelector('.enigme2_dragNdrop').style.display='none'">    &times;
-    </span>
-  </div>
-  <div class="workspace" id="workspace"></div>
+                <span
+                    class="closeSymbol"
+                    onclick="document.querySelector('.enigme4_findOrder').style.display='none'"
+                >
+                    &times;
+                </span>
+            </div>
+            <div class="workspace" id="workspace">
+                <img
+                    src="./static/assets/images/icons/Clé.png"
+                    alt="Pince"
+                    loading="lazy"
+                    id="enigme4_1"
+                    pixelated="true"
+                />
+                <img
+                    src="./static/assets/images/icons/Equerre.png"
+                    alt="Equerre"
+                    id="enigme4_2"
+                    loading="lazy"
+                />
+                <img
+                    src="./static/assets/images/icons/Helmet.png"
+                    alt="Casque"
+                    id="enigme4_3"
+                    loading="lazy"
+                />
+                <img
+                    src="./static/assets/images/icons/L.png"
+                    alt="Equerre en fer"
+                    id="enigme4_4"
+                    loading="lazy"
+                />
+                <img
+                    src="./static/assets/images/icons/Marteau.png"
+                    alt="Marteau"
+                    id="enigme4_5"
+                    loading="lazy"
+                />
+                <img
+                    src="./static/assets/images/icons/Water.png"
+                    alt="Verre d'eau"
+                    id="enigme4_6"
+                    loading="lazy"
+                />
+            </div>
+        </div>
+        <div class="enigme5_scroll" style="display: block;">
+            <div class="overlay"></div>
+            <div class="scroll">
+                <div class="scroll_top">
+                    <div class="scroll_title">
+                        <h3>Scroll</h3>
+                        <span>I think this give four position.</span>
+                    </div>
+                    <span
+                        class="closeSymbol"
+                        onclick="document.querySelector('.enigme4_findOrder').style.display='none'"
+                    >
+                        &times;
+                    </span>
+                </div>
+                <div class="scroll_content">
+                    <ul>
+                        <li>
+                            <span>Clue 1:</span> My first stands proud on the eastern rise — one of the two taller sisters — gazing silently toward the west.
+                        </li>
+                        <li>
+                            <span>Clue 2:</span> My second rests on the far western end, lowest of them all, yet steady as stone.
+                        </li>
 
-  <div class="dragNdrop_bottom">
-    <button class="clear-btn" id="enigme2_clear">Clear</button>
-    <button class="run-button" id="egnime2_run">Run</button>
-  </div>
-</div>
-
-<div class="enigme4_findOrder">
-  <div class="overlay"></div>
-  <div class="findOrder_top">
-    <div class="findOrder_title">    
-      <h3>Find the right order</h3>
-      <span>Click on the image in the right order to unlock the next room</span>
-    </div>
-  
-    <span class="closeSymbol" onclick="document.querySelector('.enigme4_findOrder').style.display='none'">    &times;
-    </span>
-  </div>
-  <div class="workspace" id="workspace">
-    <img src="./static/assets/images/icons/Clé.png" alt="Pince" loading="lazy" id="enigme4_1" pixelated="true">
-    <img src="./static/assets/images/icons/Equerre.png" alt="Equerre" id="enigme4_2" loading="lazy">
-    <img src="./static/assets/images/icons/Helmet.png" alt="Casque" id="enigme4_3" loading="lazy">
-    <img src="./static/assets/images/icons/L.png" alt="Equerre en fer" id="enigme4_4" loading="lazy">
-    <img src="./static/assets/images/icons/Marteau.png" alt="Marteau" id="enigme4_5" loading="lazy">
-    <img src="./static/assets/images/icons/Water.png" alt="Verre d'eau" id="enigme4_6" loading="lazy">
-
-  </div>
-  <div class="enigme5_scroll">
-    <div class="overlay"></div>
-    <div class="findOrder_top">
-      <div class="findOrder_title">    
-        <h3>Scroll</h3>
-        <span>The clues to unlock the next chamber</span>
-      </div>
-    
-      <span class="closeSymbol" onclick="document.querySelector('.enigme4_findOrder').style.display='none'">    &times;
-      </span>
-    
-  
-</div>
-</body>
+                        <li>
+                            <span>Clue 3:</span> My third leans close to the other high one, but on the western side — together, they brush the sky
+                        </li>
+                        <li>
+                            <span>Clue 4:</span> My last waits quietly on the eastern edge below, the humble beginning of the line.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

@@ -8,9 +8,15 @@
 }
 
 @keyframes blink {
-    0% { opacity: 1; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 body {
@@ -90,7 +96,7 @@ span {
 .pseudo input {
     padding: 10px;
     color: white;
-    font-family: PressStart; 
+    font-family: PressStart;
     font-size: smaller;
     background-color: #302f35be;
 }
@@ -312,7 +318,6 @@ span {
     z-index: 1; /* Behind the box */
 }
 
-
 .enigme2_dragNdrop {
     z-index: 100;
     display: none;
@@ -325,7 +330,6 @@ span {
     border-left: 3px solid #cecece;
     border-right: 2px solid #000;
     border-bottom: 2px solid #000;
-
 
     .overlay {
         z-index: -1;
@@ -437,7 +441,6 @@ span {
     border-right: 2px solid #000;
     border-bottom: 2px solid #000;
 
-
     .overlay {
         z-index: -1;
     }
@@ -482,7 +485,88 @@ span {
             image-rendering: pixelated;
         }
     }
-   
+}
+
+.enigme5_scroll {
+    z-index: 100;
+    display: none;
+    background: transparent;
+    margin: auto;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+
+    .overlay {
+        z-index: -1;
+    }
+
+    .scroll {
+        width: 25vw;
+        border: 5px solid #a67c52;
+        border-radius: 1vw;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        display: flex;
+        justify-self: center;
+        flex-direction: column;
+        background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+        background-color: #d2b48c75; /* fallback or base color */
+        background-blend-mode: multiply; /* or overlay, screen, etc. */
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .scroll_top {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap-reverse;
+        justify-content: space-between;
+        flex-direction: row;
+        border-bottom: 4px solid #a67c52;
+    }
+    .scroll_title {
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: column;
+        h3 {
+            margin: 10px;
+            margin-bottom: 10px;
+            margin-left: 10px;
+        }
+        span {
+            margin-left: 15px;
+            margin-bottom: 5px;
+        }
+    }
+
+    .scroll_content {
+        padding: 20px;
+        overflow-y: auto;
+        background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+        background-color: #d2b48c75; /* fallback or base color */
+        background-blend-mode: multiply; /* or overlay, screen, etc. */
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .scroll_content ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .scroll_content li {
+        margin-bottom: 10px;
+        padding-left: 10px;
+        border-left: 4px solid #a67c52;
+        font-size: 16px;
+        line-height: 18px;
+        span {
+            font-weight: bold;
+            font-size: 24px;
+            display: block;
+            padding: 5px;
+        }
+    }
 }
 
 .gameOver {
@@ -516,8 +600,10 @@ span {
 }
 
 .closeSymbol {
+    display: flex;
     cursor: pointer;
     font-size: x-large;
-    width: 4vw;
-    height: 4vh;
+    justify-content: right;
+    align-items: center;
+    margin-right: 5px;
 }
