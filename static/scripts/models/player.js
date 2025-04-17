@@ -148,16 +148,6 @@ class Player {
                 this.animationFrames[animKey][this.animationFrame]) {
                 this.element.style.backgroundImage = `url('${this.animationFrames[animKey][this.animationFrame]}')`;
             } else {
-                const url = `static/assets/images/sprite/${this.currentAnimation}/${this.facing}${this.animationFrame}.png`;
-                this.element.style.backgroundImage = `url('${url}')`;
-                preloadImage(url).then(img => {
-                    if (!this.animationFrames[animKey]) {
-                        this.animationFrames[animKey] = [];
-                    }
-                    this.animationFrames[animKey][this.animationFrame] = url;
-                }).catch(err => {
-                    console.warn(`Failed to load sprite ${url}:`, err);
-                });
             }
         }
     }
