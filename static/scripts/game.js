@@ -8,9 +8,26 @@ import Entity from "./models/entity.js";
 import {Enigme1, Enigme2, Enigme3, Enigme4, Enigme5}from "./enigmes/enigmes.js" 
 import LocalStorageService from "./services/localStorageService.js";
 
-
+/**
+ * @class Game
+ * @description Classe principale du jeu utilisant le pattern Singleton pour gérer l'état du jeu,
+ * les entités, les énigmes et la boucle de jeu.
+ */
 class Game {
+    /**
+     * @type {Game|null}
+     * @private
+     * @static
+     * @description Instance unique de la classe Game (pattern Singleton)
+     */
     static #instance = null;
+
+    /**
+     * @type {Array<Object>}
+     * @private
+     * @static
+     * @description Liste des entités du jeu avec leurs propriétés (position, condition d'apparition, etc.)
+     */
     static #entities = [
         {
             id: "knight",
@@ -22,9 +39,13 @@ class Game {
             img: "static/assets/images/sprite/knight/idle.png",
         },
     ];
-
     #enigmes = [Enigme1, Enigme2, Enigme3, Enigme4, Enigme5];
 
+    /**
+     * @static
+     * @returns {Game} L'instance unique de la classe Game
+     * @description Retourne l'instance unique de Game (pattern Singleton)
+     */
     static getInstance() {
         if (!Game.#instance) {
             Game.#instance = new Game();
@@ -32,6 +53,10 @@ class Game {
         return Game.#instance;
     }
 
+    /**
+     * @constructor
+     * @description Initialise l'instance du jeu si elle n'existe pas déjà
+     */
     constructor() {
         if (Game.#instance) {
             return Game.#instance;
@@ -48,6 +73,11 @@ class Game {
         Game.#instance = this;
     }
 
+    /**
+     * @async
+     * @returns {Promise<void>}
+     * @description Précharge tous les assets du jeu et déclenche un événement lorsque terminé
+     */
     async preloadAssets() {
         try {
             await preloadAllGameAssets();
@@ -62,11 +92,22 @@ class Game {
         }
     }
 
+    /**
+     * @async
+     * @returns {Promise<void>}
+     * @description Charge les données d'interactions pour l'état actuel du jeu
+     */
     async loadInteractions() {
         this.interactionsData = await loadInteractionsData(this.currentState);
         console.log(`Loaded ${this.interactionsData.length} interactions`);
     }
 
+    /**
+     * @async
+     * @param {number} newState - Le nouvel état du jeu
+     * @returns {Promise<void>}
+     * @description Change l'état actuel du jeu, met à jour l'arrière-plan et recharge les interactions
+     */
     async changeState(newState) {
         if (this.currentState !== newState) {
             console.log(`Changing state from ${this.currentState} to ${newState}`);
@@ -82,6 +123,11 @@ class Game {
         }
     }
 
+    /**
+     * @async
+     * @description Charge l'état suivant du jeu, met à jour l'arrière-plan et recharge les interactions
+     * @returns {Promise<void>}
+     */
     async nextState() {
         this.currentState++;
         console.log(`Loading state ${this.currentState}...`);
@@ -105,10 +151,12 @@ class Game {
         requestAnimationFrame(this.gameLoop.bind(this));
     }
 
-    stop() {
-        this.isRunning = false;
-    }
+    stop = () => this.isRunning = false
 
+
+    /**
+     * @description Boucle principale du jeu qui gère le rendu et la mise à jour des entités
+     */
     gameLoop() {
         const now = performance.now();
         const deltaTime = now - this.lastFrameTime;
@@ -125,7 +173,11 @@ class Game {
         }
     }
 
-    update(deltaTime) {
+    /**
+     * @description Met à jour l'état du jeu, y compris les animations et les interactions
+     * @param deltaTime
+     */
+    update() {
         if (this.player) {
             // Update player animation on each frame
             const now = performance.now();
@@ -133,12 +185,20 @@ class Game {
         }
     }
 
-    render() {
+    /**
+     * @description Rendu de l'état actuel du jeu
+     */
+    render = () => {
         if (this.player) {
             this.player.updatePosition();
         }
     }
 
+    /**
+     * @async
+     * @description Initialise le jeu, charge les assets et met en place l'environnement de jeu
+     * @returns {Promise<void>}
+     */
     async initialize() {
         console.log("Game initializing...");
         this.#fetchCurrentState();
@@ -148,6 +208,7 @@ class Game {
             setBoardBackground(this.currentState)
         );
 
+        // Load interactions data
         document.addEventListener("boardReady", async (event) => {
             if (!this.player) {
                 console.log("Board ready, initializing player...");
@@ -195,6 +256,10 @@ class Game {
         });
     }
 
+    /**
+     * @description Récupère l'état actuel du jeu en vérifiant si les énigmes sont terminées
+     * @returns {void}
+     */
     #fetchCurrentState() {
         if(Enigme5.isQuestEnded(true)) {
             this.currentState = 7;

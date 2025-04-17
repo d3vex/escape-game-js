@@ -2,6 +2,10 @@ import LocalStorageService from '../services/localStorageService.js';
 import { checkCollision } from '../utils.js';
 import { actualSizeMultiplier, preloadImage } from "./renderer.js";
 
+/**
+ * @class Player
+ * @description Classe représentant le joueur dans le jeu, gérant sa position, ses animations et ses collisions.
+ */
 class Player {
     constructor(x, y) {
         this.position = { x: x, y: y };
@@ -36,6 +40,12 @@ class Player {
         });
     }
 
+    /**
+     * Preload all animation frames for the player.
+     * This function loads images for player animations (idle and walk)
+     * in all four directions (north, east, south, west).
+     * @returns {Promise<Awaited<unknown>[]>}
+     */
     async preloadAnimations() {
         const baseUrl = 'static/assets/images/sprite/';
         const directions = [this.NORTH, this.EAST, this.SOUTH, this.WEST];
@@ -64,10 +74,15 @@ class Player {
         return Promise.all(promises);
     }
 
-    setCollisionsData(data) {
-        this.collisionsData = data;
-    }
+    setCollisionsData = (data) => this.collisionsData = data
 
+    /**
+     * Move the player in the specified direction.
+     * This function updates the player's position, checks for collisions,
+     * and updates the sprite based on the direction.
+     * @param dx
+     * @param dy
+     */
     move(dx, dy) {
         // Update facing direction based on movement
         if (dx > 0) this.facing = this.EAST;
@@ -101,6 +116,13 @@ class Player {
         this.updateSprite(); // Update sprite when direction changes
     }
 
+    /**
+     * Update the player's position on the screen.
+     * This function sets the player's position in local storage
+     * and updates the CSS transform properties.
+     * @returns {void}
+     * @description Update the player's position on the screen
+     */
     updatePosition() {
         LocalStorageService.setItem('playerPosition', this.position);
         if (this.element) {
@@ -110,6 +132,11 @@ class Player {
         }
     }
 
+    /**
+     * Update the size of the player element.
+     * This function sets the width and height of the player element
+     * based on the actual size multiplier.
+     */
     updatePlayerSize() {
         if (this.element) {
             this.element.style.width = `${16 * actualSizeMultiplier}px`;
@@ -117,7 +144,11 @@ class Player {
             this.element.style.imageRendering = 'pixelated';
         }
     }
-    
+
+    /**
+     * Start the idle animation for the player.
+     * This function sets the current animation to 'idle',
+     */
     startIdleAnimation() {
         this.currentAnimation = 'idle';
         this.animationFrame = 1;
@@ -125,7 +156,13 @@ class Player {
         this.isMoving = false;
         this.updateSprite();
     }
-    
+
+    /**
+     * Start the walk animation for the player.
+     * This function sets the current animation to 'walk',
+     * increments the animation frame,
+     * and updates the sprite.
+     */
     startWalkAnimation() {
         this.currentAnimation = 'walk';
         this.animationFrame = 1;
@@ -133,13 +170,22 @@ class Player {
         this.isMoving = true;
         this.updateSprite();
     }
-    
+
+    /**
+     * Stop the player's movement.
+     * This function sets the current animation to 'idle'
+     */
     stopMoving() {
         if (this.isMoving) {
             this.startIdleAnimation();
         }
     }
 
+    /**
+     * Update the sprite based on the current animation and facing direction.
+     * This function sets the background image of the player element
+     * based on the current animation and facing direction.
+     */
     updateSprite() {
         if (this.element) {
             const animKey = `${this.currentAnimation}-${this.facing}`;
@@ -152,6 +198,12 @@ class Player {
         }
     }
 
+    /**
+     * Update the animation frame based on the timestamp.
+     * This function checks if enough time has passed
+     * since the last animation frame update
+     * @param timestamp
+     */
     updateAnimation(timestamp) {
         if (!this.lastAnimationTime) {
             this.lastAnimationTime = timestamp;

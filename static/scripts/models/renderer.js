@@ -4,6 +4,11 @@ const sizeMultiplier = 2;
 let actualSizeMultiplier = 1;
 const imageCache = {}; // Cache for preloaded images
 
+/**
+ * Preload an image and store it in the cache.
+ * @param src
+ * @returns {Promise<unknown>}
+ */
 function preloadImage(src) {
     return new Promise((resolve, reject) => {
         if (imageCache[src]) {
@@ -21,6 +26,11 @@ function preloadImage(src) {
     });
 }
 
+/**
+ * Set the background of the board based on the current game state.
+ * @param state
+ * @returns {Promise<void>}
+ */
 async function setBoardBackground(state) {
     // Ensure state is a valid number
     if (typeof state !== "number") {
@@ -90,6 +100,12 @@ async function setBoardBackground(state) {
     }
 }
 
+/**
+ * Create a square div element to represent the player.
+ * This function is called when the board is ready.
+ * It ensures that the square is centered on the board.
+ * If the square already exists, it removes the old one before creating a new one.
+ */
 function createSquare() {
     const existingSquare = document.getElementById("pixel-square");
     if (existingSquare) {
@@ -171,6 +187,12 @@ function createEntity(id, x, y, imgSrc) {
     }
 }
 
+/**
+ * Preload all map assets (background images).
+ * This function loads images for maps 1 to 7.
+ * It uses the preloadImage function to load each image
+ * @returns {Promise<void>}
+ */
 async function preloadMapAssets() {
     const maxState = 7; // Preload up to Map-7
     console.log("Preloading all map backgrounds...");
@@ -190,6 +212,12 @@ async function preloadMapAssets() {
     }
 }
 
+/**
+ * Preload character animations.
+ * This function loads images for character animations (idle and walk)
+ * in all four directions (north, east, south, west).
+ * @returns {Promise<void>}
+ */
 async function preloadCharacterAnimations() {
     console.log("Preloading character animations...");
     const baseUrl = "static/assets/images/sprite/";
@@ -221,6 +249,12 @@ async function preloadCharacterAnimations() {
     }
 }
 
+/**
+ * Preload entity images.
+ * This function loads images for all entities in the game.
+ * It uses the preloadImage function to load each image.
+ * @returns {Promise<void>}
+ */
 async function preloadEntityImages() {
     console.log("Preloading entity images...");
     const promises = [];
@@ -241,6 +275,12 @@ async function preloadEntityImages() {
     }
 }
 
+/**
+ * Preload all game assets.
+ * This function combines the preloading of map assets,
+ * character animations, and entity images.
+ * @returns {Promise<boolean>}
+ */
 async function preloadAllGameAssets() {
     console.log("Starting preloading of all game assets...");
 
