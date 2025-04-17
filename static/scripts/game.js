@@ -196,6 +196,10 @@ class Game {
     }
 
     #fetchCurrentState() {
+        if(Enigme5.isQuestEnded(true)) {
+            this.currentState = 7;
+            return
+        }
         console.log("Fetching current state...");
         for (const enigme of this.#enigmes) {
             if (enigme.isQuestEnded(true)) {

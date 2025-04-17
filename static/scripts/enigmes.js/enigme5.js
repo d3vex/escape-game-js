@@ -301,7 +301,7 @@ class Enigme5 {
     static isQuestEnded() {
         let melody = LocalStorageService.getUserAttributes("enigme5.melody");
         let isFinished =
-            LocalStorageService.getUserAttributes("egnime5.isFinished");
+            LocalStorageService.getUserAttributes("enigme5.isFinished");
 
         if (melody == true) {
             Game.getInstance().nextState();
