@@ -1,4 +1,4 @@
-import Enigme2 from "../enigmes.js/enigme2.js";
+import Enigme2 from "../enigmes/enigme2.js";
 
 const workspace = document.querySelector(".enigme2_dragNdrop>#workspace");
 const blockTypes = ["forward", "left", "right"];
