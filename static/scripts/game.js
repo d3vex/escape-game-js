@@ -5,7 +5,7 @@ import { loadInteractionsData } from "./utils.js";
 import { CYCLE_DURATION } from "./variables.js";
 import { updateEnigmeBoxContent } from "./GUI/enigmeManager.js"
 import Entity from "./models/entity.js";
-import {Enigme1, Enigme2, Enigme3, Enigme4, Enigme5}from "./enigmes.js/enigmes.js" 
+import {Enigme1, Enigme2, Enigme3, Enigme4, Enigme5}from "./enigmes/enigmes.js" 
 import LocalStorageService from "./services/localStorageService.js";
 
 

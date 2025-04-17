@@ -4,7 +4,7 @@ import {
     Enigme3,
     Enigme4,
     Enigme5,
-} from "../enigmes.js/enigmes.js";
+} from "../enigmes/enigmes.js";
 
 class InteractionManager {
     constructor() {
