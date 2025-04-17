@@ -171,7 +171,8 @@ function createEntity(id, x, y, imgSrc) {
     }
 }
 
-async function preloadMapAssets(maxState = 3) {
+async function preloadMapAssets() {
+    const maxState = 7; // Preload up to Map-7
     console.log("Preloading all map backgrounds...");
     const mapPromises = [];
 
@@ -240,11 +241,11 @@ async function preloadEntityImages() {
     }
 }
 
-async function preloadAllGameAssets(maxState = 3) {
+async function preloadAllGameAssets() {
     console.log("Starting preloading of all game assets...");
 
     try {
-        await preloadMapAssets(maxState);
+        await preloadMapAssets();
         await preloadCharacterAnimations();
         await preloadEntityImages();
 
