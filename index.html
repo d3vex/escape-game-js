@@ -4,27 +4,45 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Escape game</title>
-        <link rel="stylesheet" href="./static/css/style.css" />
+        <link rel="stylesheet" href="./static/css/homeStyle.css" />
         <script type="module" src="./static/scripts/GUI/home.js"></script>
     </head>
     <body>
-        <div class="homePage">
-            <div class="homeBackground"></div>
-            <header class="homeHeader">
-                <div class="homeTitle">
-                    <h1>Escape Game</h1>
-                </div>
-                <div class="homeButtons">
-                    <a><button id="exitButton">Gitea</button></a>
-                </div>
-            </header>
-            <div class="homeContainer">
-                <h2>Welcome to the Escape Game!</h2>
-                <p>Can you solve the puzzles and escape?</p>
-                <button id="startButton">Start Game</button>
+        <div class="homeBackground"></div>
+        <header class="homeHeader">
+            <div class="homeTitle">
+                <h1>Escape Game</h1>
             </div>
-
-            <div class="leaderboard"></div>
+            <div class="homeButtons">
+                <a><button id="exitButton">Gitea</button></a>
+            </div>
+        </header>
+        <div class="homeContainer">
+            <h2>Welcome to the Escape Game!</h2>
+            <p>Can you solve the puzzles and escape?</p>
+            <a href="/game.html">
+                <button>Start Game</button>
+            </a>
+            <div class="leaderboardContainer">
+                <div class="leaderboardText">
+                    <h3>
+                        Leaderboard
+                    </h3>
+                    <p>
+                        Check out the top players and their scores!
+                        If you want to become one of them, just play the game with the button above!
+                        Try to make it to the leaderboard!
+                    </p>
+                </div>
+                <table class="leaderboard">
+                    <thead>
+                        <tr>
+                            <th>Pseudo</th>
+                            <th>Remaining time</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
     </body>
 </html>
