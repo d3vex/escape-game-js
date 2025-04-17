@@ -244,8 +244,15 @@ class Enigme5 {
         stopTimer();
         Game.getInstance().stop();
         launchConfetti();
-        document.querySelector(".gameWin")?.style.display = "block";
-        document.querySelector(".interactBox")?.style.bottom = "calc(-10vh - 4px)"
+        let gameWin = document.querySelector(".gameWin");
+        gameWin.querySelector("button").addEventListener("click", () => {
+            LocalStorageService.resetAttributes();
+            localStorage.removeItem("remainingTime");
+            location.reload();
+        });
+        document.querySelector(".gameWin").style.display = "block";
+        document.querySelector(".interactBox").style.bottom =
+            "calc(-10vh - 4px)";
     }
 
     /**
@@ -299,11 +306,11 @@ class Enigme5 {
         if (melody == true) {
             Game.getInstance().nextState();
         }
-        if(melody && isFinished) {
+        if (melody && isFinished) {
             Enigme5.#end();
-            return true
+            return true;
         }
-        return false
+        return false;
     }
 }
 

@@ -324,6 +324,17 @@ span {
     &.gameOverActive {
         opacity: 1;
     }
+
+    button {
+        font-family: PressStart;
+        padding: 10px 20px;
+        font-size: 12px;
+        cursor: pointer;
+        background: #333333;
+        color: white;
+        border: none;
+        border-radius: 5px;
+    }
 }
 
 .gameOver h4 {
@@ -359,11 +370,23 @@ span {
 .gameWinContent {
     font-size: small;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     flex-direction: row;
     padding-top: 2vh;
+    a {
+        text-decoration: none;
+    }
+    button {
+        font-family: PressStart;
+        padding: 10px 20px;
+        font-size: 12px;
+        cursor: pointer;
+        background: #333333;
+        color: white;
+        border: none;
+        border-radius: 5px;
+    }
 }
-
 
 .overlay {
     position: fixed; /* Full screen */

@@ -163,7 +163,7 @@ class Enigme2 {
         // Wait for and perform the knight movement
         await this.#moveKnigth(command);
         // Restart the game loop if the game is not ended
-        Enigme2.#isGameEnded() ? Game.getInstance().start() : null;
+        !Enigme2.#isGameEnded() ? Game.getInstance().start() : null;
         // Fetch the knight enity and check if it reach the door
         const entity = new Entity(this.#elementId);
         if (
