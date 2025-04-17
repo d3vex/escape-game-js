@@ -244,6 +244,10 @@ class Enigme5 {
         stopTimer();
         Game.getInstance().stop();
         launchConfetti();
+
+        // Ajouter le score au leaderboard
+        await Enigme5.#saveScoreToLeaderboard();
+
         let gameWin = document.querySelector(".gameWin");
         gameWin.querySelector("button").addEventListener("click", () => {
             LocalStorageService.resetAttributes();
@@ -254,6 +258,34 @@ class Enigme5 {
         document.querySelector(".interactBox").style.bottom =
             "calc(-10vh - 4px)";
     }
+
+    static async #saveScoreToLeaderboard() {
+        try {
+            const pseudo = localStorage.getItem("pseudo") || "Anonymous";
+            const remainingTime = parseInt(localStorage.getItem("remainingTime") || "0");
+
+            // Envoyer le score au serveur
+            const response = await fetch('/api/leaderboard', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    pseudo: pseudo,
+                    time: remainingTime
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to save score');
+            }
+
+            console.log('Score saved to leaderboard');
+        } catch (error) {
+            console.error('Error saving score to leaderboard:', error);
+        }
+    }
+
 
     /**
      * This method is used to manage playlist
