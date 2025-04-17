@@ -2,6 +2,8 @@ import LocalStorageService from "../services/localStorageService.js";
 import Game from "../game.js";
 import { showInteraction } from "../utils.js";
 import hiddenQuest from "../GUI/hiddenQuest.js";
+import { updateEnigmeBoxContent } from "../GUI/enigmeManager.js";
+import Enigme2 from "./enigme2.js";
 
 class Enigme1 {
     /**
@@ -21,7 +23,7 @@ class Enigme1 {
             id: 1,
             name: "Finding the key",
             description:
-                "You are locked in a room and you need to find the key to escape.",
+                'The room is dark, almost empty. Only a few cobwebs hang from the ceiling, and a fine layer of dust covers the floor. Moving cautiously forward, you come across this old object that catches your eye.\nOn the wall, a phrase is carved into the stone:\n\n"That which opens the way is not found in the light of day. You have to look where you forget to look."',
             hint: "Search in the box.",
             hintPrice: 50,
             level: 1,
@@ -93,18 +95,7 @@ class Enigme1 {
                 : false;
         if (!keyIsAvailableToTake) {
             // If the key is taken
-            // Set all attributes that are needed to finish the enigme
-            LocalStorageService.setUserAttributes("enigme1.Door", true);
-            LocalStorageService.setUserAttributes(
-                "enigme1.timestampWhenEnded",
-                Date.now()
-            );
-            LocalStorageService.setUserAttributes("enigme1.isFinished", true);
-            // Fetch the next game state
-            await Game.getInstance().nextState();
-
-            showInteraction(); // Update the interaction message
-            hiddenQuest(Enigme1.enigme.id); // Unlock the next clue
+            await Enigme1.#end(); // end the game
             return {
                 success: true,
                 message: "You opened the door.",
@@ -136,6 +127,28 @@ class Enigme1 {
             mainMessage: "Open the grid",
             subMessage: "You have the key, escape now!",
         };
+    }
+
+    /**
+     * This method is used to end the enigme
+     *
+     * @async
+     */
+    static async #end() {
+        // Set all attributes that are needed to finish the enigme
+        LocalStorageService.setUserAttributes("enigme1.Door", true);
+        LocalStorageService.setUserAttributes(
+            "enigme1.timestampWhenEnded",
+            Date.now()
+        );
+        LocalStorageService.setUserAttributes("enigme1.isFinished", true);
+        // Fetch the next game state
+        await Game.getInstance().nextState();
+
+        showInteraction(); // Update the interaction message
+        hiddenQuest(Enigme1.enigme.id); // Unlock the next clue
+        const nextEnigme = Enigme2.enigme; // Get the next enigme
+        updateEnigmeBoxContent(nextEnigme.name, nextEnigme.description); // Update enigma box content
     }
 
     /**

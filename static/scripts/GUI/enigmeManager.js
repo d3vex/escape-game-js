@@ -6,7 +6,7 @@
 function updateEnigmeBoxTitle(title) {  
     let enigmeBox = document.querySelector(".enigmaBox")
     if(!enigmeBox) return
-    enigmeBox.querySelector("h4")?.innerText = title;
+    enigmeBox.querySelector("h4").innerText = title;
 }
 
 /**
@@ -17,7 +17,7 @@ function updateEnigmeBoxTitle(title) {
 function updateEnigmeBoxDescription(description) {  
     let contentBox = document.querySelector(".enigmaBox .contentEnigmaBox")
     if(!contentBox) return
-    enigmeBox.querySelector("span")?.innerText = description;
+    contentBox.querySelector("span").innerText = description;
 }
 
 /**

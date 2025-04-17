@@ -2,6 +2,7 @@ import Game from "../game.js";
 import LocalStorageService from "../services/localStorageService.js";
 import { messagePopUp, togglePopUp } from "../GUI/messagePopUp.js";
 import hiddenQuest from "../GUI/hiddenQuest.js";
+import Enigme5 from "./enigme5.js";
 
 class Enigme4 {
     static #eventDefined = false;
@@ -154,6 +155,8 @@ class Enigme4 {
         );
         Enigme4.#closeModal(); // Restart the game and close the modal
         hiddenQuest(this.enigme.id); // Unlock the next clue
+        const nextEnigme = Enigme5.enigme; // Get the next enigme
+        updateEnigmeBoxContent(nextEnigme.name, nextEnigme.description); // Update the enigme box content
     }
 
     /**

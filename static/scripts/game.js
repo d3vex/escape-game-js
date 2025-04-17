@@ -3,13 +3,11 @@ import MovementController from "./controllers/move.js";
 import { actualSizeMultiplier, setBoardBackground, preloadAllGameAssets } from "./models/renderer.js";
 import { loadInteractionsData } from "./utils.js";
 import { CYCLE_DURATION } from "./variables.js";
+import { updateEnigmeBoxContent } from "./GUI/enigmeManager.js"
 import Entity from "./models/entity.js";
-import Enigme1 from "./enigmes.js/enigme1.js";
-import Enigme2 from "./enigmes.js/enigme2.js";
-import Enigme3 from "./enigmes.js/enigme3.js";
+import {Enigme1, Enigme2, Enigme3, Enigme4, Enigme5}from "./enigmes.js/enigmes.js" 
 import LocalStorageService from "./services/localStorageService.js";
-import Enigme4 from "./enigmes.js/enigme4.js";
-import Enigme5 from "./enigmes.js/enigme5.js";
+
 
 class Game {
     static #instance = null;
@@ -203,6 +201,7 @@ class Game {
             if (enigme.isQuestEnded(true)) {
                 this.currentState++;
             } else {
+                updateEnigmeBoxContent(enigme.enigme.name, enigme.enigme.description);
                 break;
             }
         }

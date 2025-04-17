@@ -4,6 +4,7 @@ import { messagePopUp, togglePopUp } from "../GUI/messagePopUp.js";
 import { showInteraction } from "../utils.js";
 import MovementController from "../controllers/move.js";
 import hiddenQuest from "../GUI/hiddenQuest.js";
+import Enigme4 from "./enigme4.js";
 
 class Enigme3 {
     /**
@@ -171,6 +172,8 @@ class Enigme3 {
         );
         togglePopUp();
         hiddenQuest(Enigme3.enigme.id); // Unlock the next clue
+        const nextEnigme = Enigme4.enigme; // Get the next enigme
+        updateEnigmeBoxContent(nextEnigme.name, nextEnigme.description); // Update the enigme box content
     }
 
     /**
@@ -178,7 +181,7 @@ class Enigme3 {
      * If the quest is finished, it will show the next clue.
      * This method will also be used to get back to the old state (drunk/not drunk)
      * after the user rejoin the game.
-     * 
+     *
      * @returns {Boolean}
      */
     static isQuestEnded() {

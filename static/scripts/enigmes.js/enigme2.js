@@ -4,6 +4,8 @@ import Entity from "../models/entity.js";
 import { messagePopUp, togglePopUp } from "../GUI/messagePopUp.js";
 import { showInteraction } from "../utils.js";
 import hiddenQuest from "../GUI/hiddenQuest.js";
+import Enigme3 from "./enigme3.js";
+import { updateEnigmeBoxContent } from "../GUI/enigmeManager.js";
 
 class Enigme2 {
     static #elementId = "knight";
@@ -247,6 +249,8 @@ class Enigme2 {
         messagePopUp("Success", "You made the knigth open the door.");
         togglePopUp();
         hiddenQuest(Enigme2.enigme.id); // Unlock the next clue
+        const nextEnigme = Enigme3.enigme; // Get the next enigme
+        updateEnigmeBoxContent(nextEnigme.name, nextEnigme.description); // Update the enigme box content
     }
 
     /**
