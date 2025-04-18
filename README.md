@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="readmeFiles/banner.png" alt="banner"/>
+</p>
+
+---
 
 ## 📖 Table of contents
 
@@ -77,21 +82,7 @@ Here have a look at simplified version of project structure:
 │       │   │   └── PressStart2P-Regular.ttf
 │       │   ├── images
 │       │   │   ├── icons
-│       │   │   │   ├── Clé.png
-│       │   │   │   ├── Equerre.png
-│       │   │   │   ├── Helmet.png
-│       │   │   │   ├── L.png
-│       │   │   │   ├── Marteau.png
-│       │   │   │   └── Water.png
 │       │   │   ├── map
-│       │   │   │   ├── Map-1.png
-│       │   │   │   ├── Map-2.png
-│       │   │   │   ├── Map-3.png
-│       │   │   │   ├── Map-4.png
-│       │   │   │   ├── Map-5.png
-│       │   │   │   ├── Map-6.png
-│       │   │   │   └── Map-7.png
-│       │   │   ├── Map-3.png
 │       │   │   └── sprite
 │       │   │       ├── idle
 │       │   │       ├── knight
@@ -156,7 +147,7 @@ The link for the Trello board is [here](https://trello.com/invite/b/67d2d3325da5
 
 ## 🎮 Play
 
-Here is a demo playable [online](https://challenge-js.doomoon.fr)
+Here is a demo playable [online]
 
 ### 👥 Credits
 
