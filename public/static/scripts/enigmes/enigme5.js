@@ -238,15 +238,21 @@ class Enigme5 {
      * and unlock the next room.
      * It will also play the song of the enigme.
      */
-    static async #end() {
+    static async #end(isFirstCall = true) {
         // Set the attributes to end the enigme
         LocalStorageService.setUserAttributes("enigme5.isFinished", true);
-        stopTimer();
         Game.getInstance().stop();
+        setTimeout(() => {
+            // Stop the timer and add a second to the remaining time 
+            // This avoid the user to lose time when the game is ended
+            let remainingTime = parseInt(localStorage.getItem("remainingTime")) +1
+            localStorage.setItem("remainingTime", remainingTime);
+            stopTimer();
+        }, 0);
         launchConfetti();
 
-        // Ajouter le score au leaderboard
-        await Enigme5.#saveScoreToLeaderboard();
+        // Add the score to the leaderboard only if it is the first call
+        isFirstCall?await Enigme5.#saveScoreToLeaderboard():null;
 
         let gameWin = document.querySelector(".gameWin");
         gameWin.querySelector("button").addEventListener("click", () => {
@@ -339,7 +345,7 @@ class Enigme5 {
             Game.getInstance().nextState();
         }
         if (melody && isFinished) {
-            Enigme5.#end();
+            Enigme5.#end(false);
             return true;
         }
         return false;

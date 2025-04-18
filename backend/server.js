@@ -5,7 +5,7 @@ const fs = require("fs");
 const app = express();
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "../")));
+app.use(express.static(path.join(__dirname, "../public")));
 
 // Endpoint pour récupérer le leaderboard
 app.get("/api/leaderboard", (req, res) => {
