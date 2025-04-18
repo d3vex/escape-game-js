@@ -7,7 +7,6 @@
 ## 📖 Table of contents
 
 1. [**📚 About the project**](#-about-the-project)
-2. [**🎥 Demo**](#-demo)
 3. [**🚀 How to run the project**](#-how-to-run-the-project)
 4. [**💻 Technologies**](#-technologies)
 5. [**📁 Project Structure**](#-project-structure)
@@ -26,12 +25,6 @@ This project is an interactive puzzle game where players must solve a series of 
 - 🎵 Sounds and animations for an immersive experience
 
 The final project repository can be found [here](https://ytrack.learn.ynov.com/git/mloan/challenge-js)
-
----
-
-## 🎥 Demo
-
-![PlaceHolder](https://i.imgur.com/KKGEcst.gif)
 
 ---
 
