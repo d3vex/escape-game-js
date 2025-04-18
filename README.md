@@ -1,8 +1,3 @@
-<p align="center">
-  <img src="readmeFiles/banner.png" alt="banner"/>
-</p>
-
----
 
 ## 📖 Table of contents
 
