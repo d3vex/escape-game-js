@@ -69,28 +69,88 @@ Here have a look at simplified version of project structure:
 ```
 .
 ├── backend
-│   ├── data
-│   │   └── leaderboard.json
-│   └── server.js
-├── static
-│   ├── assets
-│   │   ├── images
-│   │   │   └── sprite
-│   │   │       ├── idle
-│   │   │       └── walk
-│   │   └── song
-│   │       └── Fur_elise.mp3
-│   ├── scripts
-│   │   ├── enigmes.js
-│   │   ├── GUI
-│   │   │   └── leaderboard.js
-│   │   ├── models
-│   │   │   └── player.js
-│   │   └── services
-│   │       └── localStorageService.js
-│   └── styles
-│       └── style.css
-└── index.html
+│   ├── data
+│   │   └── leaderboard.json
+│   └── server.js
+├── node_modules
+├── public
+│   ├── game.html
+│   ├── index.html
+│   └── static
+│       ├── assets
+│       │   ├── fonts
+│       │   │   └── PressStart2P-Regular.ttf
+│       │   ├── images
+│       │   │   ├── icons
+│       │   │   │   ├── Clé.png
+│       │   │   │   ├── Equerre.png
+│       │   │   │   ├── Helmet.png
+│       │   │   │   ├── L.png
+│       │   │   │   ├── Marteau.png
+│       │   │   │   └── Water.png
+│       │   │   ├── map
+│       │   │   │   ├── Map-1.png
+│       │   │   │   ├── Map-2.png
+│       │   │   │   ├── Map-3.png
+│       │   │   │   ├── Map-4.png
+│       │   │   │   ├── Map-5.png
+│       │   │   │   ├── Map-6.png
+│       │   │   │   └── Map-7.png
+│       │   │   ├── Map-3.png
+│       │   │   └── sprite
+│       │   │       ├── idle
+│       │   │       ├── knight
+│       │   │       │   ├── idle.png
+│       │   │       │   └── walk
+│       │   │       └── walk
+│       │   ├── json
+│       │   │   ├── interactions-1.json
+│       │   │   ├── interactions-2.json
+│       │   │   ├── interactions-3.json
+│       │   │   ├── interactions-4.json
+│       │   │   ├── interactions-5.json
+│       │   │   ├── interactions-6.json
+│       │   │   └── interactions-7.json
+│       │   └── song
+│       │       └── Fur_elise.mp3
+│       ├── css
+│       │   ├── homeStyle.css
+│       │   └── style.css
+│       └── scripts
+│           ├── controllers
+│           │   └── move.js
+│           ├── enigmes
+│           │   ├── enigme1.js
+│           │   ├── enigme2.js
+│           │   ├── enigme3.js
+│           │   ├── enigme4.js
+│           │   ├── enigme5.js
+│           │   └── enigmes.js
+│           ├── game.js
+│           ├── GUI
+│           │   ├── arrowsInputHoverEffect.js
+│           │   ├── dragNdrop.js
+│           │   ├── effects.js
+│           │   ├── enigmeManager.js
+│           │   ├── fetchContent.js
+│           │   ├── gameOver.js
+│           │   ├── hiddenQuest.js
+│           │   ├── leaderboard.js
+│           │   ├── manageATH.js
+│           │   ├── manageInteractBox.js
+│           │   ├── messagePopUp.js
+│           │   ├── pseudo.js
+│           │   └── startTimer.js
+│           ├── main.js
+│           ├── models
+│           │   ├── entity.js
+│           │   ├── interactionManager.js
+│           │   ├── player.js
+│           │   └── renderer.js
+│           ├── services
+│           │   └── localStorageService.js
+│           ├── utils.js
+│           └── variables.js
 ```
 
 ---
@@ -98,6 +158,10 @@ Here have a look at simplified version of project structure:
 ## 🎬 Presentation
 
 The link for the Trello board is [here](https://trello.com/invite/b/67d2d3325da5a2c80e30d729/ATTId7dc33a9cfd4bfbb517200c1bf774f2796DA07FF/projet-js)
+
+## 🎮 Play
+
+Here is a demo playable [online](https://challenge-js.doomoon.fr)
 
 ### 👥 Credits
 
