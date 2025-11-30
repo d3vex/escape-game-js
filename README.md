@@ -136,7 +136,7 @@ Here have a look at simplified version of project structure:
 
 ## 🎮 Play
 
-Here is a demo playable [online](challenge-js.d3vex.fr
+Here is a demo playable [online](challenge-js.d3vex.fr)
 
 ### 👥 Credits
 
