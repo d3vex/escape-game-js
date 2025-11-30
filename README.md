@@ -24,7 +24,7 @@ This project is an interactive puzzle game where players must solve a series of 
 - ⏱️ Timer to measure player performance
 - 🎵 Sounds and animations for an immersive experience
 
-The final project repository can be found [here](https://ytrack.learn.ynov.com/git/mloan/challenge-js)
+The final project repository can be found [here](https://github.com/d3vex/escape-game-js)
 
 ---
 
@@ -34,8 +34,8 @@ To run the project, you will need Node.js installed on your computer.
 
 1. Clone the repository:
 ```bash
-git clone https://ytrack.learn.ynov.com/git/mloan/challenge-js.git
-cd challenge-js
+git clone https://github.com/d3vex/escape-game-js.git
+cd escape-game-js
 npm install express
 node backend/server.js
 ```
@@ -134,16 +134,12 @@ Here have a look at simplified version of project structure:
 
 ---
 
-## 🎬 Presentation
-
-The link for the Trello board is [here](https://trello.com/invite/b/67d2d3325da5a2c80e30d729/ATTId7dc33a9cfd4bfbb517200c1bf774f2796DA07FF/projet-js)
-
 ## 🎮 Play
 
-Here is a demo playable [online]
+Here is a demo playable [online](challenge-js.d3vex.fr
 
 ### 👥 Credits
 
 <a href="https://github.com/Oiha-dev"><img src="https://avatars.githubusercontent.com/u/115953539" alt="Gauthier Cenes" width="69" height="69"/></a>
 <a href="https://github.com/DantesDels"><img src="https://avatars.githubusercontent.com/u/170110923" alt="Sébastien Delver" width="69" height="69"/></a>
-<a href="https://github.com/naolatam"><img src="https://avatars.githubusercontent.com/u/59016480" alt="Sébastien Delver" width="69" height="69"/></a>
+<a href="https://github.com/d3vex"><img src="https://avatars.githubusercontent.com/u/59016480" alt="Loan Mata" width="69" height="69"/></a>
